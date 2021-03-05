@@ -36,5 +36,6 @@ public class Main extends Application {
 		primaryStage.setTitle("LA CASA DORADA");
 		primaryStage.show();
 
-    }
+    }//Prueba
+
 }
