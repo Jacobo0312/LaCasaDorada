@@ -6,6 +6,22 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "vmArgs": "--module-path C:/Users/sebas/Downloads/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "ui.Main",
+            "projectName": "LaCasaDorada_17bda197"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "vmArgs": "--module-path C:/Users/juanj/Downloads/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "Main",
+            "projectName": "LaCasaDorada_5ab0138a"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "vmArgs": "--module-path C:/Users/juanj/Downloads/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
