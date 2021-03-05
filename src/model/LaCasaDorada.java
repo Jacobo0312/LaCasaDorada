@@ -13,7 +13,7 @@ public class LaCasaDorada {
 
 
 
-    public LaCasaDorada(ArrayList<User> users, ArrayList<Product> products, ArrayList<Customer> customers, ArrayList<Order> orders, ArrayList<Employee> employees) {
+    public LaCasaDorada() {
         users = new ArrayList<User>();
         products = new ArrayList<Product>();
         customers = new ArrayList<Customer>();
