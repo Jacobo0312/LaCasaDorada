@@ -13,7 +13,7 @@ public class Customer{
     private String comments;
 
 
-    public Customer(String firstName, String lastName, String id, String address, String phone,String observations) {
+    public Customer(String firstName, String lastName, String id, String address, String phone,String comments) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -22,13 +22,15 @@ public class Customer{
         this.comments=comments;
     }
 
-  public Customer(String firstName, String lastName, String address, String phone,String observations) {
+  public Customer(String firstName, String lastName, String address, String phone,String comments) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.comments=comments;
     }
+
+    //Arreglar que el id sea opcional
 
 
 }

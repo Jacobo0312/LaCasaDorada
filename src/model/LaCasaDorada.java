@@ -38,32 +38,35 @@ public class LaCasaDorada {
     }
 
     public void addProducts(String name, String[] ingredients, int[] pricePerSize, Boolean availability, String type) {
-        products.add(new Product(  name,  ingredients,  pricePerSize, availability,  type));
+        products.add(new Product(  name,  ingredients,  pricePerSize, availability,  type));//Falta agregar los dos empleados
     }
 
 //GET and ADD for Customers----------------------------------
+
     public ArrayList<Customer> getCustumers(){	
     	return customers;
     }
     
     public void addCostumers(String firstName, String lastName, String id, String address, String phone,String observations) {
-    	customers.add(new Customer(firstName, lastName, id,  address,  phone,observations));
+    	customers.add(new Customer(firstName, lastName, id,  address,  phone,observations));//Falta agregar los dos empleados
     }
+
   //GET and ADD for Order----------------------------------
     public ArrayList<Order> getOrders(){	
     	return orders;
     }
     
-    public void addOrders(String code, Status status, ArrayList<Product> products, int[] amount, Customer customer, Employee employee, Date date, String Comment) {
-    	orders.add(new Order(code, status,  products,  amount,  customer,  employee,  date,  Comment));
+    public void addOrders(int code, String status, ArrayList<OrdersDetails> products, int[] amount, Customer customer, Employee employeeCreate,Employee employeeModify, Date date, String comment) {
+    	orders.add(new Order( code,  status,  products,  amount,  customer,  employeeCreate, employeeModify,  date,  comment));
     }
+
   //GET and ADD for Employee----------------------------------   
     public ArrayList<Employee> getEmployees(){	
     	return employees;
     }
    
     public void addEmployees(String firstName, String lastName, String id) {
-    	employees.add(new Employee( firstName, lastName,  id));
+    	employees.add(new Employee( firstName, lastName,  id));//Falta agregar los dos empleados
     }
     
     

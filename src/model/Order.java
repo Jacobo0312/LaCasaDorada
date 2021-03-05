@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
-    private String code;//Autogenerado
+    private int code;//Que empiece en 0 y vaya aumentando 
     private Status status;//Enum of status
-    private ArrayList<Product> products;
-    private int[] amount; //Amound of products
+    private ArrayList<OrdersDetails> products;
     private Customer customer;
-    private Employee employee;
+    private Employee employeeCreate;
+    private Employee employeeModify;
     private Date date;
-    private String Comment;
+    private String comment;
 
-    public Order(String code, Status status, ArrayList<Product> products, int[] amount, Customer customer, Employee employee, Date date, String Comment) {
+    public Order(int code, String status, ArrayList<OrdersDetails> products, int[] amount, Customer customer, Employee employeeCreate,Employee employeeModify, Date date, String comment) {
         this.code = code;
-        this.status = status;
+        this.status = Status.valueOf(status);
         this.products = products;
-        this.amount = amount;
         this.customer = customer;
-        this.employee = employee;
+        this.employeeCreate = employeeCreate;
+        this.employeeModify = employeeModify;
         this.date = date;
-        this.Comment = Comment;
+        this.comment = comment;
     }
 
 
