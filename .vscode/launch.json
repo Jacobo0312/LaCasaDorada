@@ -11,14 +11,6 @@
             "vmArgs": "--module-path C:/Users/sebas/Downloads/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "ui.Main",
             "projectName": "LaCasaDorada_17bda197"
-        },
-        {
-            "type": "java",
-            "name": "Launch Main",
-            "request": "launch",
-            "vmArgs": "--module-path C:/Users/juanj/Downloads/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
-            "mainClass": "ui.Main",
-            "projectName": "T1_a8d7e0cc"
         }
     ]
 }
