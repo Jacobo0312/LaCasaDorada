@@ -27,8 +27,22 @@ public class LaCasaDorada {
         return users;
     }
 
-    public void addBillboard(String firstName, String lastName, String id,String user, String passsword) {
-        users.add(new User( firstName,  lastName,  id, user,  passsword));
+    public void addUser(String firstName, String lastName, String id,String user, String password) {
+        users.add(new User( firstName,  lastName,  id, user,  password));
+    }
+
+
+    //For search user
+
+    public User getUser(String name, String password) {
+        User user = null;
+        for (User s : users) {
+            if (s.getUser().equals(name)) {
+                if (s.getPassword().equals(password))
+                    user = s;
+            }
+        }
+        return user;
     }
 
     //GET and ADD for Products----------------------------------
