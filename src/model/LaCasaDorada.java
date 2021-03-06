@@ -1,9 +1,14 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class LaCasaDorada {
+
+    public static final String SEPARATE = ",";
 
     private ArrayList<User> users;
     private ArrayList<Product> products;
@@ -51,7 +56,7 @@ public class LaCasaDorada {
         return products;
     }
 
-    public void addProducts(String name, String[] ingredients, int[] pricePerSize, Boolean availability, String type) {
+    public void addProducts(String name, String[] ingredients, double[] pricePerSize, Boolean availability, String type) {
         products.add(new Product(  name,  ingredients,  pricePerSize, availability,  type));//Falta agregar los dos empleados
     }
 
@@ -82,6 +87,29 @@ public class LaCasaDorada {
     public void addEmployees(String firstName, String lastName, String id) {
     	employees.add(new Employee( firstName, lastName,  id));//Falta agregar los dos empleados
     }
+
+
+
+    // Import data
+
+    public void importProducts(String fileDirectory) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
+        String line = br.readLine();
+        while (line != null) {
+            String[] parts = line.split(SEPARATE);
+             String name=parts[0];
+             String [] ingredients=parts[1].split(" ");
+             double [] pricePerSize={Double.parseDouble(parts[2]),Double.parseDouble(parts[3])};
+             boolean availability = Boolean.parseBoolean(parts[4]);
+             String type="DISH";
+        
+            addProducts(name,  ingredients,  pricePerSize, availability,  type);
+            line = br.readLine();
+        }
+        br.close();
+    }
+
+    //----------------------------------------------------------------------
     
     
 

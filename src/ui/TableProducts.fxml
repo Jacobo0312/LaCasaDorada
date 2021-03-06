@@ -38,12 +38,13 @@
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
-      <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
+      <TableView fx:id="tableProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
         <columns>
-          <TableColumn fx:id="colProductsNA" prefWidth="195.0" style="-fx-background-color: #6743B0;" text="Name" />
-          <TableColumn fx:id="colProductsIN" minWidth="0.0" prefWidth="208.0" style="-fx-background-color: #6743B0;" text="Ingredients" />
-            <TableColumn fx:id="colProductsPR" prefWidth="170.0" style="-fx-background-color: #6743B0;" text="Price per size" />
-            <TableColumn fx:id="colProductsAV" maxWidth="264.0" minWidth="-1.0" prefWidth="171.0" style="-fx-background-color: #6743B0;" text="Availability" />
+          <TableColumn fx:id="colProductsNA" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="Name" />
+          <TableColumn fx:id="colProductsIN" minWidth="0.0" prefWidth="158.0" style="-fx-background-color: #6743B0;" text="Ingredients" />
+            <TableColumn fx:id="colProductsPR" prefWidth="243.0" style="-fx-background-color: #6743B0;" text="Price per size" />
+            <TableColumn fx:id="colProductsAV" maxWidth="264.0" minWidth="-1.0" prefWidth="91.333251953125" style="-fx-background-color: #6743B0;" text="Availability" />
+            <TableColumn fx:id="colProductsTY" maxWidth="264.0" minWidth="-1.0" prefWidth="91.333251953125" style="-fx-background-color: #6743B0;" text="Type" />
         </columns>
       </TableView>
    </children>
