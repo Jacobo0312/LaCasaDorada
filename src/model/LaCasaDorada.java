@@ -62,7 +62,7 @@ public class LaCasaDorada {
 
 //GET and ADD for Customers----------------------------------
 
-    public ArrayList<Customer> getCustumers(){	
+    public ArrayList<Customer> getCustomers(){	
     	return customers;
     }
     
@@ -92,6 +92,8 @@ public class LaCasaDorada {
 
     // Import data
 
+
+    //PRODUCTS
     public void importProducts(String fileDirectory) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
         String line = br.readLine();
@@ -108,6 +110,27 @@ public class LaCasaDorada {
         }
         br.close();
     }
+
+
+  //CUSTOMERS
+
+  public void importCustomers(String fileDirectory) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
+    String line = br.readLine();
+    while (line != null) {
+        String[] parts = line.split(SEPARATE);
+         String firstName=parts[0];
+         String lastName=parts[1];
+         String id=parts[2];
+         String address=parts[3];
+         String phone=parts[4];
+         String observations=parts[5];
+    
+        addCostumers(firstName, lastName, id,  address,  phone,observations);
+        line = br.readLine();
+    }
+    br.close();
+}
 
     //----------------------------------------------------------------------
     

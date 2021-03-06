@@ -38,14 +38,14 @@
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
-      <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
+      <TableView fx:id="tableCustomers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
         <columns>
           <TableColumn fx:id="colCustomerFN" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="First name" />
           <TableColumn fx:id="colCustomerLN" minWidth="0.0" prefWidth="118.0" style="-fx-background-color: #6743B0;" text="Last name" />
             <TableColumn fx:id="colCustomerID" prefWidth="149.0" style="-fx-background-color: #6743B0;" text="Id(optional)" />
             <TableColumn fx:id="colCustomerAD" maxWidth="264.0" minWidth="-1.0" prefWidth="130.0" style="-fx-background-color: #6743B0;" text="Address" />
             <TableColumn fx:id="colCustomerPH" maxWidth="469.0" minWidth="-1.0" prefWidth="175.0" style="-fx-background-color: #6743B0;" text="Phone" />
-            <TableColumn fx:id="colCustomerFNCO" prefWidth="155.0" text="Comments" />
+            <TableColumn fx:id="colCustomerCO" prefWidth="155.0" text="Comments" />
         </columns>
       </TableView>
    </children>

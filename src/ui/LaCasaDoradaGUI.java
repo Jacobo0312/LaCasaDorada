@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import model.Customer;
 import model.LaCasaDorada;
 import model.Product;
 import model.User;
@@ -49,6 +50,8 @@ public class LaCasaDoradaGUI {
 
     //Tables
 
+    //Product
+
     @FXML
     private TableView<Product> tableProducts;
 
@@ -66,6 +69,34 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Product, String> colProductsTY;
+
+    //Customers
+
+    @FXML
+    private TableView<Customer> tableCustomers;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerFN;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerLN;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerID;
+
+    @FXML
+    private TableColumn<Customer,String> colCustomerAD;
+
+    @FXML
+    private TableColumn<Customer,String> colCustomerPH;
+
+    @FXML
+    private TableColumn<Customer, String> colCustomerCO;
+
+    //--------
+
+
+
 
     private LaCasaDorada laCasaDorada;
 
@@ -229,6 +260,7 @@ public class LaCasaDoradaGUI {
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();;
         pane.setCenter(form);
+        initializeTableViewCustomers();
     }
 
 
@@ -250,6 +282,24 @@ public class LaCasaDoradaGUI {
         
     }
 
+    //Table customers
+
+    @FXML
+    private void initializeTableViewCustomers() {
+        ObservableList<Customer> observableList;
+        observableList = FXCollections.observableArrayList(laCasaDorada.getCustomers());
+        tableCustomers.setItems(observableList);
+
+        colCustomerFN.setCellValueFactory(new PropertyValueFactory<Customer, String>("firstName"));
+        colCustomerLN.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastName"));
+        colCustomerID.setCellValueFactory(new PropertyValueFactory<Customer, String>("id"));
+        colCustomerAD.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
+        colCustomerPH.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
+        colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
+        }
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------
 
 //Import data
@@ -258,6 +308,8 @@ public class LaCasaDoradaGUI {
 public void importData(ActionEvent event) throws IOException {
   
     laCasaDorada.importProducts("src/data/products.csv");
+    laCasaDorada.importCustomers("src/data/customers.csv");
+
     
 }
 
