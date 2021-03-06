@@ -32,7 +32,7 @@ public class LaCasaDorada {
     }
 
 
-    //For search user
+    //For verify user
 
     public User getUser(String name, String password) {
         User user = null;

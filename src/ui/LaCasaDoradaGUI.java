@@ -52,14 +52,27 @@ public class LaCasaDoradaGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
         fxmlLoader.setController(this);
         Parent login = fxmlLoader.load();
-        pane.getChildren().clear();
+        //pane.getChildren().clear();
         pane.setCenter(login);
     }
 
-    // Options of the login
+
+
+    // Load Main window
 
     @FXML
-    public void login(ActionEvent event) {
+    public void loadMainWindow(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+        fxmlLoader.setController(this);
+        Parent mainWindow = fxmlLoader.load();
+        //pane.getChildren().clear();
+        pane.setCenter(mainWindow);
+    }
+
+    // Options of the login----------------------------------------
+
+    @FXML
+    public void login(ActionEvent event) throws IOException {
         User user = laCasaDorada.getUser(txtUser.getText(), txtPassword.getText());
 
         if (user == null) {
@@ -75,28 +88,28 @@ public class LaCasaDoradaGUI {
 
         } else {
             //loginUser = user.getUsername();
-            //loadTable(event);
+            loadMainWindow(event);
 
         }
 
     }
 
-    //Load window of form
+    //Load window of form----------------------------------------------
 
     @FXML
     public void loadFormulario(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Form.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
-        pane.getChildren().clear();
+        //pane.getChildren().clear();;
         pane.setCenter(form);
     }
 
 
-//Create a new user
+//Create a new user------------------------------------------------------------
 
     @FXML
-    public void addUser(ActionEvent event) {
+    public void addUser(ActionEvent event) throws IOException {
         boolean valid=true;
      String firstName=createUserFN.getText();
      String lastName=createUserLN.getText();
@@ -109,7 +122,7 @@ public class LaCasaDoradaGUI {
 
         laCasaDorada.addUser(firstName,  lastName,  id, user,  password);
 
-        //loadTable(event); cargar para hacer pedidos
+        loadMainWindow(event);
 
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Account created");
@@ -129,5 +142,62 @@ public class LaCasaDoradaGUI {
 
 
     }
+
+
+    //load window users------------------------------
+
+    @FXML
+    public void loadUsers(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableUsers.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        //pane.getChildren().clear();;
+        pane.setCenter(form);
+    }
+
+     //load window Products------------------------------
+
+     @FXML
+     public void loadProducts(ActionEvent event) throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableProducts.fxml"));
+         fxmlLoader.setController(this);
+         Parent form = fxmlLoader.load();
+         //pane.getChildren().clear();;
+         pane.setCenter(form);
+     }
+
+
+      //load window Employees------------------------------
+
+    @FXML
+    public void loadEmployees(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableEmployees.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        //pane.getChildren().clear();;
+        pane.setCenter(form);
+    }
+
+
+     //load window users------------------------------
+
+     @FXML
+     public void loadOrders(ActionEvent event) throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableOrders.fxml"));
+         fxmlLoader.setController(this);
+         Parent form = fxmlLoader.load();
+         //pane.getChildren().clear();;
+         pane.setCenter(form);
+     }
+
+
+     @FXML
+     public void loadCustomers(ActionEvent event) throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableCustomers.fxml"));
+         fxmlLoader.setController(this);
+         Parent form = fxmlLoader.load();
+         //pane.getChildren().clear();;
+         pane.setCenter(form);
+     }
 
 }
