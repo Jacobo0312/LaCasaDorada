@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 
+
 public class LaCasaDorada {
 
     public static final String SEPARATE = ",";
@@ -67,7 +68,7 @@ public class LaCasaDorada {
     }
 
     public void addCostumers(String firstName, String lastName, String id, String address, String phone,
-            String observations) {
+            String comments) {
 
         // Comparador por apellido y nombre
 
@@ -89,7 +90,7 @@ public class LaCasaDorada {
         };
 
         // Agregar de forma ordenada
-        Customer customer = new Customer(firstName, lastName, id, address, phone, observations);
+        Customer customer = new Customer(firstName, lastName, id, address, phone, comments);
 
         if (customers.isEmpty()) {
             customers.add(customer);
@@ -134,7 +135,7 @@ public class LaCasaDorada {
             String[] ingredients = parts[1].split(" ");
             double[] pricePerSize = { Double.parseDouble(parts[2]), Double.parseDouble(parts[3]) };
             boolean availability = Boolean.parseBoolean(parts[4]);
-            String type = "DISH";
+            String type = "DISH";//Por defecto, no se como agregar al csv
 
             addProducts(name, ingredients, pricePerSize, availability, type);
             line = br.readLine();
@@ -154,9 +155,9 @@ public class LaCasaDorada {
             String id = parts[2];
             String address = parts[3];
             String phone = parts[4];
-            String observations = parts[5];
+            String comments = parts[5];
 
-            addCostumers(firstName, lastName, id, address, phone, observations);
+            addCostumers(firstName, lastName, id, address, phone, comments);
             line = br.readLine();
         }
         br.close();
