@@ -1,5 +1,5 @@
 package model;
 
 public enum Type {
-    DISH,DRINK
+    DISH,DRINK,DESSERT
 }

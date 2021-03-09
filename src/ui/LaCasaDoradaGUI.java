@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.function.DoubleToIntFunction;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,10 +10,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
@@ -47,10 +51,9 @@ public class LaCasaDoradaGUI {
     @FXML
     private TextField createUserUS;
 
+    // Tables
 
-    //Tables
-
-    //Product
+    // Product
 
     @FXML
     private TableView<Product> tableProducts;
@@ -70,7 +73,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Product, String> colProductsTY;
 
-    //Customers
+    // Customers
 
     @FXML
     private TableView<Customer> tableCustomers;
@@ -85,18 +88,45 @@ public class LaCasaDoradaGUI {
     private TableColumn<Customer, String> colCustomerID;
 
     @FXML
-    private TableColumn<Customer,String> colCustomerAD;
+    private TableColumn<Customer, String> colCustomerAD;
 
     @FXML
-    private TableColumn<Customer,String> colCustomerPH;
+    private TableColumn<Customer, String> colCustomerPH;
 
     @FXML
     private TableColumn<Customer, String> colCustomerCO;
 
-    //--------
+    // --------
 
+    // Create Products
+    @FXML
+    private TextField createProductName;
 
+    @FXML
+    private TextField createProductIngre;
 
+    @FXML
+    private TextField createProductSizeSmall;
+
+    @FXML
+    private TextField createProductBig;
+
+    @FXML
+    private RadioButton createProductDrink;
+
+    @FXML
+    private ToggleGroup createProductType;
+
+    @FXML
+    private RadioButton createProductDish;
+
+    @FXML
+    private RadioButton createProductDessert;
+
+    @FXML
+    private ChoiceBox<String> createProductAV;
+
+    //////////
 
     private LaCasaDorada laCasaDorada;
 
@@ -209,18 +239,18 @@ public class LaCasaDoradaGUI {
         pane.setCenter(form);
     }
 
-    //------------------------------------------------------LOAD WINDOWS------------------------------------------------------------------------
+    // ------------------------------------------------------LOAD
+    // WINDOWS------------------------------------------------------------------------
 
     // load window Products------------------------------
 
     @FXML
     public void loadProducts(ActionEvent event) throws IOException {
 
-        //Test
-        //int price[] = {2,2};
-        //String ing[] = {"dssdgsgs"};
-        //laCasaDorada.addProducts("name", ing, price, true, "DISH");
-
+        // Test
+        // int price[] = {2,2};
+        // String ing[] = {"dssdgsgs"};
+        // laCasaDorada.addProducts("name", ing, price, true, "DISH");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableProducts.fxml"));
         fxmlLoader.setController(this);
@@ -263,10 +293,10 @@ public class LaCasaDoradaGUI {
         initializeTableViewCustomers();
     }
 
+    // -------------------------------------------------------INITIALIALIZE
+    // TABLES--------------------------------------------------------
 
-    //-------------------------------------------------------INITIALIALIZE TABLES--------------------------------------------------------
-
-    //Table products
+    // Table products
 
     @FXML
     private void initializeTableViewProducts() {
@@ -279,10 +309,10 @@ public class LaCasaDoradaGUI {
         colProductsPR.setCellValueFactory(new PropertyValueFactory<Product, String>("pricePerSize"));
         colProductsAV.setCellValueFactory(new PropertyValueFactory<Product, String>("availability"));
         colProductsTY.setCellValueFactory(new PropertyValueFactory<Product, String>("type"));
-        
+
     }
 
-    //Table customers
+    // Table customers
 
     @FXML
     private void initializeTableViewCustomers() {
@@ -296,21 +326,102 @@ public class LaCasaDoradaGUI {
         colCustomerAD.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
         colCustomerPH.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
+    }
+
+    // ------------------------------------------------------------------------------------------------------------------------------
+
+    // Import data
+
+    @FXML
+    public void importData(ActionEvent event) throws IOException {
+
+        laCasaDorada.importProducts("src/data/products.csv");
+        laCasaDorada.importCustomers("src/data/customers.csv");
+
+    }
+
+    ////
+    // Load window create product
+
+    public void loadCreateProduct(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateProduct.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+
+        createProductAV.getItems().addAll("AVAILABLE", "NOT AVAILABLE");
+
+    }
+
+    // Create product
+
+    @FXML
+    public void addProduct(ActionEvent event) throws IOException {
+        try {
+
+            boolean valid = true;
+            String name = createProductName.getText();
+            String[] ingredients = createProductIngre.getText().split(" ");
+            double priceSmall = Double.parseDouble(createProductSizeSmall.getText());
+            double priceBig = Double.parseDouble(createProductBig.getText());
+
+            double[] pricePerSize = { priceSmall, priceBig };
+
+            Boolean availability = false;
+            String stringAV = (String) createProductAV.getValue();
+            if (stringAV.isEmpty()) {
+                valid = false;
+            } else {
+                if (stringAV == "AVAILABLE")
+                    availability = true;
+            }
+
+            String type = "";
+            if (createProductDish.isSelected()) {
+                type = "DISH";
+            } else if (createProductDessert.isSelected()) {
+                type = "DESSERT";
+            } else if (createProductDrink.isSelected()) {
+                type = "DRINK";
+            } else
+                valid = false;
+
+            if (type.isEmpty())
+                valid = false;
+
+            // Comprobar que este todo lleno
+            if (valid) {
+
+                laCasaDorada.addProducts(name, ingredients, pricePerSize, availability, type);
+                loadProducts(event);
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Product created");
+                alert.setHeaderText(null);
+                alert.setContentText("The new product has been created");
+
+                alert.showAndWait();
+
+            } else {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Validation Error");
+                alert.setHeaderText(null);
+                alert.setContentText("You must fill each field in the form");
+
+                alert.showAndWait();
+
+            }
+
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText(null);
+            alert.setContentText("You must fill each field in the form");
+
+            alert.showAndWait();
         }
 
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-
-//Import data
-
-@FXML
-public void importData(ActionEvent event) throws IOException {
-  
-    laCasaDorada.importProducts("src/data/products.csv");
-    laCasaDorada.importCustomers("src/data/customers.csv");
-
-    
-}
+    }
 
 }
