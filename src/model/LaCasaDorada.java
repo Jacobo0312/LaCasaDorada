@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -37,7 +39,7 @@ public class LaCasaDorada {
     }
 
     // For verify user
-
+    
     public User getUser(String name, String password) {
         User user = null;
         for (User s : users) {
@@ -48,6 +50,11 @@ public class LaCasaDorada {
         }
         return user;
     }
+    
+
+    //Try binary search
+
+
 
     // GET and ADD for Products----------------------------------
 

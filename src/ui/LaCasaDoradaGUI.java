@@ -1,7 +1,7 @@
 package ui;
 
 import java.io.IOException;
-import java.util.function.DoubleToIntFunction;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -26,6 +29,19 @@ import model.Product;
 import model.User;
 
 public class LaCasaDoradaGUI {
+
+    //User account
+
+    private String loginUser;
+
+    @FXML
+    private Menu labelUser;
+
+    @FXML
+    private MenuItem labelLoginOrLogOut;
+
+
+    //----------------------
 
     @FXML
     private BorderPane pane;
@@ -142,6 +158,8 @@ public class LaCasaDoradaGUI {
         Parent login = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(login);
+        labelUser.setText("User");
+        //labelLoginOrLogOut.setText("Login");
     }
 
     // Load Main window
@@ -173,10 +191,20 @@ public class LaCasaDoradaGUI {
             alert.showAndWait();
 
         } else {
-            // loginUser = user.getUsername();
+            loginUser = user.getUser();
             loadMainWindow(event);
-
+            labelUser.setText(loginUser);
+            //labelLoginOrLogOut.setText("Log out");
+            //arreglar el log out
         }
+
+    }
+
+    //Log out
+    @FXML
+    void logOut(ActionEvent event) throws IOException {
+        loginUser="";
+        loadWelcome(event);
 
     }
 
@@ -208,7 +236,9 @@ public class LaCasaDoradaGUI {
 
             laCasaDorada.addUser(firstName, lastName, id, user, password);
 
+            loginUser = user;
             loadMainWindow(event);
+            labelUser.setText(loginUser);
 
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Account created");

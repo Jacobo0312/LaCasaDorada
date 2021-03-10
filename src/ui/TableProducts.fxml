@@ -11,17 +11,20 @@
 
 <VBox prefHeight="500.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox>
+      <HBox prefHeight="62.0" prefWidth="745.0">
          <children>
-            <Label fx:id="labelUser" prefHeight="17.0" prefWidth="341.0" text="#Name" textFill="#8d5bf0">
+            <Label fx:id="labelUser" prefHeight="57.0" prefWidth="374.0" text="#Name" textFill="#8d5bf0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
                <font>
                   <Font name="Dubai Bold" size="32.0" />
                </font></Label>
-            <Button mnemonicParsing="false" onAction="#loadCreateProduct" prefHeight="84.0" prefWidth="150.0" text="Create Product" />
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
+            <Button mnemonicParsing="false" onAction="#loadCreateProduct" prefHeight="84.0" prefWidth="150.0" text="Create Product">
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #040308;" text="Exit" textFill="#8d5bf0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
@@ -30,11 +33,11 @@
                </font></Button>
          </children>
       </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Products list" textFill="#8d5bf0">
+      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="43.0" prefWidth="745.0" text="Products list" textFill="#8d5bf0">
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
-      <TableView fx:id="tableProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
+      <TableView fx:id="tableProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="481.0" prefWidth="745.0" style="-fx-background-color: #DBAFFF;">
         <columns>
           <TableColumn fx:id="colProductsNA" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="Name" />
           <TableColumn fx:id="colProductsIN" minWidth="0.0" prefWidth="158.0" style="-fx-background-color: #6743B0;" text="Ingredients" />
