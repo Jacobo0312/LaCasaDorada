@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -17,10 +18,13 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu fx:id="labelUser" mnemonicParsing="false" text="User">
+          <Menu mnemonicParsing="false">
             <items>
-              <MenuItem fx:id="labelLoginOrLogOut" mnemonicParsing="false" onAction="#logOut" text="Login" />
+              <MenuItem fx:id="labelLoginOrLogOut" mnemonicParsing="false" onAction="#logOut" />
             </items>
+               <graphic>
+                  <Label fx:id="labelUser" text="User" />
+               </graphic>
           </Menu>
           <Menu mnemonicParsing="false" text="File">
             <items>

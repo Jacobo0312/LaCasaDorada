@@ -1,15 +1,19 @@
 package ui;
 
 import java.io.IOException;
-
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -25,23 +29,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import model.Customer;
 import model.LaCasaDorada;
+import model.OrdersDetails;
 import model.Product;
 import model.User;
 
 public class LaCasaDoradaGUI {
 
-    //User account
+    // User account
 
-    private String loginUser;
+    private String loginUser; // Evaluar si es mejor que sea un objeto
 
     @FXML
-    private Menu labelUser;
+    private Label labelUser;
 
     @FXML
     private MenuItem labelLoginOrLogOut;
 
-
-    //----------------------
+    // ----------------------
 
     @FXML
     private BorderPane pane;
@@ -142,6 +146,37 @@ public class LaCasaDoradaGUI {
     @FXML
     private ChoiceBox<String> createProductAV;
 
+    // Create order
+
+    private ArrayList orderProducts = new ArrayList<Product>(); //Intentar trabajar desde el modelo
+
+    @FXML
+    private RadioButton sizeLittle;
+
+    @FXML
+    private ToggleGroup size;
+
+    @FXML
+    private RadioButton sizeBig;
+
+    @FXML
+    private TextField productAmount;
+
+
+    @FXML
+    private TableView<OrdersDetails> tableOrderProducts;
+
+    @FXML
+    private TableColumn<OrdersDetails, String> colOrderNA;
+
+    @FXML
+    private TableColumn<OrdersDetails, Integer> colOrderAM;
+
+    @FXML
+    private TableColumn<OrdersDetails, Integer> colOrderPR;
+
+    // -----------
+
     //////////
 
     private LaCasaDorada laCasaDorada;
@@ -159,7 +194,7 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();
         pane.setCenter(login);
         labelUser.setText("User");
-        //labelLoginOrLogOut.setText("Login");
+        labelLoginOrLogOut.setText("Login");
     }
 
     // Load Main window
@@ -194,16 +229,16 @@ public class LaCasaDoradaGUI {
             loginUser = user.getUser();
             loadMainWindow(event);
             labelUser.setText(loginUser);
-            //labelLoginOrLogOut.setText("Log out");
-            //arreglar el log out
+            labelLoginOrLogOut.setText("Log out");
+            // arreglar el log out
         }
 
     }
 
-    //Log out
+    // Log out
     @FXML
     void logOut(ActionEvent event) throws IOException {
-        loginUser="";
+        loginUser = "";
         loadWelcome(event);
 
     }
@@ -239,7 +274,7 @@ public class LaCasaDoradaGUI {
             loginUser = user;
             loadMainWindow(event);
             labelUser.setText(loginUser);
-
+            labelLoginOrLogOut.setText("Log out");
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Account created");
             alert.setHeaderText(null);
@@ -453,5 +488,68 @@ public class LaCasaDoradaGUI {
         }
 
     }
+
+    @FXML
+    public void createOrder(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateOrder.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+        initializeTableViewProducts();
+
+    }
+
+    @FXML
+    public void AddProductToOrder(ActionEvent event) {
+        try {
+            boolean valid = true;
+        Product product = tableProducts.getSelectionModel().getSelectedItem();
+        if (product == null)
+            valid = false;
+
+        String size = "";
+
+        if (sizeBig.isSelected()) {
+            size = "BIG";
+        } else if (sizeLittle.isSelected()) {
+            size = "LITTLE";
+        } 
+
+        if (size.isEmpty()) valid = false;
+
+        int amount= Integer.parseInt(productAmount.getText());
+
+        if (valid){
+            orderProducts.add(new OrdersDetails(product, amount, size));
+        }
+        //agregar el else con las alertas
+        initializeTableViewOrderProducts();
+
+        
+            
+        } catch (Exception e) {
+            //Alerta de error
+        }
+        
+        
+
+    }
+
+
+
+    //Table order details
+    @FXML
+    private void initializeTableViewOrderProducts() {
+        ObservableList<OrdersDetails> observableList;
+        observableList = FXCollections.observableArrayList(orderProducts);
+        tableOrderProducts.setItems(observableList);
+
+        colOrderNA.setCellValueFactory(new PropertyValueFactory<OrdersDetails, String>("product"));
+        colOrderAM.setCellValueFactory(new PropertyValueFactory<OrdersDetails, Integer>("amount"));
+        colOrderPR.setCellValueFactory(new PropertyValueFactory<OrdersDetails, Integer>("price"));
+
+    }
+
 
 }

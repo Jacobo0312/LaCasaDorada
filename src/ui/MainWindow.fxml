@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
@@ -29,7 +28,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button mnemonicParsing="false" onAction="#loadOrders" prefHeight="25.0" prefWidth="395.0" text="Orders" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="416.0" text="Create Order" />
+            <Button mnemonicParsing="false" onAction="#createOrder" prefHeight="25.0" prefWidth="416.0" text="Create Order" />
          </children>
       </HBox>
    </children>

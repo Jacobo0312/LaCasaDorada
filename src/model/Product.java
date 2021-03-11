@@ -40,6 +40,12 @@ public class Product {
         return Arrays.toString(this.pricePerSize);
     }
 
+
+    public double [] getPricePerSizeInt() {
+        return pricePerSize;
+    }
+
+
     public void setPricePerSize(double[] pricePerSize) {
         this.pricePerSize = pricePerSize;
     }
