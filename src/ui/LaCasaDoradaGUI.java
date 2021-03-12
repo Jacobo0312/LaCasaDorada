@@ -2,7 +2,9 @@ package ui;
 
 import java.io.IOException;
 import java.sql.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -39,7 +41,7 @@ public class LaCasaDoradaGUI {
 
     // User account
 
-    private String loginUser; // Evaluar si es mejor que sea un objeto
+    private User loginUser; // Evaluar si es mejor que sea un objeto
 
     @FXML
     private Label labelUser;
@@ -150,7 +152,17 @@ public class LaCasaDoradaGUI {
 
     // Create order
 
-    private ArrayList orderProducts = new ArrayList<Product>(); //Intentar trabajar desde el modelo
+    @FXML
+    private TextField orderComments;
+
+    // Products
+
+    private ArrayList <OrdersDetails>orderProducts = new ArrayList<OrdersDetails>(); // Intentar trabajar desde el modelo
+    // customer
+    private Customer orderCustomer;
+
+    @FXML
+    private Label labelCustomer;
 
     @FXML
     private RadioButton sizeLittle;
@@ -163,7 +175,6 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TextField productAmount;
-
 
     @FXML
     private TableView<OrdersDetails> tableOrderProducts;
@@ -178,13 +189,13 @@ public class LaCasaDoradaGUI {
     private TableColumn<OrdersDetails, Integer> colOrderPR;
 
     // -----------
-    //Customer finder
+    // Customer finder
     @FXML
-    private Label label;
+    private Label labelCustomerFinder;
 
     @FXML
     private TextField filterField;
-    //------
+    // ------
 
     //////////
 
@@ -235,9 +246,9 @@ public class LaCasaDoradaGUI {
             alert.showAndWait();
 
         } else {
-            loginUser = user.getUser();
+            loginUser = user;
             loadMainWindow(event);
-            labelUser.setText(loginUser);
+            labelUser.setText(loginUser.getUser());
             labelLoginOrLogOut.setText("Log out");
             // arreglar el log out
         }
@@ -247,7 +258,7 @@ public class LaCasaDoradaGUI {
     // Log out
     @FXML
     void logOut(ActionEvent event) throws IOException {
-        loginUser = "";
+        //labelUser.setText""; creo que que se cambia cargando el welcome
         loadWelcome(event);
 
     }
@@ -280,9 +291,12 @@ public class LaCasaDoradaGUI {
 
             laCasaDorada.addUser(firstName, lastName, id, user, password);
 
-            loginUser = user;
+
+            //revisar esto
+            User userLogin = laCasaDorada.getUser(user, password);
+            loginUser = userLogin;
             loadMainWindow(event);
-            labelUser.setText(loginUser);
+            labelUser.setText(loginUser.getUser());
             labelLoginOrLogOut.setText("Log out");
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Account created");
@@ -505,6 +519,15 @@ public class LaCasaDoradaGUI {
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(form);
+
+        if (orderCustomer != null){
+            labelCustomer.setText("Cliente: " + orderCustomer.getFirstName());
+            orderComments.setText(orderCustomer.getComments());
+        }
+            
+        else
+            labelCustomer.setText("Sin asignar");
+
         initializeTableViewProducts();
 
     }
@@ -513,41 +536,36 @@ public class LaCasaDoradaGUI {
     public void AddProductToOrder(ActionEvent event) {
         try {
             boolean valid = true;
-        Product product = tableProducts.getSelectionModel().getSelectedItem();
-        if (product == null)
-            valid = false;
+            Product product = tableProducts.getSelectionModel().getSelectedItem();
+            if (product == null)
+                valid = false;
 
-        String size = "";
+            String size = "";
 
-        if (sizeBig.isSelected()) {
-            size = "BIG";
-        } else if (sizeLittle.isSelected()) {
-            size = "LITTLE";
-        } 
+            if (sizeBig.isSelected()) {
+                size = "BIG";
+            } else if (sizeLittle.isSelected()) {
+                size = "LITTLE";
+            }
 
-        if (size.isEmpty()) valid = false;
+            if (size.isEmpty())
+                valid = false;
 
-        int amount= Integer.parseInt(productAmount.getText());
+            int amount = Integer.parseInt(productAmount.getText());
 
-        if (valid){
-            orderProducts.add(new OrdersDetails(product, amount, size));
-        }
-        //agregar el else con las alertas
-        initializeTableViewOrderProducts();
+            if (valid) {
+                orderProducts.add(new OrdersDetails(product, amount, size));
+            }
+            // agregar el else con las alertas
+            initializeTableViewOrderProducts();
 
-        
-            
         } catch (Exception e) {
-            //Alerta de error
+            // Alerta de error
         }
-        
-        
 
     }
 
-
-
-    //Table order details
+    // Table order details
     @FXML
     private void initializeTableViewOrderProducts() {
         ObservableList<OrdersDetails> observableList;
@@ -560,12 +578,12 @@ public class LaCasaDoradaGUI {
 
     }
 
+    // Customer finder
 
-//Customer finder
+    @FXML
+    public void loadCustomerFinder(ActionEvent event) throws IOException {
 
-@FXML
-public void loadCustomerFinder(ActionEvent event) throws IOException{
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomerFinder.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomerFinder.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();
@@ -575,56 +593,79 @@ public void loadCustomerFinder(ActionEvent event) throws IOException{
         ObservableList<Customer> observableList;
         observableList = FXCollections.observableArrayList(laCasaDorada.getCustomers());
 
+        // Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Customer> filteredData = new FilteredList<>(observableList, b -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(customer -> {
+                // If filter text is empty, display all persons.
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (customer.getFirstName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches first name.
+                } else if (customer.getLastName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches last name.
+                } else if (customer.getId().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches last name.
+                } else if (String.valueOf(customer.getPhone()).indexOf(lowerCaseFilter) != -1)
+                    return true;
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Customer> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        // Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty().bind(tableCustomers.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableCustomers.setItems(sortedData);
+
+    }
+
+@FXML
+    public void addOrder(ActionEvent event) throws IOException {
+         
+       //Agregar try catch
+
+        //fecha y hora 
+        LocalDateTime date=LocalDateTime.now();
+        //-------------
+
+        String comment=orderComments.getText();
+        //Agregar direccion
 
 
-// Wrap the ObservableList in a FilteredList (initially display all data).
-FilteredList<Customer> filteredData = new FilteredList<>(observableList, b -> true);
-		
-// 2. Set the filter Predicate whenever the filter changes.
-filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-    filteredData.setPredicate(customer -> {
-        // If filter text is empty, display all persons.
-                        
-        if (newValue == null || newValue.isEmpty()) {
-            return true;
-        }
-        
-        // Compare first name and last name of every person with filter text.
-        String lowerCaseFilter = newValue.toLowerCase();
-        
-        if (customer.getFirstName().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-            return true; // Filter matches first name.
-        } else if (customer.getLastName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-            return true; // Filter matches last name.
-        }else if (customer.getId().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-            return true; // Filter matches last name.
-        }
-        else if (String.valueOf(customer.getPhone()).indexOf(lowerCaseFilter)!=-1)
-             return true;
-             else  
-                 return false; // Does not match.
-    });
-});
-
-// 3. Wrap the FilteredList in a SortedList. 
-SortedList<Customer> sortedData = new SortedList<>(filteredData);
-
-// 4. Bind the SortedList comparator to the TableView comparator.
-// 	  Otherwise, sorting the TableView would have no effect.
-sortedData.comparatorProperty().bind(tableCustomers.comparatorProperty());
-
-// 5. Add sorted (and filtered) data to the table.
-tableCustomers.setItems(sortedData);
-
-
-
+        laCasaDorada.addOrders(orderProducts,orderCustomer,loginUser,date,comment);
+        loadMainWindow(event);//Mandar a la tabla de orders
+        //Vaciar order details y volver null order customer
 
 }
 
+        
 
+    @FXML
+    public void addOrderCustomer(ActionEvent event) {
 
+        try {
+            Customer customer = tableCustomers.getSelectionModel().getSelectedItem();
+            orderCustomer = customer;
+            labelCustomer.setText("Cliente: " + orderCustomer.getFirstName());
+            createOrder(event);
+        } catch (Exception e) {
+            labelCustomerFinder.setText("Seleccione un cliente");
+        }
 
-
-
+    }
 
 }

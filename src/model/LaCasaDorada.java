@@ -3,12 +3,12 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-
 
 public class LaCasaDorada {
 
@@ -39,7 +39,7 @@ public class LaCasaDorada {
     }
 
     // For verify user
-    
+
     public User getUser(String name, String password) {
         User user = null;
         for (User s : users) {
@@ -50,18 +50,14 @@ public class LaCasaDorada {
         }
         return user;
     }
-    
 
-    //Try binary search
+    // Try binary search
     /*
-    public User getUser(String name, String password) {
-        User user = null;
-         int index= Collections.binarySearch(users, name);
-
-        return user;
-    }*/
-
-
+     * public User getUser(String name, String password) { User user = null; int
+     * index= Collections.binarySearch(users, name);
+     * 
+     * return user; }
+     */
 
     // GET and ADD for Products----------------------------------
 
@@ -80,7 +76,6 @@ public class LaCasaDorada {
     public ArrayList<Customer> getCustomers() {
         return customers;
     }
-
 
     public void addCostumers(String firstName, String lastName, String id, String address, String phone,
             String comments) {
@@ -111,8 +106,8 @@ public class LaCasaDorada {
             customers.add(customer);
         } else {
             int i = 0;
-            //Parametros al contrario para ordenar de forma descendente
-            while (i < customers.size() && lastNameAndFirstName.compare(customer,customers.get(i)) < 0) {
+            // Parametros al contrario para ordenar de forma descendente
+            while (i < customers.size() && lastNameAndFirstName.compare(customer, customers.get(i)) < 0) {
                 i++;
             }
             customers.add(i, customer);
@@ -124,9 +119,8 @@ public class LaCasaDorada {
         return orders;
     }
 
-    public void addOrders(int code, String status, ArrayList<OrdersDetails> products, int[] amount, Customer customer,
-            Employee employeeCreate, Employee employeeModify, Date date, String comment) {
-        orders.add(new Order(code, status, products, amount, customer, employeeCreate, employeeModify, date, comment));
+    public void addOrders(ArrayList<OrdersDetails> products, Customer customer, Employee employeeCreate, LocalDateTime date, String comment) {
+        orders.add(new Order(products, customer, employeeCreate, date, comment));
     }
 
     // GET and ADD for Employee----------------------------------
@@ -150,7 +144,7 @@ public class LaCasaDorada {
             String[] ingredients = parts[1].split(" ");
             double[] pricePerSize = { Double.parseDouble(parts[2]), Double.parseDouble(parts[3]) };
             boolean availability = Boolean.parseBoolean(parts[4]);
-            String type = "DISH";//Por defecto, no se como agregar al csv
+            String type = "DISH";// Por defecto, no se como agregar al csv
 
             addProducts(name, ingredients, pricePerSize, availability, type);
             line = br.readLine();
