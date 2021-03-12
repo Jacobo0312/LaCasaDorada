@@ -53,6 +53,13 @@ public class LaCasaDorada {
     
 
     //Try binary search
+    /*
+    public User getUser(String name, String password) {
+        User user = null;
+         int index= Collections.binarySearch(users, name);
+
+        return user;
+    }*/
 
 
 
