@@ -33,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import model.Customer;
 import model.LaCasaDorada;
+import model.Order;
 import model.OrdersDetails;
 import model.Product;
 import model.User;
@@ -96,6 +97,26 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Product, String> colProductsTY;
+
+    //Orders
+
+    @FXML
+    private TableView<Order> tableOrders;
+
+    @FXML
+    private TableColumn<Order, Integer> colOrderCO;
+
+    @FXML
+    private TableColumn<Order, String> colOrderST;
+
+    @FXML
+    private TableColumn<Order, String> colOrderCU;
+
+    @FXML
+    private TableColumn<Order, String> colOrderEemployeeCR;
+
+    @FXML
+    private TableColumn<Order, String> colOrderDA;
 
     // Customers
 
@@ -368,6 +389,7 @@ public class LaCasaDoradaGUI {
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();;
         pane.setCenter(form);
+        initializeTableViewOrders();
     }
 
     // load window customers------------------------------
@@ -381,6 +403,9 @@ public class LaCasaDoradaGUI {
         initializeTableViewCustomers();
     }
 
+
+
+    
     // -------------------------------------------------------INITIALIALIZE
     // TABLES--------------------------------------------------------
 
@@ -416,6 +441,19 @@ public class LaCasaDoradaGUI {
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
     }
 
+
+    @FXML
+    private void initializeTableViewOrders() {
+        ObservableList<Order> observableList;
+        observableList = FXCollections.observableArrayList(laCasaDorada.getOrders());
+        tableOrders.setItems(observableList);
+
+        colOrderCO.setCellValueFactory(new PropertyValueFactory<Order, Integer>("code"));
+        colOrderST.setCellValueFactory(new PropertyValueFactory<Order, String>("status"));
+        colOrderCU.setCellValueFactory(new PropertyValueFactory<Order, String>("customer"));
+        colOrderEemployeeCR.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeCreate"));
+        colOrderDA.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
+    }
     // ------------------------------------------------------------------------------------------------------------------------------
 
     // Import data
@@ -647,7 +685,7 @@ public class LaCasaDoradaGUI {
 
 
         laCasaDorada.addOrders(orderProducts,orderCustomer,loginUser,date,comment);
-        loadMainWindow(event);//Mandar a la tabla de orders
+        loadOrders(event);//Mandar a la tabla de orders
         //Vaciar order details y volver null order customer
 
 }

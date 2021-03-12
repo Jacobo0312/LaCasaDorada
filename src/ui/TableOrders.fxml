@@ -5,12 +5,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="501.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox>
          <children>
@@ -21,13 +20,9 @@
                <font>
                   <Font name="Dubai Bold" size="32.0" />
                </font></Label>
-            <ImageView id="image" fx:id="profilePhoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="ui.style">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin></ImageView>
             <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
                <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="21.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
                <font>
                   <Font name="Dubai Regular" size="24.0" />
@@ -38,16 +33,13 @@
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
-      <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
+      <TableView fx:id="tableOrders" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="344.0" prefWidth="881.0" style="-fx-background-color: #DBAFFF;">
         <columns>
-          <TableColumn fx:id="colOrderCO" prefWidth="125.0" style="-fx-background-color: #6743B0;" text="Code" />
-          <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="95.0" style="-fx-background-color: #6743B0;" text="Status" />
-            <TableColumn fx:id="colOrderPR" prefWidth="106.0" style="-fx-background-color: #6743B0;" text="Products" />
-            <TableColumn fx:id="colOrderCU" maxWidth="264.0" minWidth="-1.0" prefWidth="114.0" style="-fx-background-color: #6743B0;" text="Customer" />
-            <TableColumn fx:id="colOrderEC" prefWidth="146.0" text="Employee Create" />
-            <TableColumn fx:id="colOrderEM" prefWidth="176.0" text="Employee Modify" />
-            <TableColumn fx:id="colOrderDA" prefWidth="123.0" text="Date" />
-            <TableColumn fx:id="colOrderCM" prefWidth="150.0" text="Comment" />
+          <TableColumn fx:id="colOrderCO" prefWidth="142.0" style="-fx-background-color: #6743B0;" text="Code" />
+          <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="175.0" style="-fx-background-color: #6743B0;" text="Status" />
+            <TableColumn fx:id="colOrderCU" maxWidth="264.0" minWidth="-1.0" prefWidth="159.0" style="-fx-background-color: #6743B0;" text="Customer" />
+            <TableColumn fx:id="colOrderEemployeeCR" prefWidth="179.0" text="Employee Create" />
+            <TableColumn fx:id="colOrderDA" prefWidth="225.0" text="Date" />
         </columns>
       </TableView>
    </children>
