@@ -118,6 +118,10 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Order, String> colOrderDA;
 
+    @FXML
+    private TableColumn<Order, Double> colOrderTO;
+
+
     // Customers
 
     @FXML
@@ -141,7 +145,29 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Customer, String> colCustomerCO;
 
+
     // --------
+
+    //Create customer
+    @FXML
+    private TextField createCustomerFN;
+
+    @FXML
+    private TextField createCustomerLN;
+
+    @FXML
+    private TextField createCustomerID;
+
+    @FXML
+    private TextField createCustomerAD;
+
+    @FXML
+    private TextField createCustomerPH;
+
+    @FXML
+    private TextField createCustomerCO;
+
+    //-----------------------------------
 
     // Create Products
     @FXML
@@ -403,8 +429,6 @@ public class LaCasaDoradaGUI {
         initializeTableViewCustomers();
     }
 
-
-
     
     // -------------------------------------------------------INITIALIALIZE
     // TABLES--------------------------------------------------------
@@ -453,6 +477,7 @@ public class LaCasaDoradaGUI {
         colOrderCU.setCellValueFactory(new PropertyValueFactory<Order, String>("customer"));
         colOrderEemployeeCR.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeCreate"));
         colOrderDA.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
+        colOrderTO.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
     }
     // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -468,7 +493,7 @@ public class LaCasaDoradaGUI {
 
     ////
     // Load window create product
-
+@FXML
     public void loadCreateProduct(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateProduct.fxml"));
         fxmlLoader.setController(this);
@@ -567,6 +592,7 @@ public class LaCasaDoradaGUI {
             labelCustomer.setText("Sin asignar");
 
         initializeTableViewProducts();
+        initializeTableViewOrderProducts();
 
     }
 
@@ -705,5 +731,54 @@ public class LaCasaDoradaGUI {
         }
 
     }
+
+   @FXML
+    public void loadCreateCustomer(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateCustomer.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+
+    }
+
+
+
+    @FXML
+    public void addCustomer(ActionEvent event) throws IOException{
+
+        String firstName=createCustomerFN.getText();
+        String lastName=createCustomerLN.getText();
+        String id = createCustomerID.getText();
+        String address=createCustomerAD.getText();
+        String phone=createCustomerPH.getText();
+        String comments=createCustomerCO.getText();
+
+        if (firstName.isEmpty() || lastName.isEmpty()  || address.isEmpty() || phone.isEmpty() || comments.isEmpty()){
+            Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Validation Error");
+    alert.setHeaderText(null);
+    alert.setContentText("You must fill each field in the form");
+
+    alert.showAndWait();
+        }else{
+            laCasaDorada.addCustomers(firstName,  lastName,  id,  address,  phone,
+            comments);
+            //Agregar automaticamente el creado
+            createOrder(event);
+            Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Customer created");
+    alert.setHeaderText(null);
+    alert.setContentText("The new customer has been created");
+
+    alert.showAndWait();
+        }
+
+        
+        
+    }
+
+    
+    
 
 }

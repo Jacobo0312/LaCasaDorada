@@ -35,11 +35,12 @@
          </font></Label>
       <TableView fx:id="tableOrders" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="344.0" prefWidth="881.0" style="-fx-background-color: #DBAFFF;">
         <columns>
-          <TableColumn fx:id="colOrderCO" prefWidth="142.0" style="-fx-background-color: #6743B0;" text="Code" />
-          <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="175.0" style="-fx-background-color: #6743B0;" text="Status" />
-            <TableColumn fx:id="colOrderCU" maxWidth="264.0" minWidth="-1.0" prefWidth="159.0" style="-fx-background-color: #6743B0;" text="Customer" />
-            <TableColumn fx:id="colOrderEemployeeCR" prefWidth="179.0" text="Employee Create" />
-            <TableColumn fx:id="colOrderDA" prefWidth="225.0" text="Date" />
+          <TableColumn fx:id="colOrderCO" prefWidth="113.0" style="-fx-background-color: #6743B0;" text="Code" />
+          <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="153.0" style="-fx-background-color: #6743B0;" text="Status" />
+            <TableColumn fx:id="colOrderCU" maxWidth="264.0" minWidth="-1.0" prefWidth="210.0" style="-fx-background-color: #6743B0;" text="Customer" />
+            <TableColumn fx:id="colOrderEemployeeCR" prefWidth="151.0" text="Employee Create" />
+            <TableColumn fx:id="colOrderDA" prefWidth="92.0" text="Date" />
+            <TableColumn fx:id="colOrderTO" prefWidth="161.0" text="Total" />
         </columns>
       </TableView>
    </children>

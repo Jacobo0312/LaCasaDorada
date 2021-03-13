@@ -13,6 +13,7 @@ import java.util.Date;
 public class LaCasaDorada {
 
     public static final String SEPARATE = ",";
+    public static int CODE_ORDER = 0;//revisar con la serializacion
 
     private ArrayList<User> users;
     private ArrayList<Product> products;
@@ -77,7 +78,7 @@ public class LaCasaDorada {
         return customers;
     }
 
-    public void addCostumers(String firstName, String lastName, String id, String address, String phone,
+    public void addCustomers(String firstName, String lastName, String id, String address, String phone,
             String comments) {
 
         // Comparador por apellido y nombre
@@ -120,7 +121,8 @@ public class LaCasaDorada {
     }
 
     public void addOrders(ArrayList<OrdersDetails> products, Customer customer, Employee employeeCreate, LocalDateTime date, String comment) {
-        orders.add(new Order(products, customer, employeeCreate, date, comment));
+        CODE_ORDER++;
+        orders.add(new Order(CODE_ORDER,products, customer, employeeCreate, date, comment));
     }
 
     // GET and ADD for Employee----------------------------------
@@ -166,7 +168,7 @@ public class LaCasaDorada {
             String phone = parts[4];
             String comments = parts[5];
 
-            addCostumers(firstName, lastName, id, address, phone, comments);
+            addCustomers(firstName, lastName, id, address, phone, comments);
             line = br.readLine();
         }
         br.close();

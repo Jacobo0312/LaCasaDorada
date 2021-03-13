@@ -6,7 +6,7 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 public class Order {
-    private int code=0;;//Que empiece en 0 y vaya aumentando 
+    private int code;//Que empiece en 0 y vaya aumentando 
     private Status status;//Enum of status
     private ArrayList<OrdersDetails> products;
     private Customer customer;
@@ -14,9 +14,10 @@ public class Order {
     private Employee employeeModify;
     private LocalDateTime date;
     private String comment;
+    private double total;
 
-    public Order(ArrayList<OrdersDetails> products,Customer customer, Employee employeeCreate, LocalDateTime date, String comment) {
-        this.code = code++;
+    public Order(int code,ArrayList<OrdersDetails> products,Customer customer, Employee employeeCreate, LocalDateTime date, String comment) {
+        this.code = code;
         this.status = Status.REQUESTED;
         this.products = products;
         this.customer = customer;
@@ -24,6 +25,17 @@ public class Order {
         this.employeeModify = employeeCreate;
         this.date = date;
         this.comment = comment;
+        this.total=calculateTotal();
+    }
+
+
+
+    private double calculateTotal() {
+        double sum=0;
+        for (OrdersDetails ordersDetails : products) {
+            sum+=ordersDetails.getPrice();
+        }
+        return sum;
     }
 
     public int getCode() {
@@ -93,5 +105,13 @@ public class Order {
         this.comment = comment;
     }
 
+
+    public double getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
 
 }

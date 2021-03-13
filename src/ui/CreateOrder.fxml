@@ -156,7 +156,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label fx:id="labelCustomer" prefHeight="51.0" prefWidth="231.0" text="Sin asignar" />
-            <Button mnemonicParsing="false" text="Crear" />
+            <Button mnemonicParsing="false" onAction="#loadCreateCustomer" text="Crear" />
             <Button mnemonicParsing="false" onAction="#loadCustomerFinder" text="Buscar" />
          </children>
       </HBox>
