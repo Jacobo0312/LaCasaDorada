@@ -109,7 +109,7 @@
             <TextField fx:id="createCustomerCO" prefHeight="31.0" prefWidth="306.0" />
          </children>
       </Pane>
-      <Button mnemonicParsing="false" text="Exit" GridPane.rowIndex="7" />
+      <Button mnemonicParsing="false" onAction="#createOrder" text="Exit" GridPane.rowIndex="7" />
       <Button mnemonicParsing="false" onAction="#addCustomer" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="7" />
    </children>
 </GridPane>

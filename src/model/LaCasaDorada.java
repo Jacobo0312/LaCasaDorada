@@ -120,9 +120,9 @@ public class LaCasaDorada {
         return orders;
     }
 
-    public void addOrders(ArrayList<OrdersDetails> products, Customer customer, Employee employeeCreate, LocalDateTime date, String comment) {
+    public void addOrders(ArrayList<OrdersDetails> products, Customer customer, Employee employeeCreate, LocalDateTime date,String address, String comment) {
         CODE_ORDER++;
-        orders.add(new Order(CODE_ORDER,products, customer, employeeCreate, date, comment));
+        orders.add(new Order(CODE_ORDER,products, customer, employeeCreate, date,address, comment));
     }
 
     // GET and ADD for Employee----------------------------------

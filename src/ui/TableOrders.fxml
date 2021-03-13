@@ -11,25 +11,7 @@
 
 <VBox prefHeight="501.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox>
-         <children>
-            <Label fx:id="labelUser" prefHeight="17.0" prefWidth="341.0" text="#Name" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Dubai Bold" size="32.0" />
-               </font></Label>
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="21.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font></Button>
-         </children>
-      </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Order list" textFill="#8d5bf0">
+      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Lista de ordenes" textFill="#8d5bf0">
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
@@ -43,5 +25,40 @@
             <TableColumn fx:id="colOrderTO" prefWidth="161.0" text="Total" />
         </columns>
       </TableView>
+      <HBox>
+         <children>
+            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Revisar" textFill="#8d5bf0">
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Dubai Regular" size="24.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#showOrder" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Editar" textFill="#8d5bf0">
+               <font>
+                  <Font name="Dubai Regular" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Mostrar actuales" textFill="#8d5bf0">
+               <font>
+                  <Font name="Dubai Regular" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Salir" textFill="#8d5bf0">
+               <font>
+                  <Font name="Dubai Regular" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </VBox>

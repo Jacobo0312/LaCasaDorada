@@ -201,6 +201,10 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TextField orderComments;
+    @FXML
+    private TextField orderAddress;
+
+
 
     // Products
 
@@ -245,6 +249,30 @@ public class LaCasaDoradaGUI {
     // ------
 
     //////////
+
+    //Show order
+    @FXML
+    private Label showOrderID;
+
+    @FXML
+    private Label showOrderST;
+
+    @FXML
+    private Label showOrderCU;
+
+    @FXML
+    private Label showOrderDA;
+
+    @FXML
+    private Label showOrderAD;
+
+    @FXML
+    private Label showOrderCO;
+
+    @FXML
+    private Label showOrderTO;
+
+    //--------------------------------------------
 
     private LaCasaDorada laCasaDorada;
 
@@ -585,6 +613,7 @@ public class LaCasaDoradaGUI {
 
         if (orderCustomer != null){
             labelCustomer.setText("Cliente: " + orderCustomer.getFirstName());
+            orderAddress.setText(orderCustomer.getAddress());
             orderComments.setText(orderCustomer.getComments());
         }
             
@@ -706,11 +735,14 @@ public class LaCasaDoradaGUI {
         LocalDateTime date=LocalDateTime.now();
         //-------------
 
+
+        //Agregar aqui la direccion
         String comment=orderComments.getText();
+        String address=orderAddress.getText();
         //Agregar direccion
 
 
-        laCasaDorada.addOrders(orderProducts,orderCustomer,loginUser,date,comment);
+        laCasaDorada.addOrders(orderProducts,orderCustomer,loginUser,date,address,comment);
         loadOrders(event);//Mandar a la tabla de orders
         //Vaciar order details y volver null order customer
 
@@ -778,7 +810,45 @@ public class LaCasaDoradaGUI {
         
     }
 
+    @FXML
+    public void showOrder(ActionEvent event){
+        try {
+            Order order = tableOrders.getSelectionModel().getSelectedItem();
+            loadShowOrder(event,order);
+
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Seleccione una orden");
+
+            alert.showAndWait();
+        }
+
+    }
+
     
+    public void loadShowOrder(ActionEvent event,Order order) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ShowOrder.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+
+        String code=String.valueOf(order.getCode());
+        String total=String.valueOf(order.getTotal());
+
+        showOrderID.setText(code);
+        showOrderST.setText(order.getStatus());
+        showOrderCU.setText(order.getCustomer().getFirstName()+" "+order.getCustomer().getLastName());
+        showOrderAD.setText(order.getAddress());//Cambiar a la de la orden
+        showOrderDA.setText(order.getDate());
+        showOrderCO.setText(order.getComment());
+        showOrderTO.setText(total);
+
+        
+
+    }
     
 
 }

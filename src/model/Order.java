@@ -10,13 +10,14 @@ public class Order {
     private Status status;//Enum of status
     private ArrayList<OrdersDetails> products;
     private Customer customer;
+    private String address;
     private Employee employeeCreate;
     private Employee employeeModify;
     private LocalDateTime date;
     private String comment;
     private double total;
 
-    public Order(int code,ArrayList<OrdersDetails> products,Customer customer, Employee employeeCreate, LocalDateTime date, String comment) {
+    public Order(int code,ArrayList<OrdersDetails> products,Customer customer, Employee employeeCreate, LocalDateTime date,String address, String comment) {
         this.code = code;
         this.status = Status.REQUESTED;
         this.products = products;
@@ -24,6 +25,7 @@ public class Order {
         this.employeeCreate = employeeCreate;
         this.employeeModify = employeeCreate;
         this.date = date;
+        this.address = address;
         this.comment = comment;
         this.total=calculateTotal();
     }
@@ -46,8 +48,8 @@ public class Order {
         this.code = code;
     }
 
-    public Status getStatus() {
-        return this.status;
+    public String getStatus() {
+        return this.status.toString();
     }
 
     public void setStatus(Status status) {
@@ -103,6 +105,14 @@ public class Order {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 
