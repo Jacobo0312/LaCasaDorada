@@ -32,6 +32,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import model.Customer;
+import model.Employee;
 import model.LaCasaDorada;
 import model.Order;
 import model.OrdersDetails;
@@ -121,6 +122,9 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Order, Double> colOrderTO;
 
+    @FXML
+    private TableColumn<Order, String> colOrderEmployeeDE;
+
     // Customers
 
     @FXML
@@ -143,6 +147,22 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Customer, String> colCustomerCO;
+
+
+    //Employees
+
+    @FXML
+    private TableView<Employee> tableEmployees;
+
+    @FXML
+    private TableColumn<Employee, String> colEmployeesFN;
+
+    @FXML
+    private TableColumn<Employee, String> colEmployeesLN;
+
+    @FXML
+    private TableColumn<Employee, String> colEmployeesID;
+
 
     // --------
 
@@ -190,7 +210,7 @@ public class LaCasaDoradaGUI {
     private RadioButton createProductDish;
 
     @FXML
-    private RadioButton createProductDessert;
+    private RadioButton createProductAdditional;
 
     @FXML
     private ChoiceBox<String> createProductAV;
@@ -298,6 +318,7 @@ public class LaCasaDoradaGUI {
         Parent mainWindow = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(mainWindow);
+        orderCustomer = null;
     }
 
     // Options of the login----------------------------------------
@@ -428,6 +449,7 @@ public class LaCasaDoradaGUI {
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();;
         pane.setCenter(form);
+        initializeTableViewEmployees();
     }
 
     // load window users------------------------------
@@ -440,7 +462,6 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();;
         pane.setCenter(form);
         initializeTableViewOrders();
-        // orderProducts.clear();
 
     }
 
@@ -492,6 +513,8 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private void initializeTableViewOrders() {
+
+
         ObservableList<Order> observableList;
         observableList = FXCollections.observableArrayList(laCasaDorada.getOrders());
         tableOrders.setItems(observableList);
@@ -502,7 +525,21 @@ public class LaCasaDoradaGUI {
         colOrderEemployeeCR.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeCreate"));
         colOrderDA.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
         colOrderTO.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
+        colOrderEmployeeDE.setCellValueFactory(new PropertyValueFactory<Order,String>("employeeDelivery"));
     }
+
+
+    @FXML
+    private void initializeTableViewEmployees() {
+        ObservableList<Employee> observableList;
+        observableList = FXCollections.observableArrayList(laCasaDorada.getEmployees());
+        tableEmployees.setItems(observableList);
+
+        colEmployeesFN.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
+        colEmployeesLN.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+        colEmployeesID.setCellValueFactory(new PropertyValueFactory<Employee, String>("id"));
+    }
+
     // ------------------------------------------------------------------------------------------------------------------------------
 
     // Import data
@@ -512,6 +549,7 @@ public class LaCasaDoradaGUI {
 
         laCasaDorada.importProducts("src/data/products.csv");
         laCasaDorada.importCustomers("src/data/customers.csv");
+        laCasaDorada.importEmployee("src/data/empleados.csv");
 
     }
 
@@ -554,11 +592,11 @@ public class LaCasaDoradaGUI {
 
             String type = "";
             if (createProductDish.isSelected()) {
-                type = "DISH";
-            } else if (createProductDessert.isSelected()) {
-                type = "DESSERT";
+                type = "PLATO";
+            } else if (createProductAdditional.isSelected()) {
+                type = "ADICIONAL";
             } else if (createProductDrink.isSelected()) {
-                type = "DRINK";
+                type = "BEBIDA";
             } else
                 valid = false;
 
@@ -618,6 +656,7 @@ public class LaCasaDoradaGUI {
 
         initializeTableViewProducts();
         initializeTableViewOrderProducts();
+        initializeTableViewEmployees();
 
     }
 
@@ -725,8 +764,7 @@ public class LaCasaDoradaGUI {
     @FXML
     public void addOrder(ActionEvent event) throws IOException {
 
-        // Agregar try catch
-
+            
         // fecha y hora
         LocalDateTime date = LocalDateTime.now();
         // -------------
@@ -734,12 +772,15 @@ public class LaCasaDoradaGUI {
         // Agregar aqui la direccion
         String comment = orderComments.getText();
         String address = orderAddress.getText();
+        Employee employeeDelivery = tableEmployees.getSelectionModel().getSelectedItem();
 
         // Copiar el arraylist y luego limpiar
         // Agregar direccion
 
 
-        //Pasar productos a un array
+        if (!orderProducts.isEmpty() && orderCustomer !=null && !comment.isEmpty() && !address.isEmpty() && employeeDelivery !=null ){
+            
+            //Pasar productos a un array
         OrdersDetails[] products = new OrdersDetails[orderProducts.size()];
 
         for (int i = 0; i < orderProducts.size(); i++) {
@@ -750,12 +791,31 @@ public class LaCasaDoradaGUI {
         //Limpiar arraylist
         orderProducts.clear();
 
-        laCasaDorada.addOrders(products, orderCustomer, loginUser, date, address, comment);
+        laCasaDorada.addOrders(products, orderCustomer, loginUser,employeeDelivery, date, address, comment);
         loadOrders(event);// Mandar a la tabla de orders
 
         orderCustomer = null;
+         // Vaciar order details y volver null order customer
 
-        // Vaciar order details y volver null order customer
+         
+         Alert alert = new Alert(AlertType.INFORMATION);
+         alert.setTitle("Orden creada");
+         alert.setHeaderText(null);
+         alert.setContentText("Se creo la nueva orden");
+
+         alert.showAndWait();
+        }else{
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Ingrese todos los campos");
+
+            alert.showAndWait();
+        }
+
+        
+
+
 
     }
 

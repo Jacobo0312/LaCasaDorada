@@ -13,17 +13,19 @@ public class Order {
     private String address;
     private Employee employeeCreate;
     private Employee employeeModify;
+    private Employee employeeDelivery;
     private LocalDateTime date;
     private String comment;
     private double total;
 
-    public Order(int code,OrdersDetails[] products,Customer customer, Employee employeeCreate, LocalDateTime date,String address, String comment) {
+    public Order(int code,OrdersDetails[] products,Customer customer, Employee employeeCreate,Employee employeeDelivery, LocalDateTime date,String address, String comment) {
         this.code = code;
         this.status = Status.REQUESTED;
         this.products = products;
         this.customer = customer;
         this.employeeCreate = employeeCreate;
         this.employeeModify = employeeCreate;
+        this.employeeDelivery = employeeDelivery;
         this.date = date;
         this.address = address;
         this.comment = comment;
@@ -124,20 +126,13 @@ public class Order {
         this.total = total;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-            " code='" + getCode() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", products='" + getProducts().toString() + "'" +
-            ", customer='" + getCustomer().getFirstName() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", employeeCreate='" + getEmployeeCreate() + "'" +
-            ", employeeModify='" + getEmployeeModify() + "'" +
-            ", date='" + getDate() + "'" +
-            ", comment='" + getComment() + "'" +
-            ", total='" + getTotal() + "'" +
-            "}";
+
+    public Employee getEmployeeDelivery() {
+        return this.employeeDelivery;
+    }
+
+    public void setEmployeeDelivery(Employee employeeDelivery) {
+        this.employeeDelivery = employeeDelivery;
     }
 
 

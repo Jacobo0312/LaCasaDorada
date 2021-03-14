@@ -121,10 +121,10 @@ public class LaCasaDorada {
         return orders;
     }
 
-    public void addOrders(OrdersDetails[] products, Customer customer, Employee employeeCreate,
+    public void addOrders(OrdersDetails[] products, Customer customer, Employee employeeCreate,Employee employeeDelivery,
             LocalDateTime date, String address, String comment) {
         CODE_ORDER++;
-        orders.add(new Order(CODE_ORDER, products, customer, employeeCreate, date, address, comment));
+        orders.add(new Order(CODE_ORDER, products, customer, employeeCreate, employeeDelivery,date, address, comment));
     }
 
     // GET and ADD for Employee----------------------------------
@@ -148,7 +148,7 @@ public class LaCasaDorada {
             String[] ingredients = parts[1].split(" ");
             double[] pricePerSize = { Double.parseDouble(parts[2]), Double.parseDouble(parts[3]) };
             boolean availability = Boolean.parseBoolean(parts[4]);
-            String type = "DISH";// Por defecto, no se como agregar al csv
+            String type = "PLATO";// Por defecto, no se como agregar al csv
 
             addProducts(name, ingredients, pricePerSize, availability, type);
             line = br.readLine();
@@ -176,6 +176,21 @@ public class LaCasaDorada {
         br.close();
     }
 
+
+    public void importEmployee(String fileDirectory) throws IOException{
+        BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
+        String line = br.readLine();
+        while (line != null) {
+            String[] parts = line.split(SEPARATE);
+            String firstName = parts[0];
+            String lastName = parts[1];
+            String id = parts[2];
+            addEmployees(firstName, lastName, id);
+            line = br.readLine();
+        }
+        br.close();
+
+    }
     // ----------------------------------------------------------------------
 
     // ToString de ordenes

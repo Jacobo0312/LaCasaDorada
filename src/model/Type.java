@@ -1,5 +1,5 @@
 package model;
 
 public enum Type {
-    DISH,DRINK,DESSERT
+    PLATO,BEBIDA,ADICIONAL
 }
