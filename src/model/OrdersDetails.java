@@ -42,5 +42,15 @@ public class OrdersDetails {
     public double getPrice() {
         return this.price;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " product='" + getProduct() + "'" +
+            ", amount='" + getAmount() + "'" +
+            ", size='" + getSize() + "'" +
+            ", price='" + getPrice() + "'" +
+            "}";
+    }
     
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 public class LaCasaDorada {
 
     public static final String SEPARATE = ",";
-    public static int CODE_ORDER = 0;//revisar con la serializacion
+    public static int CODE_ORDER = 0;// revisar con la serializacion
 
     private ArrayList<User> users;
     private ArrayList<Product> products;
@@ -27,6 +27,7 @@ public class LaCasaDorada {
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
         employees = new ArrayList<Employee>();
+        addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
     }
 
     // GET and ADD for Users-------------------------------------------
@@ -120,9 +121,10 @@ public class LaCasaDorada {
         return orders;
     }
 
-    public void addOrders(ArrayList<OrdersDetails> products, Customer customer, Employee employeeCreate, LocalDateTime date,String address, String comment) {
+    public void addOrders(OrdersDetails[] products, Customer customer, Employee employeeCreate,
+            LocalDateTime date, String address, String comment) {
         CODE_ORDER++;
-        orders.add(new Order(CODE_ORDER,products, customer, employeeCreate, date,address, comment));
+        orders.add(new Order(CODE_ORDER, products, customer, employeeCreate, date, address, comment));
     }
 
     // GET and ADD for Employee----------------------------------
@@ -175,5 +177,18 @@ public class LaCasaDorada {
     }
 
     // ----------------------------------------------------------------------
+
+    // ToString de ordenes
+
+    public String toStringOrders() {
+        String message = "";
+
+
+        for (Order x : orders) {
+            message+=x.toString();
+        }
+        return message;
+
+    }
 
 }

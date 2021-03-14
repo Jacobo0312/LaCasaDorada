@@ -98,7 +98,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Product, String> colProductsTY;
 
-    //Orders
+    // Orders
 
     @FXML
     private TableView<Order> tableOrders;
@@ -120,7 +120,6 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Order, Double> colOrderTO;
-
 
     // Customers
 
@@ -145,10 +144,9 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Customer, String> colCustomerCO;
 
-
     // --------
 
-    //Create customer
+    // Create customer
     @FXML
     private TextField createCustomerFN;
 
@@ -167,7 +165,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private TextField createCustomerCO;
 
-    //-----------------------------------
+    // -----------------------------------
 
     // Create Products
     @FXML
@@ -204,11 +202,10 @@ public class LaCasaDoradaGUI {
     @FXML
     private TextField orderAddress;
 
-
-
     // Products
 
-    private ArrayList <OrdersDetails>orderProducts = new ArrayList<OrdersDetails>(); // Intentar trabajar desde el modelo
+    private ArrayList<OrdersDetails> orderProducts = new ArrayList<OrdersDetails>(); // Intentar trabajar desde el
+                                                                                     // modelo
     // customer
     private Customer orderCustomer;
 
@@ -250,7 +247,7 @@ public class LaCasaDoradaGUI {
 
     //////////
 
-    //Show order
+    // Show order
     @FXML
     private Label showOrderID;
 
@@ -272,7 +269,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private Label showOrderTO;
 
-    //--------------------------------------------
+    // --------------------------------------------
 
     private LaCasaDorada laCasaDorada;
 
@@ -333,7 +330,7 @@ public class LaCasaDoradaGUI {
     // Log out
     @FXML
     void logOut(ActionEvent event) throws IOException {
-        //labelUser.setText""; creo que que se cambia cargando el welcome
+        // labelUser.setText""; creo que que se cambia cargando el welcome
         loadWelcome(event);
 
     }
@@ -366,8 +363,7 @@ public class LaCasaDoradaGUI {
 
             laCasaDorada.addUser(firstName, lastName, id, user, password);
 
-
-            //revisar esto
+            // revisar esto
             User userLogin = laCasaDorada.getUser(user, password);
             loginUser = userLogin;
             loadMainWindow(event);
@@ -444,6 +440,8 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();;
         pane.setCenter(form);
         initializeTableViewOrders();
+        // orderProducts.clear();
+
     }
 
     // load window customers------------------------------
@@ -457,7 +455,6 @@ public class LaCasaDoradaGUI {
         initializeTableViewCustomers();
     }
 
-    
     // -------------------------------------------------------INITIALIALIZE
     // TABLES--------------------------------------------------------
 
@@ -493,7 +490,6 @@ public class LaCasaDoradaGUI {
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
     }
 
-
     @FXML
     private void initializeTableViewOrders() {
         ObservableList<Order> observableList;
@@ -521,7 +517,7 @@ public class LaCasaDoradaGUI {
 
     ////
     // Load window create product
-@FXML
+    @FXML
     public void loadCreateProduct(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateProduct.fxml"));
         fxmlLoader.setController(this);
@@ -611,12 +607,12 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();
         pane.setCenter(form);
 
-        if (orderCustomer != null){
+        if (orderCustomer != null) {
             labelCustomer.setText("Cliente: " + orderCustomer.getFirstName());
             orderAddress.setText(orderCustomer.getAddress());
             orderComments.setText(orderCustomer.getComments());
         }
-            
+
         else
             labelCustomer.setText("Sin asignar");
 
@@ -726,29 +722,42 @@ public class LaCasaDoradaGUI {
 
     }
 
-@FXML
+    @FXML
     public void addOrder(ActionEvent event) throws IOException {
-         
-       //Agregar try catch
 
-        //fecha y hora 
-        LocalDateTime date=LocalDateTime.now();
-        //-------------
+        // Agregar try catch
+
+        // fecha y hora
+        LocalDateTime date = LocalDateTime.now();
+        // -------------
+
+        // Agregar aqui la direccion
+        String comment = orderComments.getText();
+        String address = orderAddress.getText();
+
+        // Copiar el arraylist y luego limpiar
+        // Agregar direccion
 
 
-        //Agregar aqui la direccion
-        String comment=orderComments.getText();
-        String address=orderAddress.getText();
-        //Agregar direccion
+        //Pasar productos a un array
+        OrdersDetails[] products = new OrdersDetails[orderProducts.size()];
+
+        for (int i = 0; i < orderProducts.size(); i++) {
+            products[i] = orderProducts.get(i);
+        }
 
 
-        laCasaDorada.addOrders(orderProducts,orderCustomer,loginUser,date,address,comment);
-        loadOrders(event);//Mandar a la tabla de orders
-        //Vaciar order details y volver null order customer
+        //Limpiar arraylist
+        orderProducts.clear();
 
-}
+        laCasaDorada.addOrders(products, orderCustomer, loginUser, date, address, comment);
+        loadOrders(event);// Mandar a la tabla de orders
 
-        
+        orderCustomer = null;
+
+        // Vaciar order details y volver null order customer
+
+    }
 
     @FXML
     public void addOrderCustomer(ActionEvent event) {
@@ -764,7 +773,7 @@ public class LaCasaDoradaGUI {
 
     }
 
-   @FXML
+    @FXML
     public void loadCreateCustomer(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateCustomer.fxml"));
         fxmlLoader.setController(this);
@@ -774,47 +783,43 @@ public class LaCasaDoradaGUI {
 
     }
 
-
-
     @FXML
-    public void addCustomer(ActionEvent event) throws IOException{
+    public void addCustomer(ActionEvent event) throws IOException {
 
-        String firstName=createCustomerFN.getText();
-        String lastName=createCustomerLN.getText();
+        String firstName = createCustomerFN.getText();
+        String lastName = createCustomerLN.getText();
         String id = createCustomerID.getText();
-        String address=createCustomerAD.getText();
-        String phone=createCustomerPH.getText();
-        String comments=createCustomerCO.getText();
+        String address = createCustomerAD.getText();
+        String phone = createCustomerPH.getText();
+        String comments = createCustomerCO.getText();
 
-        if (firstName.isEmpty() || lastName.isEmpty()  || address.isEmpty() || phone.isEmpty() || comments.isEmpty()){
+        if (firstName.isEmpty() || lastName.isEmpty() || address.isEmpty() || phone.isEmpty() || comments.isEmpty()) {
             Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Validation Error");
-    alert.setHeaderText(null);
-    alert.setContentText("You must fill each field in the form");
+            alert.setTitle("Validation Error");
+            alert.setHeaderText(null);
+            alert.setContentText("You must fill each field in the form");
 
-    alert.showAndWait();
-        }else{
-            laCasaDorada.addCustomers(firstName,  lastName,  id,  address,  phone,
-            comments);
-            //Agregar automaticamente el creado
+            alert.showAndWait();
+        } else {
+            laCasaDorada.addCustomers(firstName, lastName, id, address, phone, comments);
+            // Agregar automaticamente el creado
             createOrder(event);
             Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Customer created");
-    alert.setHeaderText(null);
-    alert.setContentText("The new customer has been created");
+            alert.setTitle("Customer created");
+            alert.setHeaderText(null);
+            alert.setContentText("The new customer has been created");
 
-    alert.showAndWait();
+            alert.showAndWait();
         }
 
-        
-        
     }
 
     @FXML
-    public void showOrder(ActionEvent event){
+    public void showOrder(ActionEvent event) throws IOException {
+
         try {
             Order order = tableOrders.getSelectionModel().getSelectedItem();
-            loadShowOrder(event,order);
+            loadShowOrder(event, order);
 
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -827,28 +832,36 @@ public class LaCasaDoradaGUI {
 
     }
 
-    
-    public void loadShowOrder(ActionEvent event,Order order) throws IOException{
+    public void loadShowOrder(ActionEvent event, Order order) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ShowOrder.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(form);
 
-        String code=String.valueOf(order.getCode());
-        String total=String.valueOf(order.getTotal());
+        String code = String.valueOf(order.getCode());
+        String total = String.valueOf(order.getTotal());
 
         showOrderID.setText(code);
         showOrderST.setText(order.getStatus());
-        showOrderCU.setText(order.getCustomer().getFirstName()+" "+order.getCustomer().getLastName());
-        showOrderAD.setText(order.getAddress());//Cambiar a la de la orden
+        showOrderCU.setText(order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName());
+        showOrderAD.setText(order.getAddress());// Cambiar a la de la orden
         showOrderDA.setText(order.getDate());
         showOrderCO.setText(order.getComment());
         showOrderTO.setText(total);
 
-        
+        // Pasar el array a arraylist
+        OrdersDetails[] products = order.getProducts();
+        for (int i = 0; i < products.length; i++) {
+            orderProducts.add(products[i]);
+        }
+
+        initializeTableViewOrderProducts();
+
+        // Limpiar arraylist de productos
+
+        orderProducts.clear();
 
     }
-    
 
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Order {
     private int code;//Que empiece en 0 y vaya aumentando 
     private Status status;//Enum of status
-    private ArrayList<OrdersDetails> products;
+    private OrdersDetails[] products;
     private Customer customer;
     private String address;
     private Employee employeeCreate;
@@ -17,7 +17,7 @@ public class Order {
     private String comment;
     private double total;
 
-    public Order(int code,ArrayList<OrdersDetails> products,Customer customer, Employee employeeCreate, LocalDateTime date,String address, String comment) {
+    public Order(int code,OrdersDetails[] products,Customer customer, Employee employeeCreate, LocalDateTime date,String address, String comment) {
         this.code = code;
         this.status = Status.REQUESTED;
         this.products = products;
@@ -56,11 +56,11 @@ public class Order {
         this.status = status;
     }
 
-    public ArrayList<OrdersDetails> getProducts() {
+    public OrdersDetails[] getProducts() {
         return this.products;
     }
 
-    public void setProducts(ArrayList<OrdersDetails> products) {
+    public void setProducts(OrdersDetails[] products) {
         this.products = products;
     }
 
@@ -123,5 +123,23 @@ public class Order {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " code='" + getCode() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", products='" + getProducts().toString() + "'" +
+            ", customer='" + getCustomer().getFirstName() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", employeeCreate='" + getEmployeeCreate() + "'" +
+            ", employeeModify='" + getEmployeeModify() + "'" +
+            ", date='" + getDate() + "'" +
+            ", comment='" + getComment() + "'" +
+            ", total='" + getTotal() + "'" +
+            "}";
+    }
+
+
 
 }
