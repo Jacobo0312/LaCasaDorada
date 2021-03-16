@@ -7,16 +7,20 @@ public class Product {
     private String [] ingredients;
     private double [] pricePerSize;
     private Boolean availability;
+    private Employee employeeCreate;
+    private Employee employeeModify;
 
     //Relations
     private Type type; //Enum
 
-    public Product(String name, String[] ingredients, double[] pricePerSize, Boolean availability, String type) {
+    public Product(String name, String[] ingredients, double[] pricePerSize, Boolean availability, String type,Employee employeeCreate) {
         this.name = name;
         this.ingredients = ingredients;
         this.pricePerSize = pricePerSize;
         this.availability = availability;
         this.type = Type.valueOf(type);
+        this.employeeCreate = employeeCreate;
+        this.employeeModify = employeeCreate;
     }
 
 
@@ -70,5 +74,21 @@ public class Product {
         this.type = type;
     }
 
+
+    public Employee getEmployeeCreate() {
+        return this.employeeCreate;
+    }
+
+    public void setEmployeeCreate(Employee employeeCreate) {
+        this.employeeCreate = employeeCreate;
+    }
+
+    public Employee getEmployeeModify() {
+        return this.employeeModify;
+    }
+
+    public void setEmployeeModify(Employee employeeModify) {
+        this.employeeModify = employeeModify;
+    }
     
 }

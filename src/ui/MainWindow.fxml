@@ -15,8 +15,9 @@
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#loadUsers" prefHeight="25.0" prefWidth="511.0" text="Users" />
-            <Button mnemonicParsing="false" onAction="#loadProducts" prefHeight="25.0" prefWidth="590.0" text="Products" />
+            <Button mnemonicParsing="false" onAction="#loadUsers" prefHeight="25.0" prefWidth="215.0" text="Users" />
+            <Button mnemonicParsing="false" onAction="#loadProducts" prefHeight="25.0" prefWidth="270.0" text="Products" />
+            <Button mnemonicParsing="false" onAction="#loadReports" prefHeight="25.0" prefWidth="153.0" text="Reportes" />
          </children>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">

@@ -20,7 +20,7 @@
           <TableColumn fx:id="colOrderCO" prefWidth="113.0" style="-fx-background-color: #6743B0;" text="Code" />
           <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="140.0" style="-fx-background-color: #6743B0;" text="Status" />
             <TableColumn fx:id="colOrderCU" maxWidth="264.0" minWidth="-1.0" prefWidth="174.0" style="-fx-background-color: #6743B0;" text="Customer" />
-            <TableColumn fx:id="colOrderEemployeeCR" prefWidth="200.0" text="Employee Create" />
+            <TableColumn fx:id="colOrderEmployeeCR" prefWidth="200.0" text="Employee Create" />
             <TableColumn fx:id="colOrderEmployeeDE" prefWidth="157.0" text="Empleado que entrega" />
             <TableColumn fx:id="colOrderDA" prefWidth="92.0" text="Date" />
             <TableColumn fx:id="colOrderTO" prefWidth="102.0" text="Total" />

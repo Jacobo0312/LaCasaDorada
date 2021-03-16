@@ -1,26 +1,22 @@
 package ui;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -114,7 +110,7 @@ public class LaCasaDoradaGUI {
     private TableColumn<Order, String> colOrderCU;
 
     @FXML
-    private TableColumn<Order, String> colOrderEemployeeCR;
+    private TableColumn<Order, String> colOrderEmployeeCR;
 
     @FXML
     private TableColumn<Order, String> colOrderDA;
@@ -290,6 +286,13 @@ public class LaCasaDoradaGUI {
     private Label showOrderTO;
 
     // --------------------------------------------
+
+    //Reports
+
+    @FXML
+    private DatePicker dateReportOrder;
+
+    //-----
 
     private LaCasaDorada laCasaDorada;
 
@@ -522,7 +525,7 @@ public class LaCasaDoradaGUI {
         colOrderCO.setCellValueFactory(new PropertyValueFactory<Order, Integer>("code"));
         colOrderST.setCellValueFactory(new PropertyValueFactory<Order, String>("status"));
         colOrderCU.setCellValueFactory(new PropertyValueFactory<Order, String>("customer"));
-        colOrderEemployeeCR.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeCreate"));
+        colOrderEmployeeCR.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeCreate"));
         colOrderDA.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
         colOrderTO.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
         colOrderEmployeeDE.setCellValueFactory(new PropertyValueFactory<Order,String>("employeeDelivery"));
@@ -606,7 +609,7 @@ public class LaCasaDoradaGUI {
             // Comprobar que este todo lleno
             if (valid) {
 
-                laCasaDorada.addProducts(name, ingredients, pricePerSize, availability, type);
+                laCasaDorada.addProducts(name, ingredients, pricePerSize, availability, type,loginUser);
                 loadProducts(event);
 
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -861,7 +864,7 @@ public class LaCasaDoradaGUI {
 
             alert.showAndWait();
         } else {
-            laCasaDorada.addCustomers(firstName, lastName, id, address, phone, comments);
+            laCasaDorada.addCustomers(firstName, lastName, id, address, phone, comments,loginUser);
             // Agregar automaticamente el creado
             createOrder(event);
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -903,7 +906,7 @@ public class LaCasaDoradaGUI {
         String total = String.valueOf(order.getTotal());
 
         showOrderID.setText(code);
-        showOrderST.setText(order.getStatus());
+        showOrderST.setText(order.getStatus().toString());
         showOrderCU.setText(order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName());
         showOrderAD.setText(order.getAddress());// Cambiar a la de la orden
         showOrderDA.setText(order.getDate());
@@ -923,5 +926,37 @@ public class LaCasaDoradaGUI {
         orderProducts.clear();
 
     }
+
+
+
+    @FXML
+    public void setStatus(ActionEvent event) {
+        Order order = tableOrders.getSelectionModel().getSelectedItem();
+        laCasaDorada.setStatus(order);
+        showOrderST.setText(order.getStatus().toString());
+
+    }
+
+
+//reports
+
+@FXML
+public void loadReports(ActionEvent event) throws IOException {
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Reports.fxml"));
+    fxmlLoader.setController(this);
+    Parent form = fxmlLoader.load();
+    // pane.getChildren().clear();
+    pane.setCenter(form);
+
+}
+
+@FXML
+public void reportOrders(ActionEvent event) {
+
+    String date = dateReportOrder.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    laCasaDorada.generateReportOrders(date);
+
+
+}
 
 }

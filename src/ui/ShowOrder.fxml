@@ -81,7 +81,7 @@
                               <Font name="Dubai Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" text="Avanzar estado">
+                        <Button mnemonicParsing="false" onAction="#setStatus" prefHeight="25.0" prefWidth="209.0" text="Avanzar estado">
                            <HBox.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </HBox.margin>

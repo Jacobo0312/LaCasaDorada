@@ -2,8 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
+
 
 public class Order {
     private int code;//Que empiece en 0 y vaya aumentando 
@@ -20,7 +19,7 @@ public class Order {
 
     public Order(int code,OrdersDetails[] products,Customer customer, Employee employeeCreate,Employee employeeDelivery, LocalDateTime date,String address, String comment) {
         this.code = code;
-        this.status = Status.REQUESTED;
+        this.status = Status.SOLICITADO;
         this.products = products;
         this.customer = customer;
         this.employeeCreate = employeeCreate;
@@ -50,8 +49,8 @@ public class Order {
         this.code = code;
     }
 
-    public String getStatus() {
-        return this.status.toString();
+    public Status getStatus() {
+        return this.status;
     }
 
     public void setStatus(Status status) {
@@ -101,6 +100,7 @@ public class Order {
         this.date = date;
     }
 
+
     public String getComment() {
         return this.comment;
     }
@@ -135,6 +135,16 @@ public class Order {
         this.employeeDelivery = employeeDelivery;
     }
 
+
+    public String toCSV(String separate){
+        String message=getCustomer().toString()+separate+getAddress()+separate+getCustomer().getPhone()+separate+getDate()+separate+getComment()+separate+getTotal()+separate;
+
+        for (int i = 0; i < this.products.length; i++) {
+            message+=this.products[0].toCSV(separate);
+        }
+
+        return message;
+    }
 
 
 }

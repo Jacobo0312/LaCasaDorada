@@ -11,15 +11,19 @@ public class Customer{
     private String address;
     private String phone;
     private String comments;
+    private Employee employeeCreate;
+    private Employee employeeModify;
 
 
-    public Customer(String firstName, String lastName, String id, String address, String phone,String comments) {
+    public Customer(String firstName, String lastName, String id, String address, String phone,String comments,Employee employeeCreate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.comments=comments;
+        this.employeeCreate = employeeCreate;
+        this.employeeModify = employeeCreate;
     }
 
 
@@ -73,5 +77,25 @@ public class Customer{
         this.comments = comments;
     }
 
+    public String toString() {
+        return getFirstName()+" "+getLastName();
+    }
+
+
+    public Employee getEmployeeCreate() {
+        return this.employeeCreate;
+    }
+
+    public void setEmployeeCreate(Employee employeeCreate) {
+        this.employeeCreate = employeeCreate;
+    }
+
+    public Employee getEmployeeModify() {
+        return this.employeeModify;
+    }
+
+    public void setEmployeeModify(Employee employeeModify) {
+        this.employeeModify = employeeModify;
+    }
 
 }

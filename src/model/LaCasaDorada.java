@@ -5,10 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 public class LaCasaDorada {
 
@@ -20,6 +17,7 @@ public class LaCasaDorada {
     private ArrayList<Customer> customers;
     private ArrayList<Order> orders;
     private ArrayList<Employee> employees;
+    private User admin;
 
     public LaCasaDorada() {
         users = new ArrayList<User>();
@@ -27,7 +25,9 @@ public class LaCasaDorada {
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
         employees = new ArrayList<Employee>();
-        addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
+        admin=new User("Juan", "Jacobo", "1006107372", "1", "1");
+        users.add(admin);
+        //addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
     }
 
     // GET and ADD for Users-------------------------------------------
@@ -67,10 +67,9 @@ public class LaCasaDorada {
         return products;
     }
 
-    public void addProducts(String name, String[] ingredients, double[] pricePerSize, Boolean availability,
-            String type) {
-        products.add(new Product(name, ingredients, pricePerSize, availability, type));// Falta agregar los dos
-                                                                                       // empleados
+    public void addProducts(String name, String[] ingredients, double[] pricePerSize, Boolean availability, String type,
+            Employee employeeCreate) {
+        products.add(new Product(name, ingredients, pricePerSize, availability, type, employeeCreate));
     }
 
     // GET and ADD for Customers----------------------------------
@@ -80,7 +79,7 @@ public class LaCasaDorada {
     }
 
     public void addCustomers(String firstName, String lastName, String id, String address, String phone,
-            String comments) {
+            String comments, Employee employeeCreate) {
 
         // Comparador por apellido y nombre
 
@@ -102,7 +101,7 @@ public class LaCasaDorada {
         };
 
         // Agregar de forma ordenada
-        Customer customer = new Customer(firstName, lastName, id, address, phone, comments);
+        Customer customer = new Customer(firstName, lastName, id, address, phone, comments,employeeCreate);
 
         if (customers.isEmpty()) {
             customers.add(customer);
@@ -121,10 +120,10 @@ public class LaCasaDorada {
         return orders;
     }
 
-    public void addOrders(OrdersDetails[] products, Customer customer, Employee employeeCreate,Employee employeeDelivery,
-            LocalDateTime date, String address, String comment) {
+    public void addOrders(OrdersDetails[] products, Customer customer, Employee employeeCreate,
+            Employee employeeDelivery, LocalDateTime date, String address, String comment) {
         CODE_ORDER++;
-        orders.add(new Order(CODE_ORDER, products, customer, employeeCreate, employeeDelivery,date, address, comment));
+        orders.add(new Order(CODE_ORDER, products, customer, employeeCreate, employeeDelivery, date, address, comment));
     }
 
     // GET and ADD for Employee----------------------------------
@@ -150,7 +149,7 @@ public class LaCasaDorada {
             boolean availability = Boolean.parseBoolean(parts[4]);
             String type = "PLATO";// Por defecto, no se como agregar al csv
 
-            addProducts(name, ingredients, pricePerSize, availability, type);
+            addProducts(name, ingredients, pricePerSize, availability, type,admin);
             line = br.readLine();
         }
         br.close();
@@ -170,14 +169,13 @@ public class LaCasaDorada {
             String phone = parts[4];
             String comments = parts[5];
 
-            addCustomers(firstName, lastName, id, address, phone, comments);
+            addCustomers(firstName, lastName, id, address, phone, comments,admin);
             line = br.readLine();
         }
         br.close();
     }
 
-
-    public void importEmployee(String fileDirectory) throws IOException{
+    public void importEmployee(String fileDirectory) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
         String line = br.readLine();
         while (line != null) {
@@ -193,16 +191,50 @@ public class LaCasaDorada {
     }
     // ----------------------------------------------------------------------
 
-    // ToString de ordenes
+    // Change status for orders
 
-    public String toStringOrders() {
-        String message = "";
+    public void setStatus(Order order) {
 
-
-        for (Order x : orders) {
-            message+=x.toString();
+        if (order.getStatus() != Status.ENTREGADO) {
+            int index = (order.getStatus().ordinal() + 1);
+            order.setStatus(Status.values()[index]);
         }
-        return message;
+
+    }
+
+    public void generateReportOrders(String dateR) {
+        String report = " ";
+        String[] separateDateR = dateR.split("-");
+        int yearR = Integer.parseInt(separateDateR[0]);
+        int monthR = Integer.parseInt(separateDateR[1]);
+        int dayR = Integer.parseInt(separateDateR[2]);
+
+        // System.out.println(year+" "+month+" "+day);
+
+        Boolean out = true;
+        for (int i = 0; i < orders.size() && out; i++) {
+            Order order = orders.get(i);
+            String date = order.getDate().split("   ")[0];
+            String[] separateDate = date.split("/");
+            int month = Integer.parseInt(separateDate[0]);
+            int day = Integer.parseInt(separateDate[1]);
+            int year = Integer.parseInt(separateDate[2]);
+            // System.out.println(x);
+            // System.out.println(year + " " + month + " " + day);
+
+            if (dayR >= day && monthR >= month && yearR >= year) {
+
+                if (dayR > day && monthR > month && yearR > year) {
+                    out = false;
+                } else {
+                    report += order.toCSV(",");
+                }
+            }
+
+        }
+
+        System.out.println(report);
+        // Aqui se genera el reporte
 
     }
 

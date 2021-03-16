@@ -43,14 +43,9 @@ public class OrdersDetails {
         return this.price;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-            " product='" + getProduct() + "'" +
-            ", amount='" + getAmount() + "'" +
-            ", size='" + getSize() + "'" +
-            ", price='" + getPrice() + "'" +
-            "}";
-    }
     
+    public String toCSV(String separate){
+
+        return getProduct()+separate+getAmount()+separate+getPrice();
+    }
 }
