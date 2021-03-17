@@ -96,6 +96,12 @@ public class Order {
         return dateString ;
     }
 
+    public LocalDateTime getLocalDateTime() {
+        return this.date;
+    }
+
+
+
     public void setDate(LocalDateTime date) {
         this.date = date;
     }

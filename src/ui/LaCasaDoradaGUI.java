@@ -1,9 +1,14 @@
 package ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -27,6 +33,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import model.Customer;
 import model.Employee;
 import model.LaCasaDorada;
@@ -144,8 +151,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Customer, String> colCustomerCO;
 
-
-    //Employees
+    // Employees
 
     @FXML
     private TableView<Employee> tableEmployees;
@@ -158,7 +164,6 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Employee, String> colEmployeesID;
-
 
     // --------
 
@@ -287,12 +292,27 @@ public class LaCasaDoradaGUI {
 
     // --------------------------------------------
 
-    //Reports
+    // Reports
 
     @FXML
-    private DatePicker dateReportOrder;
+    private ComboBox<String> dateReportOrderHourInit;
 
-    //-----
+    @FXML
+    private ComboBox<String> dateReportOrderMinutsInit;
+
+    @FXML
+    private ComboBox<String> dateReportOrderHourFinal;
+
+    @FXML
+    private ComboBox<String> dateReportOrderMinutsFinal;
+
+    @FXML
+    private DatePicker dateReportOrderInit;
+
+    @FXML
+    private DatePicker dateReportOrderFinal;
+
+    // -----
 
     private LaCasaDorada laCasaDorada;
 
@@ -517,7 +537,6 @@ public class LaCasaDoradaGUI {
     @FXML
     private void initializeTableViewOrders() {
 
-
         ObservableList<Order> observableList;
         observableList = FXCollections.observableArrayList(laCasaDorada.getOrders());
         tableOrders.setItems(observableList);
@@ -528,9 +547,8 @@ public class LaCasaDoradaGUI {
         colOrderEmployeeCR.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeCreate"));
         colOrderDA.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
         colOrderTO.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
-        colOrderEmployeeDE.setCellValueFactory(new PropertyValueFactory<Order,String>("employeeDelivery"));
+        colOrderEmployeeDE.setCellValueFactory(new PropertyValueFactory<Order, String>("employeeDelivery"));
     }
-
 
     @FXML
     private void initializeTableViewEmployees() {
@@ -609,7 +627,7 @@ public class LaCasaDoradaGUI {
             // Comprobar que este todo lleno
             if (valid) {
 
-                laCasaDorada.addProducts(name, ingredients, pricePerSize, availability, type,loginUser);
+                laCasaDorada.addProducts(name, ingredients, pricePerSize, availability, type, loginUser);
                 loadProducts(event);
 
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -767,7 +785,6 @@ public class LaCasaDoradaGUI {
     @FXML
     public void addOrder(ActionEvent event) throws IOException {
 
-            
         // fecha y hora
         LocalDateTime date = LocalDateTime.now();
         // -------------
@@ -780,34 +797,32 @@ public class LaCasaDoradaGUI {
         // Copiar el arraylist y luego limpiar
         // Agregar direccion
 
+        if (!orderProducts.isEmpty() && orderCustomer != null && !comment.isEmpty() && !address.isEmpty()
+                && employeeDelivery != null) {
 
-        if (!orderProducts.isEmpty() && orderCustomer !=null && !comment.isEmpty() && !address.isEmpty() && employeeDelivery !=null ){
-            
-            //Pasar productos a un array
-        OrdersDetails[] products = new OrdersDetails[orderProducts.size()];
+            // Pasar productos a un array
+            OrdersDetails[] products = new OrdersDetails[orderProducts.size()];
 
-        for (int i = 0; i < orderProducts.size(); i++) {
-            products[i] = orderProducts.get(i);
-        }
+            for (int i = 0; i < orderProducts.size(); i++) {
+                products[i] = orderProducts.get(i);
+            }
 
+            // Limpiar arraylist
+            orderProducts.clear();
 
-        //Limpiar arraylist
-        orderProducts.clear();
+            laCasaDorada.addOrders(products, orderCustomer, loginUser, employeeDelivery, date, address, comment);
+            loadOrders(event);// Mandar a la tabla de orders
 
-        laCasaDorada.addOrders(products, orderCustomer, loginUser,employeeDelivery, date, address, comment);
-        loadOrders(event);// Mandar a la tabla de orders
+            orderCustomer = null;
+            // Vaciar order details y volver null order customer
 
-        orderCustomer = null;
-         // Vaciar order details y volver null order customer
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Orden creada");
+            alert.setHeaderText(null);
+            alert.setContentText("Se creo la nueva orden");
 
-         
-         Alert alert = new Alert(AlertType.INFORMATION);
-         alert.setTitle("Orden creada");
-         alert.setHeaderText(null);
-         alert.setContentText("Se creo la nueva orden");
-
-         alert.showAndWait();
-        }else{
+            alert.showAndWait();
+        } else {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -815,10 +830,6 @@ public class LaCasaDoradaGUI {
 
             alert.showAndWait();
         }
-
-        
-
-
 
     }
 
@@ -864,7 +875,7 @@ public class LaCasaDoradaGUI {
 
             alert.showAndWait();
         } else {
-            laCasaDorada.addCustomers(firstName, lastName, id, address, phone, comments,loginUser);
+            laCasaDorada.addCustomers(firstName, lastName, id, address, phone, comments, loginUser);
             // Agregar automaticamente el creado
             createOrder(event);
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -927,8 +938,6 @@ public class LaCasaDoradaGUI {
 
     }
 
-
-
     @FXML
     public void setStatus(ActionEvent event) {
         Order order = tableOrders.getSelectionModel().getSelectedItem();
@@ -937,26 +946,73 @@ public class LaCasaDoradaGUI {
 
     }
 
+    // reports
 
-//reports
+    @FXML
+    public void loadReports(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Reports.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
 
-@FXML
-public void loadReports(ActionEvent event) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Reports.fxml"));
-    fxmlLoader.setController(this);
-    Parent form = fxmlLoader.load();
-    // pane.getChildren().clear();
-    pane.setCenter(form);
+        String[] arrayHours = new String[24];
 
-}
+        for (int i = 0; i < arrayHours.length; i++) {
+            if (i < 9) {
+                arrayHours[i] = "0" + (i);
+            } else {
+                arrayHours[i] = "" + (i);
+            }
+        }
 
-@FXML
-public void reportOrders(ActionEvent event) {
+        String[] arrayMinutes = new String[60];
 
-    String date = dateReportOrder.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    laCasaDorada.generateReportOrders(date);
+        for (int i = 0; i < arrayMinutes.length; i++) {
+            if (i < 9) {
+                arrayMinutes[i] = "0" + (i);
+            } else {
+                arrayMinutes[i] = "" + (i);
+            }
+        }
 
+        dateReportOrderHourInit.getItems().addAll(arrayHours);
+        dateReportOrderHourFinal.getItems().addAll(arrayHours);
+        dateReportOrderMinutsInit.getItems().addAll(arrayMinutes);
+        dateReportOrderMinutsFinal.getItems().addAll(arrayMinutes);
 
-}
+        dateReportOrderHourInit.setValue("00");
+        dateReportOrderMinutsInit.setValue("00");
+        dateReportOrderHourFinal.setValue("23");
+        dateReportOrderMinutsFinal.setValue("59");
+
+        dateReportOrderInit.setValue(LocalDate.now());
+        dateReportOrderFinal.setValue(LocalDate.now());
+
+    }
+
+    @FXML
+    public void reportOrders(ActionEvent event) throws FileNotFoundException {
+
+        // Init
+        String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String hourInit = dateReportOrderHourInit.getValue();
+        String minuteInit = dateReportOrderMinutsInit.getValue();
+
+        LocalDateTime dateTimeInit = LocalDateTime.parse(dateInit + "T" + hourInit + ":" + minuteInit + ":00");
+
+        // Final
+
+        String dateFinal = dateReportOrderFinal.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String hourFinal = dateReportOrderHourFinal.getValue();
+        String minuteFinal = dateReportOrderMinutsFinal.getValue();
+        LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
+
+        FileChooser fc = new FileChooser();
+        File file = fc.showSaveDialog(null);
+
+        laCasaDorada.generateReportOrders(dateTimeInit, dateTimeFinal,file.getAbsolutePath());
+
+    }
 
 }

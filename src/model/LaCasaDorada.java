@@ -1,11 +1,15 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class LaCasaDorada {
 
@@ -25,9 +29,9 @@ public class LaCasaDorada {
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
         employees = new ArrayList<Employee>();
-        admin=new User("Juan", "Jacobo", "1006107372", "1", "1");
+        admin = new User("Juan", "Jacobo", "1006107372", "1", "1");
         users.add(admin);
-        //addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
+        // addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
     }
 
     // GET and ADD for Users-------------------------------------------
@@ -54,12 +58,15 @@ public class LaCasaDorada {
     }
 
     // Try binary search
+
     /*
-     * public User getUser(String name, String password) { User user = null; int
-     * index= Collections.binarySearch(users, name);
-     * 
-     * return user; }
-     */
+    public User getUser(String name, String password) {
+        User user = null;
+        int index = Collections.binarySearch(users, name);
+
+        return user;
+    }
+    */
 
     // GET and ADD for Products----------------------------------
 
@@ -101,7 +108,7 @@ public class LaCasaDorada {
         };
 
         // Agregar de forma ordenada
-        Customer customer = new Customer(firstName, lastName, id, address, phone, comments,employeeCreate);
+        Customer customer = new Customer(firstName, lastName, id, address, phone, comments, employeeCreate);
 
         if (customers.isEmpty()) {
             customers.add(customer);
@@ -149,7 +156,7 @@ public class LaCasaDorada {
             boolean availability = Boolean.parseBoolean(parts[4]);
             String type = "PLATO";// Por defecto, no se como agregar al csv
 
-            addProducts(name, ingredients, pricePerSize, availability, type,admin);
+            addProducts(name, ingredients, pricePerSize, availability, type, admin);
             line = br.readLine();
         }
         br.close();
@@ -169,7 +176,7 @@ public class LaCasaDorada {
             String phone = parts[4];
             String comments = parts[5];
 
-            addCustomers(firstName, lastName, id, address, phone, comments,admin);
+            addCustomers(firstName, lastName, id, address, phone, comments, admin);
             line = br.readLine();
         }
         br.close();
@@ -202,40 +209,24 @@ public class LaCasaDorada {
 
     }
 
-    public void generateReportOrders(String dateR) {
+    public void generateReportOrders(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal,String fileDirectory) throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(fileDirectory);
         String report = " ";
-        String[] separateDateR = dateR.split("-");
-        int yearR = Integer.parseInt(separateDateR[0]);
-        int monthR = Integer.parseInt(separateDateR[1]);
-        int dayR = Integer.parseInt(separateDateR[2]);
-
-        // System.out.println(year+" "+month+" "+day);
 
         Boolean out = true;
         for (int i = 0; i < orders.size() && out; i++) {
             Order order = orders.get(i);
-            String date = order.getDate().split("   ")[0];
-            String[] separateDate = date.split("/");
-            int month = Integer.parseInt(separateDate[0]);
-            int day = Integer.parseInt(separateDate[1]);
-            int year = Integer.parseInt(separateDate[2]);
-            // System.out.println(x);
-            // System.out.println(year + " " + month + " " + day);
+            LocalDateTime date = order.getLocalDateTime();
 
-            if (dayR >= day && monthR >= month && yearR >= year) {
-
-                if (dayR > day && monthR > month && yearR > year) {
-                    out = false;
-                } else {
-                    report += order.toCSV(",");
-                }
+            if (dateTimeInit.isBefore(date) && date.isBefore(dateTimeFinal)) {
+                report += order.toCSV(",");
             }
 
         }
 
-        System.out.println(report);
+        pw.println(report);
+        pw.close();
         // Aqui se genera el reporte
 
     }
-
 }
