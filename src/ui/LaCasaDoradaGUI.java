@@ -1010,6 +1010,8 @@ public class LaCasaDoradaGUI {
 
         FileChooser fc = new FileChooser();
         File file = fc.showSaveDialog(null);
+        //Seleccioanr que sea .csv
+        //Cambiar el null para mantener la ventane
 
         laCasaDorada.generateReportOrders(dateTimeInit, dateTimeFinal,file.getAbsolutePath());
 
