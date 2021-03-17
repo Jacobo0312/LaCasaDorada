@@ -21,6 +21,7 @@ public class LaCasaDorada {
     private ArrayList<Customer> customers;
     private ArrayList<Order> orders;
     private ArrayList<Employee> employees;
+    private ArrayList<Ingredient> ingredients;
     private User admin;
 
     public LaCasaDorada() {
@@ -29,6 +30,7 @@ public class LaCasaDorada {
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
         employees = new ArrayList<Employee>();
+        ingredients = new ArrayList<Ingredient>();
         admin = new User("Juan", "Jacobo", "1006107372", "1", "1");
         users.add(admin);
         // addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
@@ -74,9 +76,22 @@ public class LaCasaDorada {
         return products;
     }
 
-    public void addProducts(String name, String[] ingredients, double[] pricePerSize, Boolean availability, String type,
+    public void addProducts(String name, Ingredient[] ingredients, double[] pricePerSize, Boolean availability, String type,
             Employee employeeCreate) {
         products.add(new Product(name, ingredients, pricePerSize, availability, type, employeeCreate));
+    }
+
+    //Get and ADD for Ingredients
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void addIngredients(String name, String status) {
+        ingredients.add(new Ingredient(name,status));
+    }
+
+    private void addIngredients(Ingredient ingredient) {
+        ingredients.add(ingredient);
     }
 
     // GET and ADD for Customers----------------------------------
@@ -151,10 +166,24 @@ public class LaCasaDorada {
         while (line != null) {
             String[] parts = line.split(SEPARATE);
             String name = parts[0];
-            String[] ingredients = parts[1].split(" ");
+            String[] ingredientsString = parts[1].split(" ");
+            Ingredient[] ingredients= new Ingredient[ingredientsString.length];
+
+
+            for (int i = 0; i < ingredients.length; i++) {
+               
+                Ingredient ingredient=new Ingredient(ingredientsString[i]);
+               
+
+                //Si ya existe no se debe crear
+                addIngredients(ingredient);
+                ingredients[i]=ingredient;
+            }
             double[] pricePerSize = { Double.parseDouble(parts[2]), Double.parseDouble(parts[3]) };
             boolean availability = Boolean.parseBoolean(parts[4]);
             String type = "PLATO";// Por defecto, no se como agregar al csv
+
+
 
             addProducts(name, ingredients, pricePerSize, availability, type, admin);
             line = br.readLine();
@@ -163,6 +192,8 @@ public class LaCasaDorada {
     }
 
     // CUSTOMERS
+
+  
 
     public void importCustomers(String fileDirectory) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
@@ -209,9 +240,9 @@ public class LaCasaDorada {
 
     }
 
-    public void generateReportOrders(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal,String fileDirectory) throws FileNotFoundException {
+    public void generateReportOrders(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal,String fileDirectory,String separate) throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(fileDirectory);
-        String report = " ";
+        String report = "nombre"+separate+"direccion"+separate+"telefono"+separate+"Empleado que entrega"+separate+"fecha y hora"+separate+"observaciones"+separate+"total"+separate+"\n";
 
         Boolean out = true;
         for (int i = 0; i < orders.size() && out; i++) {
@@ -219,7 +250,7 @@ public class LaCasaDorada {
             LocalDateTime date = order.getLocalDateTime();
 
             if (dateTimeInit.isBefore(date) && date.isBefore(dateTimeFinal)) {
-                report += order.toCSV(",");
+                report += order.toCSV(separate)+"\n";
             }
 
         }

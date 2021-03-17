@@ -23,9 +23,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,6 +38,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import model.Customer;
 import model.Employee;
+import model.Ingredient;
 import model.LaCasaDorada;
 import model.Order;
 import model.OrdersDetails;
@@ -295,6 +298,9 @@ public class LaCasaDoradaGUI {
     // Reports
 
     @FXML
+    private TextField dateReportSeparate;
+
+    @FXML
     private ComboBox<String> dateReportOrderHourInit;
 
     @FXML
@@ -313,6 +319,23 @@ public class LaCasaDoradaGUI {
     private DatePicker dateReportOrderFinal;
 
     // -----
+
+    // List Ingredients
+    @FXML
+    private TableView<Ingredient> TableIngredients;
+
+    @FXML
+    private TableColumn<Ingredient, String> TableIngredientsName;
+
+    @FXML
+    private TableColumn<Ingredient, String> TableIngredientsStatus;
+
+    @FXML
+    private ListView<Ingredient> listIngredietns;
+
+  
+
+    //
 
     private LaCasaDorada laCasaDorada;
 
@@ -499,6 +522,20 @@ public class LaCasaDoradaGUI {
         initializeTableViewCustomers();
     }
 
+    // Load list ingredients
+    public void loadIngredients(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListIngredients.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();;
+        pane.setCenter(form);
+
+        laCasaDorada.addIngredients("Manzana", "HABILITADO");
+        laCasaDorada.addIngredients("Manzana", "HABILITADO");
+        laCasaDorada.addIngredients("Manzana", "HABILITADO");
+        initializeTableViewingredients();
+
+    }
     // -------------------------------------------------------INITIALIALIZE
     // TABLES--------------------------------------------------------
 
@@ -561,6 +598,15 @@ public class LaCasaDoradaGUI {
         colEmployeesID.setCellValueFactory(new PropertyValueFactory<Employee, String>("id"));
     }
 
+    @FXML
+    private void initializeTableViewingredients() {
+        ObservableList<Ingredient> observableList;
+        observableList = FXCollections.observableArrayList(laCasaDorada.getIngredients());
+        TableIngredients.setItems(observableList);
+
+        TableIngredientsName.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("name"));
+        TableIngredientsStatus.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("status"));
+    }
     // ------------------------------------------------------------------------------------------------------------------------------
 
     // Import data
@@ -583,6 +629,10 @@ public class LaCasaDoradaGUI {
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(form);
+        TableIngredients.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        initializeTableViewingredients();
+        ObservableList<Ingredient> ingredientsOB = TableIngredients.getSelectionModel().getSelectedItems();
+        listIngredietns.setItems(ingredientsOB);
 
         createProductAV.getItems().addAll("AVAILABLE", "NOT AVAILABLE");
 
@@ -591,12 +641,31 @@ public class LaCasaDoradaGUI {
     // Create product
 
     @FXML
+    public void addIngredientToProdcut(ActionEvent event) {
+        
+
+    }
+
+    @FXML
     public void addProduct(ActionEvent event) throws IOException {
         try {
 
             boolean valid = true;
             String name = createProductName.getText();
-            String[] ingredients = createProductIngre.getText().split(" ");
+
+
+            ObservableList<Ingredient> ingredientsOB = listIngredietns.getItems();
+
+            Ingredient[] ingredients = new Ingredient[ingredientsOB.size()];
+
+            for (int i = 0; i < ingredients.length; i++) {
+                ingredients[i] = ingredientsOB.get(i);
+            }
+
+            //ingredientsOB.clear();
+
+            //array ingredients no puede estar vacio
+
             double priceSmall = Double.parseDouble(createProductSizeSmall.getText());
             double priceBig = Double.parseDouble(createProductBig.getText());
 
@@ -1010,10 +1079,11 @@ public class LaCasaDoradaGUI {
 
         FileChooser fc = new FileChooser();
         File file = fc.showSaveDialog(null);
-        //Seleccioanr que sea .csv
-        //Cambiar el null para mantener la ventane
+        // Seleccioanr que sea .csv
+        // Cambiar el null para mantener la ventane
 
-        laCasaDorada.generateReportOrders(dateTimeInit, dateTimeFinal,file.getAbsolutePath());
+        laCasaDorada.generateReportOrders(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
+                dateReportSeparate.getText());
 
     }
 

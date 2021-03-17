@@ -143,7 +143,7 @@ public class Order {
 
 
     public String toCSV(String separate){
-        String message=getCustomer().toString()+separate+getAddress()+separate+getCustomer().getPhone()+separate+getDate()+separate+getComment()+separate+getTotal()+separate;
+        String message=getCustomer().toString()+separate+getAddress()+separate+getCustomer().getPhone()+separate+getEmployeeDelivery()+separate+getDate()+separate+getComment()+separate+getTotal()+separate;
 
         for (int i = 0; i < this.products.length; i++) {
             message+=this.products[0].toCSV(separate);

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Product {
     private String name;
-    private String [] ingredients;
+    private Ingredient [] ingredients;
     private double [] pricePerSize;
     private Boolean availability;
     private Employee employeeCreate;
@@ -13,7 +13,7 @@ public class Product {
     //Relations
     private Type type; //Enum
 
-    public Product(String name, String[] ingredients, double[] pricePerSize, Boolean availability, String type,Employee employeeCreate) {
+    public Product(String name, Ingredient[] ingredients, double[] pricePerSize, Boolean availability, String type,Employee employeeCreate) {
         this.name = name;
         this.ingredients = ingredients;
         this.pricePerSize = pricePerSize;
@@ -36,7 +36,7 @@ public class Product {
         return Arrays.toString(this.ingredients);
     }
 
-    public void setIngredients(String[] ingredients) {
+    public void setIngredients(Ingredient[] ingredients) {
         this.ingredients = ingredients;
     }
 
