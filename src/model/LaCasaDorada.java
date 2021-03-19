@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LaCasaDorada {
 
@@ -44,31 +45,21 @@ public class LaCasaDorada {
 
     public void addUser(String firstName, String lastName, String id, String user, String password) {
         users.add(new User(firstName, lastName, id, user, password));
+        // No poder crear con un mismo usuario
     }
 
     // For verify user
 
     public User getUser(String name, String password) {
-        User user = null;
-        for (User s : users) {
-            if (s.getUser().equals(name)) {
-                if (s.getPassword().equals(password))
-                    user = s;
-            }
+        User user = new User("firstName", "lastNa", "id", name, password);
+        int index = Collections.binarySearch(users, user);
+        if (index < 0) {
+            user = null;
+        } else {
+            user = users.get(index);
         }
         return user;
     }
-
-    // Try binary search
-
-    /*
-    public User getUser(String name, String password) {
-        User user = null;
-        int index = Collections.binarySearch(users, name);
-
-        return user;
-    }
-    */
 
     // GET and ADD for Products----------------------------------
 
@@ -76,18 +67,18 @@ public class LaCasaDorada {
         return products;
     }
 
-    public void addProducts(String name, Ingredient[] ingredients, double[] pricePerSize, Boolean availability, String type,
-            Employee employeeCreate) {
+    public void addProducts(String name, Ingredient[] ingredients, double[] pricePerSize, Boolean availability,
+            String type, Employee employeeCreate) {
         products.add(new Product(name, ingredients, pricePerSize, availability, type, employeeCreate));
     }
 
-    //Get and ADD for Ingredients
+    // Get and ADD for Ingredients
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
     public void addIngredients(String name, String status) {
-        ingredients.add(new Ingredient(name,status));
+        ingredients.add(new Ingredient(name, status));
     }
 
     private void addIngredients(Ingredient ingredient) {
@@ -167,33 +158,31 @@ public class LaCasaDorada {
             String[] parts = line.split(SEPARATE);
             String name = parts[0];
             String[] ingredientsString = parts[1].split(" ");
-            Ingredient[] ingredients= new Ingredient[ingredientsString.length];
+            Ingredient[] ingredientsProduct = new Ingredient[ingredientsString.length];
 
+            for (int i = 0; i < ingredientsProduct.length; i++) {
 
-            for (int i = 0; i < ingredients.length; i++) {
-               
-                Ingredient ingredient=new Ingredient(ingredientsString[i]);
-               
+                Ingredient ingredient = new Ingredient(ingredientsString[i]);
 
-                //Si ya existe no se debe crear
+                int index = Collections.binarySearch(ingredients, ingredient);
+                if (index > 0) {
+                    ingredient = ingredients.get(index);
+                }
                 addIngredients(ingredient);
-                ingredients[i]=ingredient;
+                ingredientsProduct[i] = ingredient;
+
             }
             double[] pricePerSize = { Double.parseDouble(parts[2]), Double.parseDouble(parts[3]) };
             boolean availability = Boolean.parseBoolean(parts[4]);
             String type = "PLATO";// Por defecto, no se como agregar al csv
 
-
-
-            addProducts(name, ingredients, pricePerSize, availability, type, admin);
+            addProducts(name, ingredientsProduct, pricePerSize, availability, type, admin);
             line = br.readLine();
         }
         br.close();
     }
 
     // CUSTOMERS
-
-  
 
     public void importCustomers(String fileDirectory) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
@@ -240,9 +229,11 @@ public class LaCasaDorada {
 
     }
 
-    public void generateReportOrders(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal,String fileDirectory,String separate) throws FileNotFoundException {
+    public void generateReportOrders(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String fileDirectory,
+            String separate) throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(fileDirectory);
-        String report = "nombre"+separate+"direccion"+separate+"telefono"+separate+"Empleado que entrega"+separate+"fecha y hora"+separate+"observaciones"+separate+"total"+separate+"\n";
+        String report = "nombre" + separate + "direccion" + separate + "telefono" + separate + "Empleado que entrega"
+                + separate + "fecha y hora" + separate + "observaciones" + separate + "total" + separate + "\n";
 
         Boolean out = true;
         for (int i = 0; i < orders.size() && out; i++) {
@@ -250,11 +241,54 @@ public class LaCasaDorada {
             LocalDateTime date = order.getLocalDateTime();
 
             if (dateTimeInit.isBefore(date) && date.isBefore(dateTimeFinal)) {
-                report += order.toCSV(separate)+"\n";
+                report += order.toCSV(separate) + "\n";
             }
 
         }
 
+        pw.println(report);
+        pw.close();
+        // Aqui se genera el reporte
+
+    }
+
+    public void generateReportEmployeesDelivery(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal,
+            String absolutePath, String separate) throws FileNotFoundException {
+
+        PrintWriter pw = new PrintWriter(absolutePath);
+        String report = "REPORTE DE EMPLEADOS \n";
+
+        Map<String, double[]> reportEmployee = new HashMap<String, double[]>();
+        Boolean out = true;
+
+        for (int i = 0; i < orders.size() && out; i++) {
+            Order order = orders.get(i);
+            LocalDateTime date = order.getLocalDateTime();
+            // número de pedidos entregados y la suma de los valores de dichos pedidos
+            if (dateTimeInit.isBefore(date) && date.isBefore(dateTimeFinal)) {
+                Employee employee = order.getEmployeeDelivery();
+                double totalOrder = order.getTotal();
+                String nameEmployee = employee.getFirstName() + employee.getLastName();
+                if (reportEmployee.containsKey(nameEmployee)) {
+                    double[] array = reportEmployee.get(nameEmployee);
+                    array[0] = array[0]++;
+                    array[1] = array[1] + totalOrder;
+
+                    reportEmployee.put(nameEmployee, array);
+                } else {
+                    double[] array = { 1, totalOrder };
+                    reportEmployee.put(nameEmployee, array);
+                }
+
+            }
+
+        }
+        // Pasar el hash map a reporte
+
+        for (Map.Entry<String, double[]> entry : reportEmployee.entrySet()) {
+
+            report+=("Nombre: " + entry.getKey() + ", Pedidos:" + (int)entry.getValue()[0]+ ", Total:" + entry.getValue()[1]+"\n");
+        }
         pw.println(report);
         pw.close();
         // Aqui se genera el reporte

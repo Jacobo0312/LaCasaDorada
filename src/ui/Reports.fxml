@@ -35,5 +35,6 @@
       <ComboBox fx:id="dateReportOrderMinutsFinal" layoutX="395.0" layoutY="232.0" prefHeight="25.0" prefWidth="68.0" />
       <Label layoutX="67.0" layoutY="129.0" prefHeight="25.0" prefWidth="108.0" text="Separador" />
       <TextField fx:id="dateReportSeparate" layoutX="140.0" layoutY="129.0" prefHeight="25.0" prefWidth="25.0" text=";" />
+      <Button layoutX="113.0" layoutY="307.0" mnemonicParsing="false" onAction="#generateReportEmployeesDelivery" text="Generar reporte de clientes" />
    </children>
 </Pane>

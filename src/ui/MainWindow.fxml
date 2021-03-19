@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="616.0" prefWidth="935.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="668.0" prefWidth="804.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="351.0" prefWidth="938.0">
          <children>
             <HBox prefHeight="110.0" prefWidth="938.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#loadUsers" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Users" textFill="#d4af37">
+                  <Button mnemonicParsing="false" onAction="#loadUsers" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Usuarios" textFill="#d4af37">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -24,7 +24,7 @@
                         <Font name="Gabriola" size="22.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#loadProducts" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Products" textFill="#d4af37">
+                  <Button mnemonicParsing="false" onAction="#loadProducts" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Productos" textFill="#d4af37">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -55,7 +55,7 @@
                         <Font name="Gabriola" size="22.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#loadCustomers" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Customers" textFill="#d4af37">
+                  <Button mnemonicParsing="false" onAction="#loadCustomers" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Clientes" textFill="#d4af37">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -78,7 +78,7 @@
             </HBox>
             <HBox prefHeight="110.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#loadOrders" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Orders" textFill="#d4af37">
+                  <Button mnemonicParsing="false" onAction="#loadOrders" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Ordenes" textFill="#d4af37">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -86,7 +86,7 @@
                         <Font name="Gabriola" size="22.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#createOrder" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Create Order" textFill="#d4af37">
+                  <Button mnemonicParsing="false" onAction="#createOrder" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Crear orden" textFill="#d4af37">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -94,7 +94,7 @@
                         <Font name="Gabriola" size="22.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#loadCustomers" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="Customers" textFill="#d4af37">
+                  <Button mnemonicParsing="false" onAction="#loadCustomers" prefHeight="145.0" prefWidth="500.0" style="-fx-background-color: null; -fx-border-color: #D4AF37; -fx-border-width: 2;" text="xx" textFill="#d4af37">
                      <HBox.margin>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </HBox.margin>
@@ -111,9 +111,9 @@
       </VBox>
    </center>
    <top>
-      <ImageView pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fitHeight="305.0" fitWidth="657.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../img/casa%20dorada%20editada.png" />
+            <Image url="file:/C:/Users/juanj/OneDrive/Escritorio/T1/img/casa-dorada-editada.png" />
          </image>
          <BorderPane.margin>
             <Insets top="20.0" />

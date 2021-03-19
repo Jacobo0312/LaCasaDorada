@@ -1,6 +1,7 @@
 package model;
 
-public class Ingredient {
+
+public class Ingredient implements Comparable<Ingredient>{
     private String name;
     private StatusIngredients status;
 
@@ -36,6 +37,15 @@ public class Ingredient {
     public String toString() {
         return getName();
     }
+
+    @Override
+    public int compareTo(Ingredient o) {
+    
+        return this.name.compareTo(o.getName());
+    }
+
+
+
 
 
 

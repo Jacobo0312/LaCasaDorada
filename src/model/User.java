@@ -34,11 +34,16 @@ public class User extends Employee implements Comparable<User>{
 
     @Override
     public int compareTo(User obj1) {
-        String name = obj1.getUser();
+        String user = obj1.getUser();
+        String password=obj1.getPassword();
 
-        return this.user.compareTo(name);
+        if (this.user.compareTo(user) == 0) {
+
+            return this.password.compareTo(password);
+        } else {
+            return this.user.compareTo(user);
+        }
     }
 
 
-    
 }
