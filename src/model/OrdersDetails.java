@@ -19,9 +19,9 @@ public class OrdersDetails {
     private double calculatePrice() {
          double price;
         if (size==Size.BIG){
-          price=product.getPricePerSizeInt()[1];
+          price=product.getPricePerSizeInt()[1]*getAmount();
         }else{
-            price=product.getPricePerSizeInt()[0];
+            price=product.getPricePerSizeInt()[0]*getAmount();
         }
         return amount*price;
     }

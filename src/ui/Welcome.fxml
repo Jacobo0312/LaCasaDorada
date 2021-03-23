@@ -9,6 +9,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="935.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -39,27 +42,36 @@
    <center>
       <BorderPane prefHeight="580.0" prefWidth="937.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <top>
-            <ImageView fitHeight="482.0" fitWidth="937.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <ImageView fitHeight="422.0" fitWidth="868.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../img/casa-dorada-editada.png" />
+                  <Image url="@../img/casa-dorada-editada.png" />
                </image>
             </ImageView>
          </top>
          <bottom>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadWelcome" prefHeight="112.0" prefWidth="935.0" style="-fx-background-color: white;" text="Bienvenido" textFill="#ebaf09" BorderPane.alignment="CENTER">
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadWelcome" prefHeight="10.0" prefWidth="935.0" style="-fx-background-color: null;" text="Bienvenido" BorderPane.alignment="CENTER">
                <font>
-                  <Font name="Dubai Regular" size="18.0" />
+                  <Font name="Gabriola" size="78.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="43.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../icons/iconmonstr-share-11-72.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
                <padding>
                   <Insets bottom="50.0" />
                </padding>
+               <textFill>
+                  <RadialGradient centerX="0.5166666666666666" centerY="0.7619047619047619" cycleMethod="REFLECT" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.8313725590705872" green="0.686274528503418" blue="0.21568627655506134" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
             </Button>
          </bottom>
       </BorderPane>

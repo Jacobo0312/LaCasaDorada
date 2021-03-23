@@ -5,44 +5,54 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox>
+<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox prefHeight="500.0" prefWidth="900.0">
          <children>
-            <Label fx:id="labelUser" prefHeight="17.0" prefWidth="341.0" text="#Name" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
+            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Lista de clientes" textFill="#d4af37">
                <font>
-                  <Font name="Dubai Bold" size="32.0" />
-               </font></Label>
-            <Button mnemonicParsing="false" onAction="#loadCreateCustomer" prefHeight="111.0" prefWidth="124.0" text="Crear" />
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font></Button>
+                  <Font name="Gabriola" size="32.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableCustomers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 0 0 10 10;">
+              <columns>
+                <TableColumn fx:id="colCustomerFN" prefWidth="164.0" style="-fx-background-color: #d4af37;" text="Nombre" />
+                <TableColumn fx:id="colCustomerLN" minWidth="0.0" prefWidth="212.0" style="-fx-background-color: #d4af37;" text="Apellidos" />
+                  <TableColumn fx:id="colCustomerID" prefWidth="141.0" style="-fx-background-color: #d4af37;" text="Id(opcional)" />
+                  <TableColumn fx:id="colCustomerAD" maxWidth="264.0" minWidth="-1.0" prefWidth="133.0" style="-fx-background-color: #d4af37;" text="Dirección" />
+                  <TableColumn fx:id="colCustomerPH" maxWidth="469.0" minWidth="-1.0" prefWidth="122.0" style="-fx-background-color: #d4af37;" text="Celular" />
+                  <TableColumn fx:id="colCustomerCO" prefWidth="114.0" style="-fx-background-color: #d4af37;" text="Observaciones" />
+              </columns>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox>
+               <children>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadCreateCustomer" prefHeight="49.0" prefWidth="498.0" style="-fx-background-color: #d4af37;" text="Crearsss">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="53.0" prefWidth="500.0" style="-fx-background-color: #d4af37;" text="Salir">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="User account list" textFill="#8d5bf0">
-         <font>
-            <Font name="Dubai Bold" size="32.0" />
-         </font></Label>
-      <TableView fx:id="tableCustomers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
-        <columns>
-          <TableColumn fx:id="colCustomerFN" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="First name" />
-          <TableColumn fx:id="colCustomerLN" minWidth="0.0" prefWidth="118.0" style="-fx-background-color: #6743B0;" text="Last name" />
-            <TableColumn fx:id="colCustomerID" prefWidth="149.0" style="-fx-background-color: #6743B0;" text="Id(optional)" />
-            <TableColumn fx:id="colCustomerAD" maxWidth="264.0" minWidth="-1.0" prefWidth="130.0" style="-fx-background-color: #6743B0;" text="Address" />
-            <TableColumn fx:id="colCustomerPH" maxWidth="469.0" minWidth="-1.0" prefWidth="175.0" style="-fx-background-color: #6743B0;" text="Phone" />
-            <TableColumn fx:id="colCustomerCO" prefWidth="155.0" text="Comments" />
-        </columns>
-      </TableView>
-   </children>
-</VBox>
+      </VBox>
+   </center>
+</BorderPane>

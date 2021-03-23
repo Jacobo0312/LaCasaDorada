@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="348.0" layoutY="307.0" mnemonicParsing="false" onAction="#reportOrders" text="Generar reporte de pedidos" />
+      <Button layoutX="334.0" layoutY="276.0" mnemonicParsing="false" onAction="#reportOrders" text="Generar reporte de pedidos" />
       <Label layoutX="60.0" layoutY="146.0" prefHeight="41.0" prefWidth="121.0" text="Intervalo" />
       <Label layoutX="115.0" layoutY="231.0" prefHeight="25.0" prefWidth="11.0" text=":">
          <font>
@@ -35,6 +35,7 @@
       <ComboBox fx:id="dateReportOrderMinutsFinal" layoutX="395.0" layoutY="232.0" prefHeight="25.0" prefWidth="68.0" />
       <Label layoutX="67.0" layoutY="129.0" prefHeight="25.0" prefWidth="108.0" text="Separador" />
       <TextField fx:id="dateReportSeparate" layoutX="140.0" layoutY="129.0" prefHeight="25.0" prefWidth="25.0" text=";" />
-      <Button layoutX="113.0" layoutY="307.0" mnemonicParsing="false" onAction="#generateReportEmployeesDelivery" text="Generar reporte de clientes" />
+      <Button layoutX="80.0" layoutY="282.0" mnemonicParsing="false" onAction="#reportEmployeesDelivery" text="Generar reporte de clientes" />
+      <Button layoutX="99.0" layoutY="337.0" mnemonicParsing="false" onAction="#reportProducts" text="Generar reporte de productos" />
    </children>
 </Pane>

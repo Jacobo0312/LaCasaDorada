@@ -13,6 +13,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,8 +34,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import model.Customer;
 import model.Employee;
 import model.Ingredient;
@@ -567,6 +572,14 @@ public class LaCasaDoradaGUI {
         colCustomerAD.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
         colCustomerPH.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
+
+        
+        tableCustomers.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+                //Agregar ventana de cambio
+                System.out.println(tableCustomers.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 
     @FXML
@@ -1076,7 +1089,8 @@ public class LaCasaDoradaGUI {
         LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
 
         FileChooser fc = new FileChooser();
-        File file = fc.showSaveDialog(null);
+        fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
+        File file = fc.showSaveDialog(pane.getScene().getWindow());
         // Seleccioanr que sea .csv
         // Cambiar el null para mantener la ventane
 
@@ -1086,9 +1100,8 @@ public class LaCasaDoradaGUI {
     }
 
 
-    //Cambiar nombre de funcion
     @FXML
-    public void generateReportEmployeesDelivery(ActionEvent event) throws FileNotFoundException{
+    public void reportEmployeesDelivery(ActionEvent event) throws FileNotFoundException{
                 // Init
                 String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 String hourInit = dateReportOrderHourInit.getValue();
@@ -1104,11 +1117,42 @@ public class LaCasaDoradaGUI {
                 LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
         
                 FileChooser fc = new FileChooser();
-                File file = fc.showSaveDialog(null);
+                fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
+                File file = fc.showSaveDialog(pane.getScene().getWindow());
                 // Seleccioanr que sea .csv
                 // Cambiar el null para mantener la ventane
         
-                laCasaDorada.generateReportEmployeesDelivery(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
+                laCasaDorada.reportEmployeesDelivery(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
                 dateReportSeparate.getText());
     }
+
+
+    @FXML
+    public void reportProducts(ActionEvent event) throws FileNotFoundException{
+                // Init
+                String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String hourInit = dateReportOrderHourInit.getValue();
+                String minuteInit = dateReportOrderMinutsInit.getValue();
+        
+                LocalDateTime dateTimeInit = LocalDateTime.parse(dateInit + "T" + hourInit + ":" + minuteInit + ":00");
+        
+                // Final
+        
+                String dateFinal = dateReportOrderFinal.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String hourFinal = dateReportOrderHourFinal.getValue();
+                String minuteFinal = dateReportOrderMinutsFinal.getValue();
+                LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
+        
+                FileChooser fc = new FileChooser();
+                fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
+                File file = fc.showSaveDialog(pane.getScene().getWindow());
+                // Seleccioanr que sea .csv
+                // Cambiar el null para mantener la ventane
+        
+                laCasaDorada.reportProducts(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
+                dateReportSeparate.getText());
+            
+    }
+
+
 }

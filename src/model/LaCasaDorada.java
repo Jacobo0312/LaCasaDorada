@@ -252,8 +252,8 @@ public class LaCasaDorada {
 
     }
 
-    public void generateReportEmployeesDelivery(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal,
-            String absolutePath, String separate) throws FileNotFoundException {
+    public void reportEmployeesDelivery(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String absolutePath,
+            String separate) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter(absolutePath);
         String report = "REPORTE DE EMPLEADOS \n";
@@ -287,11 +287,62 @@ public class LaCasaDorada {
 
         for (Map.Entry<String, double[]> entry : reportEmployee.entrySet()) {
 
-            report+=("Nombre: " + entry.getKey() + ", Pedidos:" + (int)entry.getValue()[0]+ ", Total:" + entry.getValue()[1]+"\n");
+            report += ("Nombre: " + entry.getKey() + ", Pedidos:" + (int) entry.getValue()[0] + ", Total:"
+                    + entry.getValue()[1] + "\n");
         }
         pw.println(report);
         pw.close();
         // Aqui se genera el reporte
 
     }
+
+    public void reportProducts(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String absolutePath,
+            String separate) throws FileNotFoundException {
+
+        PrintWriter pw = new PrintWriter(absolutePath);
+        String report = "REPORTE DE PRODUCTOS \n";
+
+        Map<String, double[]> reportProduct = new HashMap<String, double[]>();
+        Boolean out = true;
+
+        for (int i = 0; i < orders.size() && out; i++) {
+            Order order = orders.get(i);
+            LocalDateTime date = order.getLocalDateTime();
+            // número de pedidos entregados y la suma de los valores de dichos pedidos
+            if (dateTimeInit.isBefore(date) && date.isBefore(dateTimeFinal)) {
+                OrdersDetails products [] = order.getProducts();
+                for (int j = 0; j < products.length; j++) {
+                    double amount = (double) products[j].getAmount();
+                    double price = products[j].getPrice();
+                    String nameProduct = products[j].getProduct();
+
+                    if (reportProduct.containsKey(nameProduct)) {
+                        double[] array = reportProduct.get(nameProduct);
+                        amount=array[0]+amount;
+                        price=array[1]+price;
+                        array[0]= amount;
+                        array[1]= price;
+                        reportProduct.put(nameProduct,array);
+                    } else {
+                        double [] array={amount,price};
+                        reportProduct.put(nameProduct, array);
+                    }
+                }
+
+            }
+
+        }
+        // Pasar el hash map a reporte
+
+        for (Map.Entry<String,double []> entry : reportProduct.entrySet()) {
+
+            report += ("Nombre: " + entry.getKey() + ", Cantidad pedida:" + (int) entry.getValue()[0] + ", Total:"
+                    + entry.getValue()[1] + "\n");
+        }
+        pw.println(report);
+        pw.close();
+        // Aqui se genera el reporte
+
+    }
+
 }

@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.LaCasaDorada;
 
@@ -31,6 +32,8 @@ public class Main extends Application {
 
 		fxmlLoader.setController(laCasaDoradaGUI);
 		Parent root = fxmlLoader.load();
+        Image icon= new Image("/img/casa-dorada-editada.png");
+        primaryStage.getIcons().add(icon);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("LA CASA DORADA");
