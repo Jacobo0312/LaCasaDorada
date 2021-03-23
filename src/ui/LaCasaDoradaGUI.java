@@ -37,6 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.Customer;
@@ -336,7 +337,35 @@ public class LaCasaDoradaGUI {
     @FXML
     private ListView<Ingredient> listIngredietns;
 
-  
+    // Set objects
+
+    // set Customeer
+
+    @FXML
+    private TextField infoCustomerFN;
+
+    @FXML
+    private TextField infoCustomerLN;
+
+    @FXML
+    private TextField infoCustomerID;
+
+    @FXML
+    private TextField infoCustomerAD;
+
+    @FXML
+    private TextField infoCustomerPH;
+
+    @FXML
+    private TextField infoCustomerCO;
+
+    private Customer setCustomer;
+
+    @FXML
+    private Text infoCustomerCreator;
+
+    @FXML
+    private Text infoCustomerModify;
 
     //
 
@@ -533,9 +562,9 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();;
         pane.setCenter(form);
 
-        //laCasaDorada.addIngredients("Manzana", "HABILITADO");
-        //laCasaDorada.addIngredients("Manzana", "HABILITADO");
-        //laCasaDorada.addIngredients("Cinnamon", "DESHABILITADO");
+        // laCasaDorada.addIngredients("Manzana", "HABILITADO");
+        // laCasaDorada.addIngredients("Manzana", "HABILITADO");
+        // laCasaDorada.addIngredients("Cinnamon", "DESHABILITADO");
         initializeTableViewingredients();
 
     }
@@ -573,11 +602,20 @@ public class LaCasaDoradaGUI {
         colCustomerPH.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
 
-        
         tableCustomers.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-                //Agregar ventana de cambio
-                System.out.println(tableCustomers.getSelectionModel().getSelectedItem());
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                // Agregar ventana de cambio
+
+                setCustomer = tableCustomers.getSelectionModel().getSelectedItem();
+                if (setCustomer != null) {
+                    try {
+                        loadInfoCustomer(setCustomer);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
             }
         });
     }
@@ -652,7 +690,6 @@ public class LaCasaDoradaGUI {
 
     @FXML
     public void addIngredientToProdcut(ActionEvent event) {
-        
 
     }
 
@@ -663,7 +700,6 @@ public class LaCasaDoradaGUI {
             boolean valid = true;
             String name = createProductName.getText();
 
-
             ObservableList<Ingredient> ingredientsOB = listIngredietns.getItems();
 
             Ingredient[] ingredients = new Ingredient[ingredientsOB.size()];
@@ -672,9 +708,9 @@ public class LaCasaDoradaGUI {
                 ingredients[i] = ingredientsOB.get(i);
             }
 
-            //ingredientsOB.clear();
+            // ingredientsOB.clear();
 
-            //array ingredients no puede estar vacio
+            // array ingredients no puede estar vacio
 
             double priceSmall = Double.parseDouble(createProductSizeSmall.getText());
             double priceBig = Double.parseDouble(createProductBig.getText());
@@ -1070,7 +1106,6 @@ public class LaCasaDoradaGUI {
 
     }
 
-    
     @FXML
     public void reportOrders(ActionEvent event) throws FileNotFoundException {
 
@@ -1095,64 +1130,135 @@ public class LaCasaDoradaGUI {
         // Cambiar el null para mantener la ventane
 
         laCasaDorada.generateReportOrders(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
-        dateReportSeparate.getText());
+                dateReportSeparate.getText());
 
     }
 
-
     @FXML
-    public void reportEmployeesDelivery(ActionEvent event) throws FileNotFoundException{
-                // Init
-                String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                String hourInit = dateReportOrderHourInit.getValue();
-                String minuteInit = dateReportOrderMinutsInit.getValue();
-        
-                LocalDateTime dateTimeInit = LocalDateTime.parse(dateInit + "T" + hourInit + ":" + minuteInit + ":00");
-        
-                // Final
-        
-                String dateFinal = dateReportOrderFinal.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                String hourFinal = dateReportOrderHourFinal.getValue();
-                String minuteFinal = dateReportOrderMinutsFinal.getValue();
-                LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
-        
-                FileChooser fc = new FileChooser();
-                fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
-                File file = fc.showSaveDialog(pane.getScene().getWindow());
-                // Seleccioanr que sea .csv
-                // Cambiar el null para mantener la ventane
-        
-                laCasaDorada.reportEmployeesDelivery(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
+    public void reportEmployeesDelivery(ActionEvent event) throws FileNotFoundException {
+        // Init
+        String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String hourInit = dateReportOrderHourInit.getValue();
+        String minuteInit = dateReportOrderMinutsInit.getValue();
+
+        LocalDateTime dateTimeInit = LocalDateTime.parse(dateInit + "T" + hourInit + ":" + minuteInit + ":00");
+
+        // Final
+
+        String dateFinal = dateReportOrderFinal.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String hourFinal = dateReportOrderHourFinal.getValue();
+        String minuteFinal = dateReportOrderMinutsFinal.getValue();
+        LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
+
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
+        File file = fc.showSaveDialog(pane.getScene().getWindow());
+        // Seleccioanr que sea .csv
+        // Cambiar el null para mantener la ventane
+
+        laCasaDorada.reportEmployeesDelivery(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
                 dateReportSeparate.getText());
     }
 
-
     @FXML
-    public void reportProducts(ActionEvent event) throws FileNotFoundException{
-                // Init
-                String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                String hourInit = dateReportOrderHourInit.getValue();
-                String minuteInit = dateReportOrderMinutsInit.getValue();
-        
-                LocalDateTime dateTimeInit = LocalDateTime.parse(dateInit + "T" + hourInit + ":" + minuteInit + ":00");
-        
-                // Final
-        
-                String dateFinal = dateReportOrderFinal.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                String hourFinal = dateReportOrderHourFinal.getValue();
-                String minuteFinal = dateReportOrderMinutsFinal.getValue();
-                LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
-        
-                FileChooser fc = new FileChooser();
-                fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
-                File file = fc.showSaveDialog(pane.getScene().getWindow());
-                // Seleccioanr que sea .csv
-                // Cambiar el null para mantener la ventane
-        
-                laCasaDorada.reportProducts(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
-                dateReportSeparate.getText());
-            
+    public void reportProducts(ActionEvent event) throws FileNotFoundException {
+        // Init
+        String dateInit = dateReportOrderInit.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String hourInit = dateReportOrderHourInit.getValue();
+        String minuteInit = dateReportOrderMinutsInit.getValue();
+
+        LocalDateTime dateTimeInit = LocalDateTime.parse(dateInit + "T" + hourInit + ":" + minuteInit + ":00");
+
+        // Final
+
+        String dateFinal = dateReportOrderFinal.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String hourFinal = dateReportOrderHourFinal.getValue();
+        String minuteFinal = dateReportOrderMinutsFinal.getValue();
+        LocalDateTime dateTimeFinal = LocalDateTime.parse(dateFinal + "T" + hourFinal + ":" + minuteFinal + ":00");
+
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new ExtensionFilter("Text", "*.txt"));
+        File file = fc.showSaveDialog(pane.getScene().getWindow());
+        // Seleccioanr que sea .csv
+        // Cambiar el null para mantener la ventane
+
+        laCasaDorada.reportProducts(dateTimeInit, dateTimeFinal, file.getAbsolutePath(), dateReportSeparate.getText());
+
     }
 
+    public void loadInfoCustomer(Customer customer) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InfoCustomer.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
 
+        String fn = customer.getFirstName();
+        String ln = customer.getLastName();
+        String id = customer.getId();
+        String address = customer.getAddress();
+        String phone = customer.getPhone();
+        String comments = customer.getComments();
+
+        infoCustomerFN.setText(fn);
+        infoCustomerLN.setText(ln);
+        infoCustomerID.setText(id);
+        infoCustomerAD.setText(address);
+        infoCustomerPH.setText(phone);
+        infoCustomerCO.setText(comments);
+        infoCustomerCreator.setText(customer.getEmployeeCreate().toString());
+        infoCustomerModify.setText(customer.getEmployeeModify().toString());
+
+    }
+
+    @FXML
+    public void setCustomer(ActionEvent event) throws IOException {
+        // Valid para saber si lo modifico
+
+        boolean valid = false;
+        String fn = infoCustomerFN.getText();
+        String ln = infoCustomerLN.getText();
+        String id = infoCustomerID.getText();
+        String address = infoCustomerAD.getText();
+        String phone = infoCustomerPH.getText();
+        String comments = infoCustomerCO.getText();
+
+        if (!setCustomer.getFirstName().equals(fn) && !fn.isEmpty()) {
+            setCustomer.setFirstName(fn);
+            valid = true;
+        }
+
+        if (!setCustomer.getLastName().equals(ln) && !ln.isEmpty()) {
+            setCustomer.setLastName(ln);
+            valid = true;
+        }
+
+        if (!setCustomer.getId().equals(id) && !id.isEmpty()) {
+            setCustomer.setId(id);
+            valid = true;
+        }
+
+        if (!setCustomer.getAddress().equals(address) && !address.isEmpty()) {
+            setCustomer.setAddress(address);
+            valid = true;
+        }
+
+        if (!setCustomer.getPhone().equals(phone) && !phone.isEmpty()) {
+            setCustomer.setPhone(phone);
+            valid = true;
+        }
+
+        if (!setCustomer.getComments().equals(comments) && !comments.isEmpty()) {
+            setCustomer.setComments(comments);
+            valid = true;
+        }
+
+        if (valid) {
+            setCustomer.setEmployeeModify(loginUser);
+        }
+
+        loadCustomers(event);
+
+        // Cambiar empleado que modifico
+    }
 }

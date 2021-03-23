@@ -14,7 +14,7 @@
    <center>
       <VBox prefHeight="500.0" prefWidth="900.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Lista de clientes" textFill="#d4af37">
+            <Label alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="877.0" text="Lista de clientes" textFill="#d4af37">
                <font>
                   <Font name="Gabriola" size="32.0" />
                </font>
@@ -34,7 +34,7 @@
             </TableView>
             <HBox>
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadCreateCustomer" prefHeight="49.0" prefWidth="498.0" style="-fx-background-color: #d4af37;" text="Crearsss">
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadCreateCustomer" prefHeight="49.0" prefWidth="498.0" style="-fx-background-color: #d4af37;" text="Crear">
                      <font>
                         <Font name="Gabriola" size="26.0" />
                      </font>

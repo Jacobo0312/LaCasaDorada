@@ -33,7 +33,7 @@
                   <Insets left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Text>
-            <Button mnemonicParsing="false" onAction="#addCustomer" prefHeight="65.0" prefWidth="201.0" style="-fx-background-color: #d4af37;" text="Crear">
+            <Button mnemonicParsing="false" onAction="#setCustomer" prefHeight="65.0" prefWidth="232.0" style="-fx-background-color: #d4af37;" text="Guardar cambios">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -48,7 +48,7 @@
                   <Insets left="20.0" right="20.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#createOrder" prefHeight="64.0" prefWidth="183.0" style="-fx-background-color: #d4af37;" text="Atras">
+            <Button mnemonicParsing="false" onAction="#loadCustomers" prefHeight="64.0" prefWidth="183.0" style="-fx-background-color: #d4af37;" text="Atras">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -79,6 +79,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" textAlignment="RIGHT" wrappingWidth="313.28271484375">
@@ -86,11 +88,11 @@
                   <Font size="21.0" />
                </font>
             </Text>
-            <TextField fx:id="createCustomerFN" prefHeight="83.0" prefWidth="418.0" promptText="Nombre" style="-fx-border-color: black;" GridPane.columnIndex="1">
+            <TextField fx:id="infoCustomerFN" prefHeight="83.0" prefWidth="418.0" promptText="Nombre" style="-fx-border-color: black;" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="25.0" left="10.0" right="150.0" top="25.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="createCustomerLN" prefHeight="85.0" prefWidth="418.0" promptText="Apellido" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="infoCustomerLN" prefHeight="85.0" prefWidth="418.0" promptText="Apellido" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="25.0" left="10.0" right="150.0" top="25.0" />
                </GridPane.margin></TextField>
@@ -99,7 +101,7 @@
                   <Font size="21.0" />
                </font>
             </Text>
-            <TextField fx:id="createCustomerID" prefHeight="83.0" prefWidth="418.0" promptText="ID-opcional" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="infoCustomerID" prefHeight="83.0" prefWidth="418.0" promptText="ID-opcional" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="25.0" left="10.0" right="150.0" top="25.0" />
                </GridPane.margin></TextField>
@@ -108,7 +110,7 @@
                   <Font size="21.0" />
                </font>
             </Text>
-            <TextField fx:id="createCustomerAD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="232.0" promptText="Dirección" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="infoCustomerAD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="232.0" promptText="Dirección" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="25.0" left="10.0" right="150.0" top="25.0" />
                </GridPane.margin></TextField>
@@ -117,7 +119,7 @@
                   <Font size="21.0" />
                </font>
             </Text>
-            <TextField fx:id="createCustomerPH" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="232.0" promptText="Telefono" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="infoCustomerPH" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="232.0" promptText="Telefono" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="25.0" left="10.0" right="150.0" top="25.0" />
                </GridPane.margin></TextField>
@@ -126,11 +128,31 @@
                   <Font size="21.0" />
                </font>
             </Text>
-            <TextField fx:id="createCustomerCO" alignment="CENTER" prefHeight="102.0" prefWidth="232.0" promptText="Comentarios" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <TextField fx:id="infoCustomerCO" alignment="CENTER" prefHeight="102.0" prefWidth="232.0" promptText="Comentarios" style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="150.0" top="10.0" />
                </GridPane.margin></TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Comentarios:" textAlignment="RIGHT" wrappingWidth="314.21630859375" GridPane.rowIndex="5">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Creador:" textAlignment="RIGHT" wrappingWidth="314.21630859375" GridPane.rowIndex="6">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ultimo que modifico:" textAlignment="RIGHT" wrappingWidth="314.21630859375" GridPane.rowIndex="7">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fx:id="infoCustomerCreator" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="314.21630859375" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fx:id="infoCustomerModify" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="314.21630859375" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font size="21.0" />
                </font>
