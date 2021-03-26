@@ -3,17 +3,18 @@ package model;
 
 public class Ingredient implements Comparable<Ingredient>{
     private String name;
-    private StatusIngredients status;
+    private Boolean availability;
 
 
-    public Ingredient(String name, String status) {
+    public Ingredient(String name, Boolean availability) {
         this.name = name;
-        this.status = StatusIngredients.valueOf(status);
+        this.availability=availability;
+ 
     }
 
     public Ingredient(String name) {
         this.name = name;
-        this.status = StatusIngredients.HABILITADO;
+        this.availability=true;;
     }
 
 
@@ -25,13 +26,25 @@ public class Ingredient implements Comparable<Ingredient>{
         this.name = name;
     }
 
-    public StatusIngredients getStatus() {
-        return this.status;
+
+    public Boolean isAvailability() {
+        return this.availability;
     }
 
-    public void setStatus(StatusIngredients status) {
-        this.status = status;
+    public String getAvailability() {
+        String av;
+        if (this.availability){
+            av="HABILITADO";
+        }else{
+            av="DESHABILITADO";
+        }
+        return av;
     }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
 
     @Override
     public String toString() {

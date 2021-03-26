@@ -246,6 +246,10 @@ public class LaCasaDoradaGUI {
     @FXML
     private TextField orderAddress;
 
+    //Create Ingredient
+    @FXML
+    private TextField createIngredientName;
+
     // Products
 
     private ArrayList<OrdersDetails> orderProducts = new ArrayList<OrdersDetails>(); // Intentar trabajar desde el
@@ -402,6 +406,16 @@ public class LaCasaDoradaGUI {
     @FXML
     private ChoiceBox<String> infoEmployeeAV;
     //
+
+    //Set ingredient
+
+    private Ingredient setIngredient;
+
+    @FXML
+    private TextField infoIngredientName;
+
+    @FXML
+    private ChoiceBox<String> infoIngredientAV;
 
     private LaCasaDorada laCasaDorada;
 
@@ -651,10 +665,42 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();;
         pane.setCenter(form);
 
-        // laCasaDorada.addIngredients("Manzana", "HABILITADO");
-        // laCasaDorada.addIngredients("Manzana", "HABILITADO");
-        // laCasaDorada.addIngredients("Cinnamon", "DESHABILITADO");
+        infoIngredientAV.getItems().addAll("HABILITADO", "DESHABILITADO");
+
+        if (setIngredient !=null){
+            String name = setIngredient.getName();
+    
+            Boolean availability = setIngredient.isAvailability();
+            String av;
+            if (availability) {
+                av = "HABILITADO";
+            } else {
+                av = "DESHABILITADO";
+            }
+    
+            infoIngredientName.setText(name);
+            infoIngredientAV.setValue(av);
+        }
+
+
         initializeTableViewingredients();
+
+        TableIngredients.setOnMouseClicked((MouseEvent eventM) -> {
+            if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                // Agregar ventana de cambio
+
+                setIngredient = TableIngredients.getSelectionModel().getSelectedItem();
+                if (setIngredient != null) {
+                    try {
+                        loadIngredients(event);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
 
     }
     // -------------------------------------------------------INITIALIALIZE
@@ -730,7 +776,7 @@ public class LaCasaDoradaGUI {
         TableIngredients.setItems(observableList);
 
         TableIngredientsName.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("name"));
-        TableIngredientsStatus.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("status"));
+        TableIngredientsStatus.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("availability"));
     }
     // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -1116,6 +1162,31 @@ public class LaCasaDoradaGUI {
     }
 
     @FXML
+    public void addIngredient(ActionEvent event) throws IOException {
+        String name = createIngredientName.getText();
+
+
+        if (name.isEmpty()) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Llene todo los campos");
+
+            alert.showAndWait();
+        } else {
+            //Falta agregar los empleados
+            laCasaDorada.addIngredients(name);
+            loadIngredients(event);
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Ingrediente creado");
+            alert.setHeaderText(null);
+            alert.setContentText("El nuevo ingrediente ha sido agregado");
+
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     public void showOrder(ActionEvent event) throws IOException {
 
         try {
@@ -1430,7 +1501,7 @@ public class LaCasaDoradaGUI {
     @FXML
     public void deleteEmployee(ActionEvent event) throws IOException {
 
-        boolean valid = laCasaDorada.deleteCustomer(setCustomer);
+        boolean valid = laCasaDorada.deleteEmployee(setEmployee);
 
         if (valid) {
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -1438,7 +1509,7 @@ public class LaCasaDoradaGUI {
             alert.setHeaderText(null);
             alert.setContentText("El empleado se elimino satisfactoriamente");
             alert.showAndWait();
-            loadMainWindow(event);
+            loadEmployees(event);
         } else {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("El empleado no ha podido ser eliminado");
@@ -1450,5 +1521,62 @@ public class LaCasaDoradaGUI {
 
     }
 
+
+
+    @FXML
+    public void setIngredient(ActionEvent event) throws IOException {
+
+        String name = infoIngredientName.getText();
+        String av = infoIngredientAV.getValue();
+        Boolean valid = laCasaDorada.setIngredient(setIngredient,name,av);
+
+        if (valid) {
+            //setEmployee.(loginUser);
+            //Empleado modificador
+            //Agregar estos atributos
+        }
+
+
+        setIngredient=null;
+        loadIngredients(event);
+
+    }
+
+    @FXML
+    public void deleteIngredient(ActionEvent event) throws IOException {
+
+        if (setIngredient == null){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El ingrediente no ha podido ser eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("No ha seleccionado ningun ingrediente");
+            alert.showAndWait();
+            setIngredient=null;
+            loadIngredients(event);
+        }else{
+            boolean valid = laCasaDorada.deleteIngredient(setIngredient);
+
+            if (valid) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("El ingrediente ha sido eliminado");
+                alert.setHeaderText(null);
+                alert.setContentText("El empleado se elimino satisfactoriamente");
+                alert.showAndWait();
+                setIngredient=null;
+                loadIngredients(event);
+            } else {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("El ingrediente no ha podido ser eliminado");
+                alert.setHeaderText(null);
+                alert.setContentText("El ingrediente se encuentra en algun producto");
+                alert.showAndWait();
+                setIngredient=null;
+                loadIngredients(event);
+            }
+        }
+
+        
+
+    }
 
 }

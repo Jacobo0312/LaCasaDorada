@@ -83,8 +83,8 @@ public class LaCasaDorada {
         return ingredients;
     }
 
-    public void addIngredients(String name, String status) {
-        ingredients.add(new Ingredient(name, status));
+    public void addIngredients(String name) {
+        ingredients.add(new Ingredient(name));
     }
 
     private void addIngredients(Ingredient ingredient) {
@@ -459,10 +459,54 @@ public class LaCasaDorada {
         }
 
 
-        
+
 
         if (valid) {
             employees.remove(setEmployee);
+        }
+
+        return valid;
+    }
+
+    public Boolean setIngredient(Ingredient setIngredient, String name, String av) {
+        boolean valid = false;
+        if (!setIngredient.getName().equals(name) && !name.isEmpty()) {
+            setIngredient.setName(name);
+            valid = true;
+        }
+
+
+
+        if (!setIngredient.getAvailability().equals(av) && !av.isEmpty()) {
+            valid = true;
+            if (av.equals("HABILITADO")) {
+                setIngredient.setAvailability(true);
+            } else {
+                setIngredient.setAvailability(false);
+            }
+        }
+
+        return valid;
+    }
+
+    public boolean deleteIngredient(Ingredient setIngredient) {
+       
+        boolean valid = true;
+
+        for (int i = 0; i < products.size() && valid; i++) {
+            Ingredient [] setIngredients = products.get(i).getIngredientsArray();
+
+            for (int j = 0; j < setIngredients.length && valid; j++) {
+                if (setIngredients[j].equals(setIngredient)){
+                    valid = false;
+                }
+                
+            }
+          
+        }
+
+        if (valid) {
+            ingredients.remove(setIngredient);
         }
 
         return valid;

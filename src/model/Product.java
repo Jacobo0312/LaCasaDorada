@@ -36,6 +36,10 @@ public class Product {
         return Arrays.toString(this.ingredients);
     }
 
+    public Ingredient[] getIngredientsArray() {
+        return this.ingredients;
+    }
+
     public void setIngredients(Ingredient[] ingredients) {
         this.ingredients = ingredients;
     }
