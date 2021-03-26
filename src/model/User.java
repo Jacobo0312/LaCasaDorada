@@ -46,4 +46,18 @@ public class User extends Employee implements Comparable<User>{
     }
 
 
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+            User obj = (User) o;
+        return obj.getUser().equals(this.user);
+    }
+
+
+
+
+
+
 }

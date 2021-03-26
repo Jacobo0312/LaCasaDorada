@@ -4,12 +4,18 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String id;
+    //private Employee employeeCreate;
+    //private Employee employeeModify;
+    private Boolean availability;
 
 
     public Employee(String firstName, String lastName, String id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
+        //this.employeeCreate = employeeCreate;
+        //this.employeeModify = employeeCreate;
+        this.availability=true;
     }
 
 
@@ -19,6 +25,24 @@ public class Employee {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public Boolean isAvailability() {
+        return this.availability;
+    }
+
+    public String getAvailability() {
+        String av;
+        if (this.availability){
+            av="HABILITADO";
+        }else{
+            av="DESHABILITADO";
+        }
+        return av;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
     }
 
     public String getLastName() {
@@ -36,6 +60,8 @@ public class Employee {
     public void setId(String id) {
         this.id = id;
     }
+
+
 
     public String toString() {
         return getFirstName()+" "+getLastName();

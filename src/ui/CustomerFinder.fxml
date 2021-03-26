@@ -31,16 +31,6 @@
          </children>
       </Pane>
       <Pane layoutY="53.0" prefHeight="5.0" prefWidth="975.0" style="-fx-background-color: #000000;" />
-      <TableView fx:id="tableCustomers" layoutX="11.0" layoutY="137.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="355.0" prefWidth="933.0" style="-fx-background-color: #D4AF37;">
-         <columns>
-            <TableColumn fx:id="colCustomerFN" prefWidth="172.0" style="-fx-background-color: #D4AF37;" text="First name" />
-            <TableColumn fx:id="colCustomerLN" minWidth="0.0" prefWidth="118.0" style="-fx-background-color: #D4AF37;" text="Last name" />
-            <TableColumn fx:id="colCustomerID" prefWidth="149.0" style="-fx-background-color: #D4AF37;" text="Id(optional)" />
-            <TableColumn fx:id="colCustomerAD" maxWidth="264.0" minWidth="-1.0" prefWidth="130.0" style="-fx-background-color: #D4AF37;" text="Address" />
-            <TableColumn fx:id="colCustomerPH" maxWidth="469.0" minWidth="-1.0" prefWidth="175.0" style="-fx-background-color: #D4AF37;" text="Phone" />
-            <TableColumn fx:id="colCustomerCO" prefWidth="188.0" style="-fx-background-color: #D4AF37;" text="Comments" />
-         </columns>
-      </TableView>
       <Button layoutX="778.0" layoutY="72.0" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #D4AF37;" text="Exit" textFill="#8d5bf0">
          <font>
             <Font name="Dubai Regular" size="24.0" />
@@ -51,5 +41,16 @@
             <Font name="Dubai Regular" size="24.0" />
          </font>
       </Button>
+      <TableView fx:id="tableCustomers" layoutX="43.0" layoutY="151.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 0 0 10 10;">
+         <columns>
+            <TableColumn fx:id="colCustomerFN" prefWidth="124.0" style="-fx-background-color: #d4af37;" text="Nombre" />
+            <TableColumn fx:id="colCustomerLN" minWidth="0.0" prefWidth="140.0" style="-fx-background-color: #d4af37;" text="Apellidos" />
+            <TableColumn fx:id="colCustomerID" prefWidth="130.0" style="-fx-background-color: #d4af37;" text="Id(opcional)" />
+            <TableColumn fx:id="colCustomerAD" maxWidth="264.0" minWidth="-1.0" prefWidth="143.0" style="-fx-background-color: #d4af37;" text="Dirección" />
+            <TableColumn fx:id="colCustomerPH" maxWidth="469.0" minWidth="-1.0" prefWidth="110.0" style="-fx-background-color: #d4af37;" text="Celular" />
+            <TableColumn fx:id="colCustomerCO" prefWidth="126.0" style="-fx-background-color: #d4af37;" text="Observaciones" />
+            <TableColumn fx:id="colCustomerAV" prefWidth="112.0" style="-fx-background-color: #d4af37;" text="Disponibilidad" />
+         </columns>
+      </TableView>
     </children>
 </AnchorPane>

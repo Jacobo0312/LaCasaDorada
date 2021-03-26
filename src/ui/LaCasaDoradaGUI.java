@@ -158,7 +158,20 @@ public class LaCasaDoradaGUI {
     @FXML
     private TableColumn<Customer, String> colCustomerCO;
 
+    @FXML
+    private TableColumn<Customer, String> colCustomerAV;
+
     // Employees
+    // Create employee
+    @FXML
+    private TextField createEmployeeFN;
+
+    @FXML
+    private TextField createEmployeeLN;
+
+    @FXML
+    private TextField createEmployeeID;
+    // table employees
 
     @FXML
     private TableView<Employee> tableEmployees;
@@ -171,6 +184,9 @@ public class LaCasaDoradaGUI {
 
     @FXML
     private TableColumn<Employee, String> colEmployeesID;
+
+    @FXML
+    private TableColumn<Employee, String> colEmployeeAV;
 
     // --------
 
@@ -339,7 +355,7 @@ public class LaCasaDoradaGUI {
 
     // Set objects
 
-    // set Customeer
+    // set Customer
 
     @FXML
     private TextField infoCustomerFN;
@@ -367,6 +383,24 @@ public class LaCasaDoradaGUI {
     @FXML
     private Text infoCustomerModify;
 
+    @FXML
+    private ChoiceBox<String> infoCustomerAV;
+
+
+    //Set employee
+
+    private Employee setEmployee;
+    @FXML
+    private TextField infoEmployeeFN;
+
+    @FXML
+    private TextField infoEmployeeLN;
+
+    @FXML
+    private TextField infoEmployeeID;
+
+    @FXML
+    private ChoiceBox<String> infoEmployeeAV;
     //
 
     private LaCasaDorada laCasaDorada;
@@ -458,27 +492,25 @@ public class LaCasaDoradaGUI {
         if (firstName.isEmpty() || lastName.isEmpty() || id.isEmpty() || user.isEmpty() || password.isEmpty())
             valid = false;
 
-        if (valid) {
+        User userObj = laCasaDorada.addUser(firstName, lastName, id, user, password);
 
-            laCasaDorada.addUser(firstName, lastName, id, user, password);
+        if (valid && userObj != null) {
 
-            // revisar esto
-            User userLogin = laCasaDorada.getUser(user, password);
-            loginUser = userLogin;
+            loginUser = userObj;
             loadMainWindow(event);
             labelUser.setText(loginUser.getUser());
             labelLoginOrLogOut.setText("Log out");
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Account created");
+            alert.setTitle("Usuario creado");
             alert.setHeaderText(null);
-            alert.setContentText("The new user has been created");
+            alert.setContentText("El nuevo usuario ha sido creado");
             alert.showAndWait();
 
         } else {
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Validation Error");
+            alert.setTitle("Error de validacion");
             alert.setHeaderText(null);
-            alert.setContentText("You must fill each field in the form");
+            alert.setContentText("Tiene algunos campos sin llenar o su nombre se usuario ya ha sido utilizado");
 
             alert.showAndWait();
 
@@ -528,6 +560,25 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();;
         pane.setCenter(form);
         initializeTableViewEmployees();
+
+                // Double click
+                tableEmployees.setOnMouseClicked((MouseEvent eventM) -> {
+                    if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                        // Agregar ventana de cambio
+        
+                        setEmployee = tableEmployees.getSelectionModel().getSelectedItem();
+                        if (setEmployee != null) {
+                            try {
+                                loadInfoEmployee(setEmployee);
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+        
+                    }
+                });
+
     }
 
     // load window users------------------------------
@@ -541,6 +592,25 @@ public class LaCasaDoradaGUI {
         pane.setCenter(form);
         initializeTableViewOrders();
 
+        tableOrders.setOnMouseClicked((MouseEvent eventM) -> {
+            if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                // Agregar ventana de cambio
+                System.out.println(tableOrders.getSelectionModel().getSelectedItem().toString());
+                /*
+                setCustomer = tableCustomers.getSelectionModel().getSelectedItem();
+                if (setCustomer != null) {
+                    try {
+                        loadInfoCustomer(setCustomer);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                */
+
+            }
+        });
+
     }
 
     // load window customers------------------------------
@@ -552,6 +622,25 @@ public class LaCasaDoradaGUI {
         // pane.getChildren().clear();;
         pane.setCenter(form);
         initializeTableViewCustomers();
+
+        // Double click
+        tableCustomers.setOnMouseClicked((MouseEvent eventM) -> {
+            if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                // Agregar ventana de cambio
+
+                setCustomer = tableCustomers.getSelectionModel().getSelectedItem();
+                if (setCustomer != null) {
+                    try {
+                        loadInfoCustomer(setCustomer);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
     }
 
     // Load list ingredients
@@ -601,23 +690,9 @@ public class LaCasaDoradaGUI {
         colCustomerAD.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
         colCustomerPH.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
+        colCustomerAV.setCellValueFactory(new PropertyValueFactory<Customer, String>("availability"));
 
-        tableCustomers.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                // Agregar ventana de cambio
 
-                setCustomer = tableCustomers.getSelectionModel().getSelectedItem();
-                if (setCustomer != null) {
-                    try {
-                        loadInfoCustomer(setCustomer);
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
     }
 
     @FXML
@@ -645,6 +720,7 @@ public class LaCasaDoradaGUI {
         colEmployeesFN.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
         colEmployeesLN.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
         colEmployeesID.setCellValueFactory(new PropertyValueFactory<Employee, String>("id"));
+        colEmployeeAV.setCellValueFactory(new PropertyValueFactory<Employee, String>("availability"));
     }
 
     @FXML
@@ -668,8 +744,8 @@ public class LaCasaDoradaGUI {
 
     }
 
-    ////
-    // Load window create product
+    // ---------------------------------------------
+
     @FXML
     public void loadCreateProduct(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateProduct.fxml"));
@@ -686,10 +762,42 @@ public class LaCasaDoradaGUI {
 
     }
 
-    // Create product
+    @FXML
+    public void loadCreateEmployee(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateEmployee.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+        initializeTableViewEmployees();
+    }
 
     @FXML
-    public void addIngredientToProdcut(ActionEvent event) {
+    public void addEmployee(ActionEvent event) throws IOException {
+        boolean valid = true;
+        String firstName = createEmployeeFN.getText();
+        String lastName = createEmployeeLN.getText();
+        String id = createEmployeeID.getText();
+        if (firstName.isEmpty() || lastName.isEmpty() || id.isEmpty())
+            valid = false;
+
+        if (valid) {
+            laCasaDorada.addEmployees(firstName, lastName, id);
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Empleado creado");
+            alert.setHeaderText(null);
+            alert.setContentText("El nuevo empleado ha sido creado");
+            alert.showAndWait();
+            loadEmployees(event);
+
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error de validacion");
+            alert.setHeaderText(null);
+            alert.setContentText("Tiene algunos campos sin llenar");
+            alert.showAndWait();
+
+        }
 
     }
 
@@ -794,6 +902,10 @@ public class LaCasaDoradaGUI {
         initializeTableViewOrderProducts();
         initializeTableViewEmployees();
 
+        ObservableList<Employee> observableList;
+        observableList = FXCollections.observableArrayList(laCasaDorada.getEmployees()).filtered(customer -> customer.isAvailability() == true);
+        tableEmployees.setItems(observableList);
+
     }
 
     @FXML
@@ -855,7 +967,8 @@ public class LaCasaDoradaGUI {
         initializeTableViewCustomers();
 
         ObservableList<Customer> observableList;
-        observableList = FXCollections.observableArrayList(laCasaDorada.getCustomers());
+        observableList = FXCollections.observableArrayList(laCasaDorada.getCustomers())
+                .filtered(customer -> customer.isAvailability() == true);
 
         // Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<Customer> filteredData = new FilteredList<>(observableList, b -> true);
@@ -991,7 +1104,6 @@ public class LaCasaDoradaGUI {
             alert.showAndWait();
         } else {
             laCasaDorada.addCustomers(firstName, lastName, id, address, phone, comments, loginUser);
-            // Agregar automaticamente el creado
             createOrder(event);
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Customer created");
@@ -1187,11 +1299,14 @@ public class LaCasaDoradaGUI {
     }
 
     public void loadInfoCustomer(Customer customer) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InfoCustomer.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(form);
+
+        infoCustomerAV.getItems().addAll("HABILITADO", "DESHABILITADO");
 
         String fn = customer.getFirstName();
         String ln = customer.getLastName();
@@ -1199,6 +1314,14 @@ public class LaCasaDoradaGUI {
         String address = customer.getAddress();
         String phone = customer.getPhone();
         String comments = customer.getComments();
+
+        Boolean availability = customer.isAvailability();
+        String av;
+        if (availability) {
+            av = "HABILITADO";
+        } else {
+            av = "DESHABILITADO";
+        }
 
         infoCustomerFN.setText(fn);
         infoCustomerLN.setText(ln);
@@ -1208,50 +1331,50 @@ public class LaCasaDoradaGUI {
         infoCustomerCO.setText(comments);
         infoCustomerCreator.setText(customer.getEmployeeCreate().toString());
         infoCustomerModify.setText(customer.getEmployeeModify().toString());
+        infoCustomerAV.setValue(av);
+
+    }
+
+    public void loadInfoEmployee(Employee employee) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InfoEmployee.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+
+        infoEmployeeAV.getItems().addAll("HABILITADO", "DESHABILITADO");
+
+        String fn = employee.getFirstName();
+        String ln = employee.getLastName();
+        String id = employee.getId();
+
+        Boolean availability = employee.isAvailability();
+        String av;
+        if (availability) {
+            av = "HABILITADO";
+        } else {
+            av = "DESHABILITADO";
+        }
+
+        infoEmployeeFN.setText(fn);
+        infoEmployeeLN.setText(ln);
+        infoEmployeeID.setText(id);
+        infoEmployeeAV.setValue(av);
 
     }
 
     @FXML
     public void setCustomer(ActionEvent event) throws IOException {
-        // Valid para saber si lo modifico
 
-        boolean valid = false;
         String fn = infoCustomerFN.getText();
         String ln = infoCustomerLN.getText();
         String id = infoCustomerID.getText();
         String address = infoCustomerAD.getText();
         String phone = infoCustomerPH.getText();
         String comments = infoCustomerCO.getText();
-
-        if (!setCustomer.getFirstName().equals(fn) && !fn.isEmpty()) {
-            setCustomer.setFirstName(fn);
-            valid = true;
-        }
-
-        if (!setCustomer.getLastName().equals(ln) && !ln.isEmpty()) {
-            setCustomer.setLastName(ln);
-            valid = true;
-        }
-
-        if (!setCustomer.getId().equals(id) && !id.isEmpty()) {
-            setCustomer.setId(id);
-            valid = true;
-        }
-
-        if (!setCustomer.getAddress().equals(address) && !address.isEmpty()) {
-            setCustomer.setAddress(address);
-            valid = true;
-        }
-
-        if (!setCustomer.getPhone().equals(phone) && !phone.isEmpty()) {
-            setCustomer.setPhone(phone);
-            valid = true;
-        }
-
-        if (!setCustomer.getComments().equals(comments) && !comments.isEmpty()) {
-            setCustomer.setComments(comments);
-            valid = true;
-        }
+        String av = infoCustomerAV.getValue();
+        Boolean valid = laCasaDorada.setCustomer(setCustomer, fn, ln, id, address, phone, comments, av);
 
         if (valid) {
             setCustomer.setEmployeeModify(loginUser);
@@ -1259,6 +1382,73 @@ public class LaCasaDoradaGUI {
 
         loadCustomers(event);
 
-        // Cambiar empleado que modifico
     }
+
+    @FXML
+    public void deleteCustomer(ActionEvent event) throws IOException {
+
+        boolean valid = laCasaDorada.deleteCustomer(setCustomer);
+
+        if (valid) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El cliente ha sido eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El cliente se elimino satisfactoriamente");
+            alert.showAndWait();
+            loadMainWindow(event);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El cliente no ha podido ser eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El cliente ha realizado ordenes");
+            alert.showAndWait();
+        }
+        // Pasar todo al modelo
+
+    }
+
+
+
+    @FXML
+    public void setEmployee(ActionEvent event) throws IOException {
+
+        String fn = infoEmployeeFN.getText();
+        String ln = infoEmployeeLN.getText();
+        String id = infoEmployeeID.getText();
+        String av = infoEmployeeAV.getValue();
+        Boolean valid = laCasaDorada.setEmployee(setEmployee, fn, ln, id,av);
+
+        if (valid) {
+            //setEmployee.(loginUser);
+            //Empleado modificador
+        }
+
+        loadEmployees(event);
+
+    }
+
+    @FXML
+    public void deleteEmployee(ActionEvent event) throws IOException {
+
+        boolean valid = laCasaDorada.deleteCustomer(setCustomer);
+
+        if (valid) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El empleado ha sido eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El empleado se elimino satisfactoriamente");
+            alert.showAndWait();
+            loadMainWindow(event);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El empleado no ha podido ser eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El empleado ha realizado ordenes");
+            alert.showAndWait();
+        }
+        // Pasar todo al modelo
+
+    }
+
+
 }

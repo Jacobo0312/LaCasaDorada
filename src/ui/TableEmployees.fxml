@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,17 +13,18 @@
    <children>
       <HBox>
          <children>
-            <Label fx:id="labelUser" prefHeight="17.0" prefWidth="341.0" text="#Name" textFill="#8d5bf0">
+            <Label fx:id="labelUser" prefHeight="17.0" prefWidth="341.0" text="Prueba" textFill="#8d5bf0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
                <font>
                   <Font name="Dubai Bold" size="32.0" />
                </font></Label>
-            <ImageView id="image" fx:id="profilePhoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="ui.style">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin></ImageView>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadCreateEmployee" prefHeight="51.0" prefWidth="236.0" style="-fx-background-color: #d4af37;" text="Crear">
+               <font>
+                  <Font name="Gabriola" size="26.0" />
+               </font>
+            </Button>
             <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -34,15 +34,16 @@
                </font></Button>
          </children>
       </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Employees list" textFill="#8d5bf0">
+      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="Lista de empleados" textFill="#8d5bf0">
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
       <TableView fx:id="tableEmployees" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
         <columns>
-          <TableColumn fx:id="colEmployeesFN" prefWidth="256.0" style="-fx-background-color: #6743B0;" text="First name" />
-          <TableColumn fx:id="colEmployeesLN" minWidth="0.0" prefWidth="267.0" style="-fx-background-color: #6743B0;" text="Last name" />
-            <TableColumn fx:id="colEmployeesID" prefWidth="220.0" style="-fx-background-color: #6743B0;" text="Id" />
+          <TableColumn fx:id="colEmployeesFN" prefWidth="256.0" style="-fx-background-color: #6743B0;" text="Nombre" />
+          <TableColumn fx:id="colEmployeesLN" minWidth="0.0" prefWidth="125.0" style="-fx-background-color: #6743B0;" text="Apellido" />
+            <TableColumn fx:id="colEmployeesID" prefWidth="200.0" style="-fx-background-color: #6743B0;" text="Id" />
+            <TableColumn fx:id="colEmployeeAV" prefWidth="163.0" style="-fx-background-color: #d4af37;" text="Disponibilidad" />
         </columns>
       </TableView>
    </children>

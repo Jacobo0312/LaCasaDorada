@@ -32,9 +32,9 @@ public class LaCasaDorada {
         orders = new ArrayList<Order>();
         employees = new ArrayList<Employee>();
         ingredients = new ArrayList<Ingredient>();
-        admin = new User("Juan", "Jacobo", "1006107372", "1", "1");
-        users.add(admin);
-        // addUser("Juan", "Jacobo", "1006107372", "1", "1");// Admin
+        admin = addUser("Juan", "Jacobo", "1006107372", "1", "1");
+
+        //Agregar los otros atributos
     }
 
     // GET and ADD for Users-------------------------------------------
@@ -43,9 +43,15 @@ public class LaCasaDorada {
         return users;
     }
 
-    public void addUser(String firstName, String lastName, String id, String user, String password) {
-        users.add(new User(firstName, lastName, id, user, password));
-        // No poder crear con un mismo usuario
+    public User addUser(String firstName, String lastName, String id, String account, String password) {
+        User user = new User(firstName, lastName, id, account, password);
+
+        if (users.contains(user)) {
+            user = null;
+        } else {
+            users.add(user);
+        }
+        return user;
     }
 
     // For verify user
@@ -145,7 +151,8 @@ public class LaCasaDorada {
     }
 
     public void addEmployees(String firstName, String lastName, String id) {
-        employees.add(new Employee(firstName, lastName, id));// Falta agregar los dos empleados
+        employees.add(new Employee(firstName, lastName, id));
+        // Falta agregar los dos empleados
     }
 
     // Import data
@@ -310,7 +317,7 @@ public class LaCasaDorada {
             LocalDateTime date = order.getLocalDateTime();
             // número de pedidos entregados y la suma de los valores de dichos pedidos
             if (dateTimeInit.isBefore(date) && date.isBefore(dateTimeFinal)) {
-                OrdersDetails products [] = order.getProducts();
+                OrdersDetails products[] = order.getProducts();
                 for (int j = 0; j < products.length; j++) {
                     double amount = (double) products[j].getAmount();
                     double price = products[j].getPrice();
@@ -318,13 +325,13 @@ public class LaCasaDorada {
 
                     if (reportProduct.containsKey(nameProduct)) {
                         double[] array = reportProduct.get(nameProduct);
-                        amount=array[0]+amount;
-                        price=array[1]+price;
-                        array[0]= amount;
-                        array[1]= price;
-                        reportProduct.put(nameProduct,array);
+                        amount = array[0] + amount;
+                        price = array[1] + price;
+                        array[0] = amount;
+                        array[1] = price;
+                        reportProduct.put(nameProduct, array);
                     } else {
-                        double [] array={amount,price};
+                        double[] array = { amount, price };
                         reportProduct.put(nameProduct, array);
                     }
                 }
@@ -334,7 +341,7 @@ public class LaCasaDorada {
         }
         // Pasar el hash map a reporte
 
-        for (Map.Entry<String,double []> entry : reportProduct.entrySet()) {
+        for (Map.Entry<String, double[]> entry : reportProduct.entrySet()) {
 
             report += ("Nombre: " + entry.getKey() + ", Cantidad pedida:" + (int) entry.getValue()[0] + ", Total:"
                     + entry.getValue()[1] + "\n");
@@ -345,4 +352,119 @@ public class LaCasaDorada {
 
     }
 
+    public Boolean setCustomer(Customer setCustomer, String fn, String ln, String id, String address, String phone,
+            String comments, String av) {
+
+        boolean valid = false;
+        if (!setCustomer.getFirstName().equals(fn) && !fn.isEmpty()) {
+            setCustomer.setFirstName(fn);
+            valid = true;
+        }
+
+        if (!setCustomer.getLastName().equals(ln) && !ln.isEmpty()) {
+            setCustomer.setLastName(ln);
+            valid = true;
+        }
+
+        if (!setCustomer.getId().equals(id) && !id.isEmpty()) {
+            setCustomer.setId(id);
+            valid = true;
+        }
+
+        if (!setCustomer.getAddress().equals(address) && !address.isEmpty()) {
+            setCustomer.setAddress(address);
+            valid = true;
+        }
+
+        if (!setCustomer.getPhone().equals(phone) && !phone.isEmpty()) {
+            setCustomer.setPhone(phone);
+            valid = true;
+        }
+
+        if (!setCustomer.getComments().equals(comments) && !comments.isEmpty()) {
+            setCustomer.setComments(comments);
+            valid = true;
+        }
+
+        if (!setCustomer.getAvailability().equals(av) && !av.isEmpty()) {
+            valid = true;
+            if (av.equals("HABILITADO")) {
+                setCustomer.setAvailability(true);
+            } else {
+                setCustomer.setAvailability(false);
+            }
+        }
+
+        return valid;
+
+    }
+
+    public boolean deleteCustomer(Customer setCustomer) {
+
+        boolean valid = true;
+
+        for (int i = 0; i < orders.size() && valid; i++) {
+            Customer customer = orders.get(i).getCustomer();
+            if (customer.equals(setCustomer))
+                valid = false;
+        }
+
+        if (valid) {
+            customers.remove(setCustomer);
+        }
+
+        return valid;
+    }
+
+    public Boolean setEmployee(Employee setEmployee, String fn, String ln, String id, String av) {
+        boolean valid = false;
+        if (!setEmployee.getFirstName().equals(fn) && !fn.isEmpty()) {
+            setEmployee.setFirstName(fn);
+            valid = true;
+        }
+
+        if (!setEmployee.getLastName().equals(ln) && !ln.isEmpty()) {
+            setEmployee.setLastName(ln);
+            valid = true;
+        }
+
+        if (!setEmployee.getId().equals(id) && !id.isEmpty()) {
+            setEmployee.setId(id);
+            valid = true;
+        }
+
+
+        if (!setEmployee.getAvailability().equals(av) && !av.isEmpty()) {
+            valid = true;
+            if (av.equals("HABILITADO")) {
+                setEmployee.setAvailability(true);
+            } else {
+                setEmployee.setAvailability(false);
+            }
+        }
+
+        return valid;
+
+    }
+
+
+    public boolean deleteEmployee(Employee setEmployee) {
+
+        boolean valid = true;
+
+        for (int i = 0; i < orders.size() && valid; i++) {
+            Employee employee = orders.get(i).getEmployeeDelivery();
+            if (employee.equals(setEmployee))
+                valid = false;
+        }
+
+
+        
+
+        if (valid) {
+            employees.remove(setEmployee);
+        }
+
+        return valid;
+    }
 }

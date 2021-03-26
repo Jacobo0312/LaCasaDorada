@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Customer
  */
@@ -13,6 +15,7 @@ public class Customer{
     private String comments;
     private Employee employeeCreate;
     private Employee employeeModify;
+    private Boolean availability;
 
 
     public Customer(String firstName, String lastName, String id, String address, String phone,String comments,Employee employeeCreate) {
@@ -24,6 +27,7 @@ public class Customer{
         this.comments=comments;
         this.employeeCreate = employeeCreate;
         this.employeeModify = employeeCreate;
+        this.availability=true;
     }
 
 
@@ -97,5 +101,38 @@ public class Customer{
     public void setEmployeeModify(Employee employeeModify) {
         this.employeeModify = employeeModify;
     }
+
+    public Boolean isAvailability() {
+        return this.availability;
+    }
+
+    public String getAvailability() {
+        String av;
+        if (this.availability){
+            av="HABILITADO";
+        }else{
+            av="DESHABILITADO";
+        }
+        return av;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Customer)) {
+            return false;
+        }
+        Customer customer = (Customer) o;
+        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(id, customer.id) && Objects.equals(address, customer.address) && Objects.equals(phone, customer.phone) && Objects.equals(comments, customer.comments) && Objects.equals(employeeCreate, customer.employeeCreate) && Objects.equals(employeeModify, customer.employeeModify) && Objects.equals(availability, customer.availability);
+    }
+
+
 
 }
