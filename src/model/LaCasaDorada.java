@@ -83,8 +83,8 @@ public class LaCasaDorada {
         return ingredients;
     }
 
-    public void addIngredients(String name) {
-        ingredients.add(new Ingredient(name));
+    public void addIngredients(String name,Employee employeeCreate) {
+        ingredients.add(new Ingredient(name,employeeCreate));
     }
 
     private void addIngredients(Ingredient ingredient) {
@@ -169,7 +169,7 @@ public class LaCasaDorada {
 
             for (int i = 0; i < ingredientsProduct.length; i++) {
 
-                Ingredient ingredient = new Ingredient(ingredientsString[i]);
+                Ingredient ingredient = new Ingredient(ingredientsString[i],admin);
 
                 int index = Collections.binarySearch(ingredients, ingredient);
                 if (index > 0) {

@@ -4,17 +4,24 @@ package model;
 public class Ingredient implements Comparable<Ingredient>{
     private String name;
     private Boolean availability;
+    private Employee employeeCreate;
+    private Employee employeeModify;
+    
 
 
-    public Ingredient(String name, Boolean availability) {
+    public Ingredient(String name, Boolean availability,Employee employeeCreate) {
         this.name = name;
         this.availability=availability;
+        this.employeeCreate = employeeCreate;
+        this.employeeModify = employeeCreate;
  
     }
 
-    public Ingredient(String name) {
+    public Ingredient(String name,Employee employeeCreate) {
         this.name = name;
-        this.availability=true;;
+        this.availability=true;
+        this.employeeCreate = employeeCreate;
+        this.employeeModify = employeeCreate;
     }
 
 
@@ -57,7 +64,21 @@ public class Ingredient implements Comparable<Ingredient>{
         return this.name.compareTo(o.getName());
     }
 
+    public Employee getEmployeeCreate() {
+        return this.employeeCreate;
+    }
 
+    public void setEmployeeCreate(Employee employeeCreate) {
+        this.employeeCreate = employeeCreate;
+    }
+
+    public Employee getEmployeeModify() {
+        return this.employeeModify;
+    }
+
+    public void setEmployeeModify(Employee employeeModify) {
+        this.employeeModify = employeeModify;
+    }
 
 
 

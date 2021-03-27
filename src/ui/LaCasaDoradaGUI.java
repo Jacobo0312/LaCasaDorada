@@ -13,8 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -417,6 +415,37 @@ public class LaCasaDoradaGUI {
     @FXML
     private ChoiceBox<String> infoIngredientAV;
 
+    @FXML
+    private Text InfoIngredientCreator;
+
+    @FXML
+    private Text infoIngredientModify;
+
+
+    //Set User
+
+    private User setUser;
+    @FXML
+    private TextField infoUserFN;
+
+    @FXML
+    private TextField infoUserLN;
+
+    @FXML
+    private TextField InfoUserId;
+
+    @FXML
+    private TextField infoUserUS;
+
+    @FXML
+    private PasswordField infoUserPA;
+
+    @FXML
+    private Text infoUserCreator;
+
+    @FXML
+    private Text infoUserModify;
+
     private LaCasaDorada laCasaDorada;
 
     public LaCasaDoradaGUI(LaCasaDorada controller) {
@@ -486,7 +515,7 @@ public class LaCasaDoradaGUI {
 
     @FXML
     public void loadFormulario(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Form.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();;
@@ -662,7 +691,7 @@ public class LaCasaDoradaGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListIngredients.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
-        // pane.getChildren().clear();;
+        // pane.getChildren().clear();
         pane.setCenter(form);
 
         infoIngredientAV.getItems().addAll("HABILITADO", "DESHABILITADO");
@@ -680,6 +709,8 @@ public class LaCasaDoradaGUI {
     
             infoIngredientName.setText(name);
             infoIngredientAV.setValue(av);
+            InfoIngredientCreator.setText(setIngredient.getEmployeeCreate().toString());
+            infoIngredientModify.setText(setIngredient.getEmployeeModify().toString());
         }
 
 
@@ -1175,7 +1206,7 @@ public class LaCasaDoradaGUI {
             alert.showAndWait();
         } else {
             //Falta agregar los empleados
-            laCasaDorada.addIngredients(name);
+            laCasaDorada.addIngredients(name,loginUser);
             loadIngredients(event);
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Ingrediente creado");
@@ -1536,6 +1567,10 @@ public class LaCasaDoradaGUI {
             //Agregar estos atributos
         }
 
+        if (valid) {
+            setIngredient.setEmployeeModify(loginUser);
+        }
+
 
         setIngredient=null;
         loadIngredients(event);
@@ -1573,9 +1608,7 @@ public class LaCasaDoradaGUI {
                 setIngredient=null;
                 loadIngredients(event);
             }
-        }
-
-        
+        }   
 
     }
 
