@@ -16,69 +16,6 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="937.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
-      <AnchorPane prefHeight="526.0" prefWidth="937.0" BorderPane.alignment="CENTER">
-         <children>
-            <Text layoutX="39.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Text>
-            <TextField fx:id="createProductName" layoutX="120.0" layoutY="30.0" prefHeight="31.0" prefWidth="327.0" />
-            <TableView fx:id="TableIngredients" layoutX="25.0" layoutY="89.0" prefHeight="200.0" prefWidth="332.0">
-              <columns>
-                <TableColumn fx:id="TableIngredientsName" prefWidth="171.0" text="Nombre" />
-                  <TableColumn fx:id="TableIngredientsStatus" prefWidth="160.0" text="Estado" />
-              </columns>
-            </TableView>
-            <Text layoutX="508.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredientes">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Text>
-            <ListView fx:id="listIngredietns" layoutX="651.0" layoutY="30.0" prefHeight="212.0" prefWidth="254.0" />
-            <Text layoutX="458.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio por tamaño:" />
-            <TextField fx:id="createProductSizeSmall" layoutX="434.0" layoutY="124.0" promptText="Grande" />
-            <TextField fx:id="createProductBig" layoutX="437.0" layoutY="157.0" />
-            <Text layoutX="362.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="disponibilidad" />
-            <ChoiceBox fx:id="createProductAV" layoutX="447.0" layoutY="216.0" prefWidth="150.0" />
-            <RadioButton fx:id="createProductDrink" layoutX="404.0" layoutY="265.0" mnemonicParsing="false" text="Bebida." />
-            <RadioButton fx:id="createProductDish" layoutX="512.0" layoutY="273.0" mnemonicParsing="false" text="Plato" />
-            <RadioButton fx:id="createProductAdditional" layoutX="612.0" layoutY="290.0" mnemonicParsing="false" text="Adicional" />
-            <Text layoutX="67.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso:" textAlignment="RIGHT" wrappingWidth="81.21630859375">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <ChoiceBox fx:id="infoCustomerAV" layoutX="162.0" layoutY="320.0" prefHeight="25.0" prefWidth="171.0" />
-            <Button layoutX="717.0" layoutY="318.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: red;" text="Eliminar" underline="true">
-               <font>
-                  <Font name="Gabriola" size="20.0" />
-               </font>
-            </Button>
-            <Text layoutX="-9.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creador:" textAlignment="RIGHT" wrappingWidth="314.21630859375">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="5.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultimo que modifico:" textAlignment="RIGHT" wrappingWidth="314.21630859375">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text fx:id="infoCustomerCreator" layoutX="319.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="314.21630859375">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text fx:id="infoCustomerModify" layoutX="333.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="314.21630859375">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-   </bottom>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -92,7 +29,7 @@
                   <Font size="44.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onAction="#setCustomer" prefHeight="65.0" prefWidth="232.0" style="-fx-background-color: #d4af37;" text="Guardar cambios">
+            <Button mnemonicParsing="false" onAction="#setProduct" prefHeight="65.0" prefWidth="232.0" style="-fx-background-color: #d4af37;" text="Guardar cambios">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -104,7 +41,7 @@
                   <Font name="Gabriola" size="28.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#loadCustomers" prefHeight="64.0" prefWidth="183.0" style="-fx-background-color: #d4af37;" text="Atras">
+            <Button mnemonicParsing="false" onAction="#loadProducts" prefHeight="64.0" prefWidth="183.0" style="-fx-background-color: #d4af37;" text="Atras">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -119,4 +56,75 @@
          </children>
       </HBox>
    </top>
+   <bottom>
+      <AnchorPane prefHeight="526.0" prefWidth="937.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="39.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <TextField fx:id="infoProductName" layoutX="120.0" layoutY="30.0" prefHeight="31.0" prefWidth="327.0" />
+            <TableView fx:id="TableIngredients" layoutX="25.0" layoutY="89.0" prefHeight="200.0" prefWidth="332.0">
+              <columns>
+                <TableColumn fx:id="TableIngredientsName" prefWidth="171.0" text="Nombre" />
+                  <TableColumn fx:id="TableIngredientsStatus" prefWidth="160.0" text="Estado" />
+              </columns>
+            </TableView>
+            <Text layoutX="508.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredientes">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <ListView fx:id="listIngredietns" layoutX="651.0" layoutY="30.0" prefHeight="212.0" prefWidth="254.0" />
+            <Text layoutX="458.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio por tamaño:" />
+            <TextField fx:id="infoProductSizeSmall" layoutX="448.0" layoutY="123.0" promptText="pequenio" />
+            <TextField fx:id="infoProductBig" layoutX="448.0" layoutY="156.0" />
+            <RadioButton fx:id="infoProductDrink" layoutX="388.0" layoutY="242.0" mnemonicParsing="false" text="Bebida." />
+            <RadioButton fx:id="infoProductDish" layoutX="466.0" layoutY="242.0" mnemonicParsing="false" text="Plato" />
+            <RadioButton fx:id="infoProductAdditional" layoutX="524.0" layoutY="242.0" mnemonicParsing="false" text="Adicional" />
+            <Text layoutX="67.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso:" textAlignment="RIGHT" wrappingWidth="81.21630859375">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <ChoiceBox fx:id="infoProductAV" layoutX="162.0" layoutY="320.0" prefHeight="25.0" prefWidth="171.0" />
+            <Button layoutX="717.0" layoutY="390.0" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: red;" text="Eliminar" underline="true">
+               <font>
+                  <Font name="Gabriola" size="20.0" />
+               </font>
+            </Button>
+            <Text layoutX="-9.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creador:" textAlignment="RIGHT" wrappingWidth="314.21630859375">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text layoutX="5.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultimo que modifico:" textAlignment="RIGHT" wrappingWidth="314.21630859375">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fx:id="infoProductCreator" layoutX="319.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="314.21630859375">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fx:id="infoProductModify" layoutX="333.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="314.21630859375">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Button layoutX="779.0" layoutY="251.0" mnemonicParsing="false" onAction="#addIngredientOfProduct" prefHeight="38.0" prefWidth="123.0" text="Agregar ingrediente" underline="true">
+               <font>
+                  <Font name="Gabriola" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="647.0" layoutY="251.0" mnemonicParsing="false" onAction="#deleteIngredientOfProduct" prefHeight="38.0" prefWidth="123.0" text="Eliminar Ingrediente" underline="true">
+               <font>
+                  <Font name="Gabriola" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>

@@ -54,7 +54,7 @@ public class LaCasaDoradaGUI {
     private User loginUser; // Evaluar si es mejor que sea un objeto
 
     @FXML
-    private Label labelUser;
+    private Text labelUser;
 
     @FXML
     private MenuItem labelLoginOrLogOut;
@@ -86,6 +86,22 @@ public class LaCasaDoradaGUI {
     private TextField createUserUS;
 
     // Tables
+
+    // Users
+    @FXML
+    private TableView<User> tableUsers;
+
+    @FXML
+    private TableColumn<User, String> colUserFN;
+
+    @FXML
+    private TableColumn<User, String> colUserLN;
+
+    @FXML
+    private TableColumn<User, String> colUserID;
+
+    @FXML
+    private TableColumn<User, String> colUserUS;
 
     // Product
 
@@ -244,7 +260,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private TextField orderAddress;
 
-    //Create Ingredient
+    // Create Ingredient
     @FXML
     private TextField createIngredientName;
 
@@ -388,8 +404,7 @@ public class LaCasaDoradaGUI {
     @FXML
     private ChoiceBox<String> infoCustomerAV;
 
-
-    //Set employee
+    // Set employee
 
     private Employee setEmployee;
     @FXML
@@ -405,7 +420,7 @@ public class LaCasaDoradaGUI {
     private ChoiceBox<String> infoEmployeeAV;
     //
 
-    //Set ingredient
+    // Set ingredient
 
     private Ingredient setIngredient;
 
@@ -421,10 +436,10 @@ public class LaCasaDoradaGUI {
     @FXML
     private Text infoIngredientModify;
 
-
-    //Set User
+    // Set User
 
     private User setUser;
+
     @FXML
     private TextField infoUserFN;
 
@@ -441,10 +456,45 @@ public class LaCasaDoradaGUI {
     private PasswordField infoUserPA;
 
     @FXML
+    private ChoiceBox<String> infoUserAV;
+
+    @FXML
     private Text infoUserCreator;
 
     @FXML
     private Text infoUserModify;
+
+    // Set product
+
+    private Product setProduct;
+    @FXML
+    private TextField infoProductName;
+
+    @FXML
+    private TextField infoProductSizeSmall;
+
+    @FXML
+    private TextField infoProductBig;
+
+    @FXML
+    private RadioButton infoProductDrink;
+
+    @FXML
+    private RadioButton infoProductDish;
+
+    @FXML
+    private RadioButton infoProductAdditional;
+
+    @FXML
+    private ChoiceBox<String> infoProductAV;
+
+    @FXML
+    private Text infoProductCreator;
+
+    @FXML
+    private Text infoProductModify;
+
+    // --------------------------------
 
     private LaCasaDorada laCasaDorada;
 
@@ -460,20 +510,24 @@ public class LaCasaDoradaGUI {
         Parent login = fxmlLoader.load();
         // pane.getChildren().clear();
         pane.setCenter(login);
-        labelUser.setText("User");
+
+        labelUser.setText("Usuario");
         labelLoginOrLogOut.setText("Login");
+
     }
 
     // Load Main window
 
     @FXML
     public void loadMainWindow(ActionEvent event) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         fxmlLoader.setController(this);
         Parent mainWindow = fxmlLoader.load();
-        // pane.getChildren().clear();
+        // pane.getChildren();
         pane.setCenter(mainWindow);
         orderCustomer = null;
+
     }
 
     // Options of the login----------------------------------------
@@ -495,19 +549,11 @@ public class LaCasaDoradaGUI {
 
         } else {
             loginUser = user;
-            loadMainWindow(event);
             labelUser.setText(loginUser.getUser());
             labelLoginOrLogOut.setText("Log out");
+            loadMainWindow(event);
             // arreglar el log out
         }
-
-    }
-
-    // Log out
-    @FXML
-    void logOut(ActionEvent event) throws IOException {
-        // labelUser.setText""; creo que que se cambia cargando el welcome
-        loadWelcome(event);
 
     }
 
@@ -518,7 +564,7 @@ public class LaCasaDoradaGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
-        // pane.getChildren().clear();;
+        // pane.getChildren().clear();
         pane.setCenter(form);
     }
 
@@ -568,8 +614,24 @@ public class LaCasaDoradaGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableUsers.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
-        // pane.getChildren().clear();;
+        // pane.getChildren();
         pane.setCenter(form);
+        initializeTableViewUsers();
+
+        // Double click
+        tableUsers.setOnMouseClicked((MouseEvent eventM) -> {
+            if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                setUser = tableUsers.getSelectionModel().getSelectedItem();
+                if (setUser != null) {
+                    try {
+                        loadInfoUser(setUser);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
     }
 
     // ------------------------------------------------------LOAD
@@ -580,20 +642,31 @@ public class LaCasaDoradaGUI {
     @FXML
     public void loadProducts(ActionEvent event) throws IOException {
 
-        // Test
-        // int price[] = {2,2};
-        // String ing[] = {"dssdgsgs"};
-        // laCasaDorada.addProducts("name", ing, price, true, "DISH");
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TableProducts.fxml"));
         fxmlLoader.setController(this);
         Parent form = fxmlLoader.load();
         // pane.getChildren().clear();;
         pane.setCenter(form);
         initializeTableViewProducts();
+
+        // Double click
+        tableProducts.setOnMouseClicked((MouseEvent eventM) -> {
+            if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                setProduct = tableProducts.getSelectionModel().getSelectedItem();
+                if (setProduct != null) {
+                    try {
+                        loadInfoProduct(setProduct);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
     }
 
     // load window Employees------------------------------
+
 
     @FXML
     public void loadEmployees(ActionEvent event) throws IOException {
@@ -604,27 +677,24 @@ public class LaCasaDoradaGUI {
         pane.setCenter(form);
         initializeTableViewEmployees();
 
-                // Double click
-                tableEmployees.setOnMouseClicked((MouseEvent eventM) -> {
-                    if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
-                        // Agregar ventana de cambio
-        
-                        setEmployee = tableEmployees.getSelectionModel().getSelectedItem();
-                        if (setEmployee != null) {
-                            try {
-                                loadInfoEmployee(setEmployee);
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
-        
+        // Double click
+        tableEmployees.setOnMouseClicked((MouseEvent eventM) -> {
+            if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
+                // Agregar ventana de cambio
+
+                setEmployee = tableEmployees.getSelectionModel().getSelectedItem();
+                if (setEmployee != null) {
+                    try {
+                        loadInfoEmployee(setEmployee);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+
+            }
+        });
 
     }
-
-    // load window users------------------------------
 
     @FXML
     public void loadOrders(ActionEvent event) throws IOException {
@@ -638,18 +708,13 @@ public class LaCasaDoradaGUI {
         tableOrders.setOnMouseClicked((MouseEvent eventM) -> {
             if (eventM.getButton().equals(MouseButton.PRIMARY) && eventM.getClickCount() == 2) {
                 // Agregar ventana de cambio
-                System.out.println(tableOrders.getSelectionModel().getSelectedItem().toString());
-                /*
-                setCustomer = tableCustomers.getSelectionModel().getSelectedItem();
-                if (setCustomer != null) {
-                    try {
-                        loadInfoCustomer(setCustomer);
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+
+                Order order = tableOrders.getSelectionModel().getSelectedItem();
+                try {
+                    loadShowOrder(event, order);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                */
 
             }
         });
@@ -676,7 +741,6 @@ public class LaCasaDoradaGUI {
                     try {
                         loadInfoCustomer(setCustomer);
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -696,9 +760,9 @@ public class LaCasaDoradaGUI {
 
         infoIngredientAV.getItems().addAll("HABILITADO", "DESHABILITADO");
 
-        if (setIngredient !=null){
+        if (setIngredient != null) {
             String name = setIngredient.getName();
-    
+
             Boolean availability = setIngredient.isAvailability();
             String av;
             if (availability) {
@@ -706,13 +770,12 @@ public class LaCasaDoradaGUI {
             } else {
                 av = "DESHABILITADO";
             }
-    
+
             infoIngredientName.setText(name);
             infoIngredientAV.setValue(av);
             InfoIngredientCreator.setText(setIngredient.getEmployeeCreate().toString());
             infoIngredientModify.setText(setIngredient.getEmployeeModify().toString());
         }
-
 
         initializeTableViewingredients();
 
@@ -725,7 +788,6 @@ public class LaCasaDoradaGUI {
                     try {
                         loadIngredients(event);
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -769,7 +831,6 @@ public class LaCasaDoradaGUI {
         colCustomerCO.setCellValueFactory(new PropertyValueFactory<Customer, String>("comments"));
         colCustomerAV.setCellValueFactory(new PropertyValueFactory<Customer, String>("availability"));
 
-
     }
 
     @FXML
@@ -798,6 +859,17 @@ public class LaCasaDoradaGUI {
         colEmployeesLN.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
         colEmployeesID.setCellValueFactory(new PropertyValueFactory<Employee, String>("id"));
         colEmployeeAV.setCellValueFactory(new PropertyValueFactory<Employee, String>("availability"));
+    }
+
+    @FXML
+    private void initializeTableViewUsers() {
+        ObservableList<User> observableList;
+        observableList = FXCollections.observableArrayList(laCasaDorada.getUsers());
+        tableUsers.setItems(observableList);
+        colUserFN.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
+        colUserLN.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+        colUserID.setCellValueFactory(new PropertyValueFactory<User, String>("id"));
+        colUserUS.setCellValueFactory(new PropertyValueFactory<User, String>("user"));
     }
 
     @FXML
@@ -980,7 +1052,8 @@ public class LaCasaDoradaGUI {
         initializeTableViewEmployees();
 
         ObservableList<Employee> observableList;
-        observableList = FXCollections.observableArrayList(laCasaDorada.getEmployees()).filtered(customer -> customer.isAvailability() == true);
+        observableList = FXCollections.observableArrayList(laCasaDorada.getEmployees())
+                .filtered(customer -> customer.isAvailability() == true);
         tableEmployees.setItems(observableList);
 
     }
@@ -1196,7 +1269,6 @@ public class LaCasaDoradaGUI {
     public void addIngredient(ActionEvent event) throws IOException {
         String name = createIngredientName.getText();
 
-
         if (name.isEmpty()) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -1205,8 +1277,8 @@ public class LaCasaDoradaGUI {
 
             alert.showAndWait();
         } else {
-            //Falta agregar los empleados
-            laCasaDorada.addIngredients(name,loginUser);
+            // Falta agregar los empleados
+            laCasaDorada.addIngredients(name, loginUser);
             loadIngredients(event);
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Ingrediente creado");
@@ -1219,12 +1291,43 @@ public class LaCasaDoradaGUI {
 
     @FXML
     public void showOrder(ActionEvent event) throws IOException {
+        Order order = tableOrders.getSelectionModel().getSelectedItem();
+        loadShowOrder(event, order);
 
-        try {
-            Order order = tableOrders.getSelectionModel().getSelectedItem();
-            loadShowOrder(event, order);
+    }
 
-        } catch (Exception e) {
+    public void loadShowOrder(ActionEvent event, Order order) throws IOException {
+
+        if (order != null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ShowOrder.fxml"));
+            fxmlLoader.setController(this);
+            Parent form = fxmlLoader.load();
+            // pane.getChildren().clear();
+            pane.setCenter(form);
+
+            String code = String.valueOf(order.getCode());
+            String total = String.valueOf(order.getTotal());
+
+            showOrderID.setText(code);
+            showOrderST.setText(order.getStatus().toString());
+            showOrderCU.setText(order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName());
+            showOrderAD.setText(order.getAddress());// Cambiar a la de la orden
+            showOrderDA.setText(order.getDate());
+            showOrderCO.setText(order.getComment());
+            showOrderTO.setText(total);
+
+            // Pasar el array a arraylist
+            OrdersDetails[] products = order.getProducts();
+            for (int i = 0; i < products.length; i++) {
+                orderProducts.add(products[i]);
+            }
+
+            initializeTableViewOrderProducts();
+
+            // Limpiar arraylist de productos
+
+            orderProducts.clear();
+        } else {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Validation Error");
             alert.setHeaderText(null);
@@ -1232,38 +1335,6 @@ public class LaCasaDoradaGUI {
 
             alert.showAndWait();
         }
-
-    }
-
-    public void loadShowOrder(ActionEvent event, Order order) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ShowOrder.fxml"));
-        fxmlLoader.setController(this);
-        Parent form = fxmlLoader.load();
-        // pane.getChildren().clear();
-        pane.setCenter(form);
-
-        String code = String.valueOf(order.getCode());
-        String total = String.valueOf(order.getTotal());
-
-        showOrderID.setText(code);
-        showOrderST.setText(order.getStatus().toString());
-        showOrderCU.setText(order.getCustomer().getFirstName() + " " + order.getCustomer().getLastName());
-        showOrderAD.setText(order.getAddress());// Cambiar a la de la orden
-        showOrderDA.setText(order.getDate());
-        showOrderCO.setText(order.getComment());
-        showOrderTO.setText(total);
-
-        // Pasar el array a arraylist
-        OrdersDetails[] products = order.getProducts();
-        for (int i = 0; i < products.length; i++) {
-            orderProducts.add(products[i]);
-        }
-
-        initializeTableViewOrderProducts();
-
-        // Limpiar arraylist de productos
-
-        orderProducts.clear();
 
     }
 
@@ -1466,6 +1537,107 @@ public class LaCasaDoradaGUI {
 
     }
 
+    public void loadInfoUser(User user) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InfoUser.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+
+        infoUserAV.getItems().addAll("HABILITADO", "DESHABILITADO");
+
+        String fn = user.getFirstName();
+        String ln = user.getLastName();
+        String id = user.getId();
+        String userName = user.getUser();
+        String password = user.getPassword();
+        Boolean availability = user.isAvailability();
+        String av;
+        if (availability) {
+            av = "HABILITADO";
+        } else {
+            av = "DESHABILITADO";
+        }
+
+        infoUserFN.setText(fn);
+        infoUserLN.setText(ln);
+        InfoUserId.setText(id);
+        infoUserUS.setText(userName);
+        infoUserPA.setText(password);
+        infoUserAV.setValue(av);
+        // infoCustomerCreator.setText(customer.getEmployeeCreate().toString());
+        // infoCustomerModify.setText(customer.getEmployeeModify().toString());
+    }
+
+    public void loadInfoProduct(Product product) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InfoProduct.fxml"));
+        fxmlLoader.setController(this);
+        Parent form = fxmlLoader.load();
+        // pane.getChildren().clear();
+        pane.setCenter(form);
+
+        infoProductAV.getItems().addAll("HABILITADO", "DESHABILITADO");
+
+        String name = product.getName();
+
+        //TableIngredients.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        initializeTableViewingredients();
+
+        ObservableList<Ingredient> ingredientsOB=FXCollections.observableArrayList(product.getIngredientsArray());
+        listIngredietns.setItems(ingredientsOB);
+        //ingredientsOB = TableIngredients.getSelectionModel().getSelectedItems();
+        
+
+        double[] arrayPrices=product.getPricePerSizeInt();
+
+        Boolean availability = product.isAvailability();
+        String av;
+        if (availability) {
+            av = "HABILITADO";
+        } else {
+            av = "DESHABILITADO";
+        }
+
+        String type=product.getType();
+
+        infoProductName.setText(name);
+
+        infoProductSizeSmall.setText(String.valueOf(arrayPrices[0]));
+        infoProductBig.setText(String.valueOf(arrayPrices[1]));
+
+        if (type.equals("PLATO")) {
+            infoProductDish.setSelected(true);;
+        } else if (type.equals("ADICIONAL")) {
+            infoProductAdditional.setSelected(true);
+        } else  {
+            infoProductDrink.setSelected(true);
+        }
+
+        infoProductAV.setValue(av);
+        infoProductCreator.setText(product.getEmployeeCreate().toString());
+        infoProductModify.setText(product.getEmployeeModify().toString());
+    }
+
+
+    @FXML
+    public void addIngredientOfProduct(ActionEvent event) {
+        Ingredient ingredient =TableIngredients.getSelectionModel().getSelectedItem();
+        if (ingredient !=null){
+            listIngredietns.getItems().add(ingredient);
+        }//Alert
+       
+
+    }
+
+    @FXML
+    public  void deleteIngredientOfProduct(ActionEvent event) {
+        Ingredient ingredient =listIngredietns.getSelectionModel().getSelectedItem();
+        if (ingredient !=null){
+            listIngredietns.getItems().remove(ingredient);
+        }//Alert
+    }
+
     @FXML
     public void setCustomer(ActionEvent event) throws IOException {
 
@@ -1509,8 +1681,6 @@ public class LaCasaDoradaGUI {
 
     }
 
-
-
     @FXML
     public void setEmployee(ActionEvent event) throws IOException {
 
@@ -1518,11 +1688,11 @@ public class LaCasaDoradaGUI {
         String ln = infoEmployeeLN.getText();
         String id = infoEmployeeID.getText();
         String av = infoEmployeeAV.getValue();
-        Boolean valid = laCasaDorada.setEmployee(setEmployee, fn, ln, id,av);
+        Boolean valid = laCasaDorada.setEmployee(setEmployee, fn, ln, id, av);
 
         if (valid) {
-            //setEmployee.(loginUser);
-            //Empleado modificador
+            // setEmployee.(loginUser);
+            // Empleado modificador
         }
 
         loadEmployees(event);
@@ -1552,27 +1722,24 @@ public class LaCasaDoradaGUI {
 
     }
 
-
-
     @FXML
     public void setIngredient(ActionEvent event) throws IOException {
 
         String name = infoIngredientName.getText();
         String av = infoIngredientAV.getValue();
-        Boolean valid = laCasaDorada.setIngredient(setIngredient,name,av);
+        Boolean valid = laCasaDorada.setIngredient(setIngredient, name, av);
 
         if (valid) {
-            //setEmployee.(loginUser);
-            //Empleado modificador
-            //Agregar estos atributos
+            // setEmployee.(loginUser);
+            // Empleado modificador
+            // Agregar estos atributos
         }
 
         if (valid) {
             setIngredient.setEmployeeModify(loginUser);
         }
 
-
-        setIngredient=null;
+        setIngredient = null;
         loadIngredients(event);
 
     }
@@ -1580,15 +1747,15 @@ public class LaCasaDoradaGUI {
     @FXML
     public void deleteIngredient(ActionEvent event) throws IOException {
 
-        if (setIngredient == null){
+        if (setIngredient == null) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("El ingrediente no ha podido ser eliminado");
             alert.setHeaderText(null);
             alert.setContentText("No ha seleccionado ningun ingrediente");
             alert.showAndWait();
-            setIngredient=null;
+            setIngredient = null;
             loadIngredients(event);
-        }else{
+        } else {
             boolean valid = laCasaDorada.deleteIngredient(setIngredient);
 
             if (valid) {
@@ -1597,7 +1764,7 @@ public class LaCasaDoradaGUI {
                 alert.setHeaderText(null);
                 alert.setContentText("El empleado se elimino satisfactoriamente");
                 alert.showAndWait();
-                setIngredient=null;
+                setIngredient = null;
                 loadIngredients(event);
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -1605,10 +1772,108 @@ public class LaCasaDoradaGUI {
                 alert.setHeaderText(null);
                 alert.setContentText("El ingrediente se encuentra en algun producto");
                 alert.showAndWait();
-                setIngredient=null;
+                setIngredient = null;
                 loadIngredients(event);
             }
-        }   
+        }
+
+    }
+
+    @FXML
+    public void setUser(ActionEvent event) throws IOException {
+
+        String fn = infoUserFN.getText();
+        String ln = infoUserLN.getText();
+        String id = InfoUserId.getText();
+        String user = infoUserUS.getText();
+        String password = infoUserPA.getText();
+        String av = infoUserAV.getValue();
+        Boolean valid = laCasaDorada.setuser(setUser, fn, ln, id, user, password, av);
+
+        if (valid) {
+            // setEmployee.(loginUser);
+            // Empleado modificador
+            // Agregar estos atributos
+        }
+
+        setUser = null;
+        loadUsers(event);
+
+    }
+
+    @FXML
+    public void deleteUser(ActionEvent event) throws IOException {
+
+        boolean valid = laCasaDorada.deleteUser(setUser);
+
+        if (valid) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El usuario ha sido eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El usuario se elimino satisfactoriamente");
+            alert.showAndWait();
+            setUser = null;
+            loadUsers(event);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El usuario no ha podido ser eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El usuario se encuentra en algun producto");
+            alert.showAndWait();
+            setUser = null;
+            loadUsers(event);
+        }
+
+    }
+
+
+    @FXML
+    public void setProduct(ActionEvent event) throws IOException {
+
+        boolean valid = laCasaDorada.deleteUser(setUser);
+
+        if (valid) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El usuario ha sido eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El usuario se elimino satisfactoriamente");
+            alert.showAndWait();
+            setUser = null;
+            loadUsers(event);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El usuario no ha podido ser eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El usuario se encuentra en algun producto");
+            alert.showAndWait();
+            setUser = null;
+            loadUsers(event);
+        }
+
+    }
+
+    @FXML
+    public void deleteProduct(ActionEvent event) throws IOException {
+
+        boolean valid = laCasaDorada.deleteUser(setUser);
+
+        if (valid) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El usuario ha sido eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El usuario se elimino satisfactoriamente");
+            alert.showAndWait();
+            setUser = null;
+            loadUsers(event);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("El usuario no ha podido ser eliminado");
+            alert.setHeaderText(null);
+            alert.setContentText("El usuario se encuentra en algun producto");
+            alert.showAndWait();
+            setUser = null;
+            loadUsers(event);
+        }
 
     }
 

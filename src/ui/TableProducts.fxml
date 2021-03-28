@@ -13,7 +13,7 @@
    <children>
       <HBox prefHeight="62.0" prefWidth="745.0">
          <children>
-            <Label fx:id="labelUser" prefHeight="57.0" prefWidth="374.0" text="#Name" textFill="#8d5bf0">
+            <Label prefHeight="57.0" prefWidth="374.0" text="#Name" textFill="#8d5bf0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>

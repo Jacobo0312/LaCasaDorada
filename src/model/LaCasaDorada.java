@@ -34,7 +34,7 @@ public class LaCasaDorada {
         ingredients = new ArrayList<Ingredient>();
         admin = addUser("Juan", "Jacobo", "1006107372", "1", "1");
 
-        //Agregar los otros atributos
+        // Agregar los otros atributos
     }
 
     // GET and ADD for Users-------------------------------------------
@@ -63,7 +63,11 @@ public class LaCasaDorada {
             user = null;
         } else {
             user = users.get(index);
+            if (!user.isAvailability()){
+                user=null;
+            }
         }
+
         return user;
     }
 
@@ -83,8 +87,8 @@ public class LaCasaDorada {
         return ingredients;
     }
 
-    public void addIngredients(String name,Employee employeeCreate) {
-        ingredients.add(new Ingredient(name,employeeCreate));
+    public void addIngredients(String name, Employee employeeCreate) {
+        ingredients.add(new Ingredient(name, employeeCreate));
     }
 
     private void addIngredients(Ingredient ingredient) {
@@ -169,7 +173,7 @@ public class LaCasaDorada {
 
             for (int i = 0; i < ingredientsProduct.length; i++) {
 
-                Ingredient ingredient = new Ingredient(ingredientsString[i],admin);
+                Ingredient ingredient = new Ingredient(ingredientsString[i], admin);
 
                 int index = Collections.binarySearch(ingredients, ingredient);
                 if (index > 0) {
@@ -433,7 +437,6 @@ public class LaCasaDorada {
             valid = true;
         }
 
-
         if (!setEmployee.getAvailability().equals(av) && !av.isEmpty()) {
             valid = true;
             if (av.equals("HABILITADO")) {
@@ -447,7 +450,6 @@ public class LaCasaDorada {
 
     }
 
-
     public boolean deleteEmployee(Employee setEmployee) {
 
         boolean valid = true;
@@ -457,9 +459,6 @@ public class LaCasaDorada {
             if (employee.equals(setEmployee))
                 valid = false;
         }
-
-
-
 
         if (valid) {
             employees.remove(setEmployee);
@@ -475,8 +474,6 @@ public class LaCasaDorada {
             valid = true;
         }
 
-
-
         if (!setIngredient.getAvailability().equals(av) && !av.isEmpty()) {
             valid = true;
             if (av.equals("HABILITADO")) {
@@ -490,19 +487,19 @@ public class LaCasaDorada {
     }
 
     public boolean deleteIngredient(Ingredient setIngredient) {
-       
+
         boolean valid = true;
 
         for (int i = 0; i < products.size() && valid; i++) {
-            Ingredient [] setIngredients = products.get(i).getIngredientsArray();
+            Ingredient[] setIngredients = products.get(i).getIngredientsArray();
 
             for (int j = 0; j < setIngredients.length && valid; j++) {
-                if (setIngredients[j].equals(setIngredient)){
+                if (setIngredients[j].equals(setIngredient)) {
                     valid = false;
                 }
-                
+
             }
-          
+
         }
 
         if (valid) {
@@ -511,4 +508,96 @@ public class LaCasaDorada {
 
         return valid;
     }
+
+
+    public Boolean setuser(User setUser, String fn, String ln, String id, String user, String password,String av) {
+        boolean valid = false;
+        if (!setUser.getFirstName().equals(fn) && !fn.isEmpty()) {
+            setUser.setFirstName(fn);
+            valid = true;
+        }
+
+        if (!setUser.getLastName().equals(ln) && !ln.isEmpty()) {
+            setUser.setLastName(ln);
+            valid = true;
+        }
+
+        if (!setUser.getId().equals(id) && !id.isEmpty()) {
+            setUser.setId(id);
+            valid = true;
+        }
+
+        if (!setUser.getUser().equals(user) && !user.isEmpty()) {
+            setUser.setUser(user);
+            valid = true;
+        }
+
+        if (!setUser.getPassword().equals(password) && !password.isEmpty()) {
+            setUser.setPassword(password);
+            valid = true;
+        }
+
+
+        if (!setUser.getAvailability().equals(av) && !av.isEmpty()) {
+            valid = true;
+            if (av.equals("HABILITADO")) {
+                setUser.setAvailability(true);
+            } else {
+                setUser.setAvailability(false);
+            }
+        }
+
+        return valid;
+    }
+
+
+
+
+
+    public Boolean deleteUser(User setUser) {
+        boolean valid = true;
+
+       
+        for (int i = 0; i < orders.size() && valid; i++) {
+            Employee employee = orders.get(i).getEmployeeCreate();
+            if (employee.equals(setUser)){
+                valid = false;
+            }
+          
+        }
+
+        for (int i = 0; i < orders.size() && valid; i++) {
+            Employee employee = orders.get(i).getEmployeeCreate();
+            if (employee.equals(setUser)){
+                valid = false;
+            }
+       
+        }
+
+        for (int i = 0; i < customers.size() && valid; i++) {
+            Employee employee = customers.get(i).getEmployeeCreate();
+            if (employee.equals(setUser)){
+                valid = false;
+            }
+      
+        }
+
+
+        for (int i = 0; i < customers.size() && valid; i++) {
+            Employee employee = customers.get(i).getEmployeeModify();
+            if (employee.equals(setUser)){
+                valid = false;
+            }
+          
+        }
+
+        if (valid){
+            users.remove(setUser);
+        }
+
+
+        return valid;
+    }
+
+  
 }

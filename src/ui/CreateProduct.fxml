@@ -55,8 +55,8 @@
             </Text>
             <ListView fx:id="listIngredietns" layoutX="651.0" layoutY="30.0" prefHeight="212.0" prefWidth="254.0" />
             <Text layoutX="458.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio por tamaño:" />
-            <TextField fx:id="createProductSizeSmall" layoutX="434.0" layoutY="124.0" promptText="Grande" />
-            <TextField fx:id="createProductBig" layoutX="437.0" layoutY="157.0" />
+            <TextField fx:id="createProductSizeSmall" layoutX="434.0" layoutY="124.0" promptText="pequenio" />
+            <TextField fx:id="createProductBig" layoutX="437.0" layoutY="157.0" promptText="Grande" />
             <Text layoutX="362.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="disponibilidad" />
             <ChoiceBox fx:id="createProductAV" layoutX="447.0" layoutY="216.0" prefWidth="150.0" />
             <RadioButton fx:id="createProductDrink" layoutX="404.0" layoutY="265.0" mnemonicParsing="false" text="Bebida." />

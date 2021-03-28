@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,17 +13,6 @@
    <children>
       <HBox>
          <children>
-            <Label fx:id="labelUser" prefHeight="17.0" prefWidth="341.0" text="#Name" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Dubai Bold" size="32.0" />
-               </font></Label>
-            <ImageView id="image" fx:id="profilePhoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="ui.style">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin></ImageView>
             <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -38,13 +26,12 @@
          <font>
             <Font name="Dubai Bold" size="32.0" />
          </font></Label>
-      <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
+      <TableView fx:id="tableUsers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
         <columns>
           <TableColumn fx:id="colUserFN" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="First name" />
           <TableColumn fx:id="colUserLN" minWidth="0.0" prefWidth="118.0" style="-fx-background-color: #6743B0;" text="Last name" />
-            <TableColumn fx:id="colUserID" prefWidth="149.0" style="-fx-background-color: #6743B0;" text="id" />
-            <TableColumn fx:id="colUserUS" maxWidth="264.0" minWidth="-1.0" prefWidth="130.0" style="-fx-background-color: #6743B0;" text="User" />
-            <TableColumn fx:id="colUserPA" maxWidth="469.0" minWidth="-1.0" prefWidth="175.0" style="-fx-background-color: #6743B0;" text="Password" />
+            <TableColumn fx:id="colUserID" prefWidth="208.0" style="-fx-background-color: #6743B0;" text="id" />
+            <TableColumn fx:id="colUserUS" maxWidth="305.0" minWidth="-1.0" prefWidth="246.0" style="-fx-background-color: #6743B0;" text="User" />
         </columns>
       </TableView>
    </children>

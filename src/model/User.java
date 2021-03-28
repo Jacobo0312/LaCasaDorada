@@ -26,7 +26,7 @@ public class User extends Employee implements Comparable<User>{
         return this.password;
     }
 
-    public void setPasssword(String passsword) {
+    public void setPassword(String passsword) {
         this.password = passsword;
     }
 
