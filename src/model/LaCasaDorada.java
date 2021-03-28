@@ -63,8 +63,8 @@ public class LaCasaDorada {
             user = null;
         } else {
             user = users.get(index);
-            if (!user.isAvailability()){
-                user=null;
+            if (!user.isAvailability()) {
+                user = null;
             }
         }
 
@@ -486,7 +486,7 @@ public class LaCasaDorada {
         return valid;
     }
 
-    public boolean deleteIngredient(Ingredient setIngredient) {
+    public boolean deleteIngredient(Ingredient setIngredient) { 
 
         boolean valid = true;
 
@@ -509,8 +509,7 @@ public class LaCasaDorada {
         return valid;
     }
 
-
-    public Boolean setuser(User setUser, String fn, String ln, String id, String user, String password,String av) {
+    public Boolean setuser(User setUser, String fn, String ln, String id, String user, String password, String av) {
         boolean valid = false;
         if (!setUser.getFirstName().equals(fn) && !fn.isEmpty()) {
             setUser.setFirstName(fn);
@@ -537,7 +536,6 @@ public class LaCasaDorada {
             valid = true;
         }
 
-
         if (!setUser.getAvailability().equals(av) && !av.isEmpty()) {
             valid = true;
             if (av.equals("HABILITADO")) {
@@ -550,54 +548,105 @@ public class LaCasaDorada {
         return valid;
     }
 
-
-
-
-
     public Boolean deleteUser(User setUser) {
         boolean valid = true;
 
-       
         for (int i = 0; i < orders.size() && valid; i++) {
             Employee employee = orders.get(i).getEmployeeCreate();
-            if (employee.equals(setUser)){
+            if (employee.equals(setUser)) {
                 valid = false;
             }
-          
+
         }
 
         for (int i = 0; i < orders.size() && valid; i++) {
             Employee employee = orders.get(i).getEmployeeCreate();
-            if (employee.equals(setUser)){
+            if (employee.equals(setUser)) {
                 valid = false;
             }
-       
+
         }
 
         for (int i = 0; i < customers.size() && valid; i++) {
             Employee employee = customers.get(i).getEmployeeCreate();
-            if (employee.equals(setUser)){
+            if (employee.equals(setUser)) {
                 valid = false;
             }
-      
-        }
 
+        }
 
         for (int i = 0; i < customers.size() && valid; i++) {
             Employee employee = customers.get(i).getEmployeeModify();
-            if (employee.equals(setUser)){
+            if (employee.equals(setUser)) {
                 valid = false;
             }
-          
+
         }
 
-        if (valid){
+        if (valid) {
             users.remove(setUser);
         }
-
 
         return valid;
     }
 
-  
+    public Boolean setProduct(Product setProduct, String name, double[] prices, Ingredient[] setIngredients,
+            String type, String av) {
+        boolean valid = false;
+
+        if (!setProduct.getName().equals(name) && !name.isEmpty()) {
+            setProduct.setName(name);
+            valid = true;
+        }
+
+        if (!setProduct.getIngredientsArray().equals(setIngredients) && (setIngredients.length > 0)) {
+            setProduct.setIngredients(setIngredients);
+            valid = true;
+        }
+
+        if (!setProduct.getPricePerSize().equals(prices) && (prices.length > 0)) {
+            setProduct.setPricePerSize(prices);
+            valid = true;
+        }
+
+        if (!setProduct.getType().equals(type) && !type.isEmpty()) {
+            setProduct.setType(type);
+            valid = true;
+        }
+
+        if (!setProduct.getAvailability().equals(av) && !av.isEmpty()) {
+            valid = true;
+            if (av.equals("HABILITADO")) {
+                setProduct.setAvailability(true);
+            } else {
+                setProduct.setAvailability(false);
+            }
+        }
+
+        return valid;
+    }
+
+    public boolean deleteProduct(Product setProduct) {
+
+        boolean valid = true;
+
+        for (int i = 0; i < orders.size() && valid; i++) {
+            OrdersDetails[] setProducts = orders.get(i).getProducts();
+
+            for (int j = 0; j < setProducts.length && valid; j++) {
+                if (setProducts[j].getProductObj().equals(setProduct)) {
+                    valid = false;
+                }
+
+            }
+
+        }
+
+        if (valid) {
+            products.remove(setProduct);
+        }
+
+        return valid;
+    }
+
 }

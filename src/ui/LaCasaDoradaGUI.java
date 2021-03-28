@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -1830,51 +1831,65 @@ public class LaCasaDoradaGUI {
     @FXML
     public void setProduct(ActionEvent event) throws IOException {
 
-        boolean valid = laCasaDorada.deleteUser(setUser);
+        String name = infoProductName.getText();
+        Ingredient [] setIngredients=new Ingredient[listIngredietns.getItems().size()];
+        listIngredietns.getItems().toArray(setIngredients);
+
+
+        System.out.println(Arrays.toString(setIngredients));
+
+        double[] prices ={Double.parseDouble(infoProductSizeSmall.getText()),Double.parseDouble(infoProductBig.getText())};
+
+        String type = "";
+        if (infoProductDish.isSelected()) {
+            type = "PLATO";
+        } else if (infoProductAdditional.isSelected()) {
+            type = "ADICIONAL";
+        } else {
+            type = "BEBIDA";
+        } 
+
+        String av = infoProductAV.getValue();
+        Boolean valid = laCasaDorada.setProduct(setProduct, name, prices, setIngredients, type, av);
 
         if (valid) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("El usuario ha sido eliminado");
-            alert.setHeaderText(null);
-            alert.setContentText("El usuario se elimino satisfactoriamente");
-            alert.showAndWait();
-            setUser = null;
-            loadUsers(event);
-        } else {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("El usuario no ha podido ser eliminado");
-            alert.setHeaderText(null);
-            alert.setContentText("El usuario se encuentra en algun producto");
-            alert.showAndWait();
-            setUser = null;
-            loadUsers(event);
+            setProduct.setEmployeeModify(loginUser);
         }
+
+        setProduct = null;
+        loadProducts(event);
+
+        //Try catch number Format
 
     }
 
     @FXML
     public void deleteProduct(ActionEvent event) throws IOException {
 
-        boolean valid = laCasaDorada.deleteUser(setUser);
+        boolean valid = laCasaDorada.deleteProduct(setProduct);
 
         if (valid) {
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("El usuario ha sido eliminado");
+            alert.setTitle("El producto ha sido eliminado");
             alert.setHeaderText(null);
-            alert.setContentText("El usuario se elimino satisfactoriamente");
+            alert.setContentText("El producto se elimino satisfactoriamente");
             alert.showAndWait();
-            setUser = null;
-            loadUsers(event);
+            setProduct = null;
+            loadProducts(event);
         } else {
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("El usuario no ha podido ser eliminado");
+            alert.setTitle("El producto no ha podido ser eliminado");
             alert.setHeaderText(null);
-            alert.setContentText("El usuario se encuentra en algun producto");
+            alert.setContentText("El producto no se puede eliminar");
             alert.showAndWait();
-            setUser = null;
-            loadUsers(event);
+            setProduct = null;
+            loadProducts(event);
         }
 
     }
+
+
+
+
 
 }

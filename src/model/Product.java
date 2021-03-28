@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Product {
     private String name;
@@ -62,8 +63,14 @@ public class Product {
         return this.availability;
     }
 
-    public Boolean getAvailability() {
-        return this.availability;
+    public String getAvailability() {
+        String av;
+        if (this.availability){
+            av="HABILITADO";
+        }else{
+            av="DESHABILITADO";
+        }
+        return av;
     }
 
     public void setAvailability(Boolean availability) {
@@ -74,8 +81,8 @@ public class Product {
         return this.type.toString();
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setType(String type) {
+        this.type = Type.valueOf(type);;
     }
 
 
@@ -95,4 +102,18 @@ public class Product {
         this.employeeModify = employeeModify;
     }
     
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Product)) {
+            return false;
+        }
+        Product product = (Product) o;
+        return Objects.equals(name, product.name) && Objects.equals(ingredients, product.ingredients) && Objects.equals(pricePerSize, product.pricePerSize) && Objects.equals(availability, product.availability) && Objects.equals(employeeCreate, product.employeeCreate) && Objects.equals(employeeModify, product.employeeModify) && Objects.equals(type, product.type);
+    }
+
+
 }

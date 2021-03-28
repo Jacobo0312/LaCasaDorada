@@ -31,6 +31,11 @@ public class OrdersDetails {
         return this.product.getName();
     }
 
+    public Product getProductObj() {
+        return this.product;
+    }
+
+
     public int getAmount() {
         return this.amount;
     }
