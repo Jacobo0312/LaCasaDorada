@@ -1,6 +1,8 @@
 package ui;
 
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +18,7 @@ public class Main extends Application {
     private LaCasaDoradaGUI laCasaDoradaGUI;
     private LaCasaDorada laCasaDorada;
 
-    public Main() {
+    public Main() throws ClassNotFoundException, IOException {
             laCasaDorada = new LaCasaDorada();
             laCasaDoradaGUI = new LaCasaDoradaGUI(laCasaDorada);
         

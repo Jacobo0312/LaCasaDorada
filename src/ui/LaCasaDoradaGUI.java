@@ -47,8 +47,15 @@ import model.Order;
 import model.OrdersDetails;
 import model.Product;
 import model.User;
+import model.ClockThread;
 
 public class LaCasaDoradaGUI {
+
+
+        //Clock
+
+        @FXML
+        private Label clockLabel;
 
     // User account
 
@@ -501,6 +508,14 @@ public class LaCasaDoradaGUI {
 
     public LaCasaDoradaGUI(LaCasaDorada controller) {
         laCasaDorada = controller;
+    }
+
+
+        //Start clock
+    public void initialize (){
+        ClockThread clock=new ClockThread(clockLabel);
+        clock.start();
+
     }
 
     // Window of welcome--------------------------------------------
@@ -1340,7 +1355,7 @@ public class LaCasaDoradaGUI {
     }
 
     @FXML
-    public void setStatus(ActionEvent event) {
+    public void setStatus(ActionEvent event) throws IOException {
         Order order = tableOrders.getSelectionModel().getSelectedItem();
         laCasaDorada.setStatus(order);
         showOrderST.setText(order.getStatus().toString());

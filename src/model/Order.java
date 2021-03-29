@@ -1,10 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class Order {
+public class Order implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private int code;//Que empiece en 0 y vaya aumentando 
     private Status status;//Enum of status
     private OrdersDetails[] products;

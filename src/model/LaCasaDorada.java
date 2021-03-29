@@ -1,9 +1,14 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LaCasaDorada {
+
+    public static final String CUSTOMERS_FILE_NAME = "src/data/customers.bbd";
+    public static final String EMPLOYEES_FILE_NAME = "src/data/employees.bbd";
+    public static final String INGREDIENTS_FILE_NAME = "src/data/ingredients.bbd";
+    public static final String PRODUCTS_FILE_NAME = "src/data/products.bbd";
+    public static final String USERS_FILE_NAME = "src/data/users.bbd";
+    public static final String ORDERS_FILE_NAME = "src/data/orders.bbd";
 
     public static final String SEPARATE = ",";
     public static int CODE_ORDER = 0;// revisar con la serializacion
@@ -25,16 +37,30 @@ public class LaCasaDorada {
     private ArrayList<Ingredient> ingredients;
     private User admin;
 
-    public LaCasaDorada() {
+    public LaCasaDorada() throws IOException {
         users = new ArrayList<User>();
         products = new ArrayList<Product>();
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
         employees = new ArrayList<Employee>();
         ingredients = new ArrayList<Ingredient>();
-        admin = addUser("Juan", "Jacobo", "1006107372", "1", "1");
+        try {
+            loadData();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } 
 
-        // Agregar los otros atributos
+        User objUser = addUser("Juan", "Jacobo", "1006107372", "1", "1");
+        if (objUser==null){
+            admin=users.get(0);
+        }else{
+            admin=objUser;
+        }
+        
+
+        
+     
     }
 
     // GET and ADD for Users-------------------------------------------
@@ -43,7 +69,8 @@ public class LaCasaDorada {
         return users;
     }
 
-    public User addUser(String firstName, String lastName, String id, String account, String password) {
+    public User addUser(String firstName, String lastName, String id, String account, String password)
+            throws IOException {
         User user = new User(firstName, lastName, id, account, password);
 
         if (users.contains(user)) {
@@ -51,6 +78,8 @@ public class LaCasaDorada {
         } else {
             users.add(user);
         }
+
+        saveDataUsers();
         return user;
     }
 
@@ -78,8 +107,9 @@ public class LaCasaDorada {
     }
 
     public void addProducts(String name, Ingredient[] ingredients, double[] pricePerSize, Boolean availability,
-            String type, Employee employeeCreate) {
+            String type, Employee employeeCreate) throws IOException {
         products.add(new Product(name, ingredients, pricePerSize, availability, type, employeeCreate));
+        saveDataProducts();
     }
 
     // Get and ADD for Ingredients
@@ -87,12 +117,14 @@ public class LaCasaDorada {
         return ingredients;
     }
 
-    public void addIngredients(String name, Employee employeeCreate) {
+    public void addIngredients(String name, Employee employeeCreate) throws IOException {
         ingredients.add(new Ingredient(name, employeeCreate));
+        saveDataIngredients();
     }
 
-    private void addIngredients(Ingredient ingredient) {
+    public void addIngredients(Ingredient ingredient) throws IOException {
         ingredients.add(ingredient);
+        saveDataIngredients();
     }
 
     // GET and ADD for Customers----------------------------------
@@ -102,7 +134,7 @@ public class LaCasaDorada {
     }
 
     public void addCustomers(String firstName, String lastName, String id, String address, String phone,
-            String comments, Employee employeeCreate) {
+            String comments, Employee employeeCreate) throws IOException {
 
         // Comparador por apellido y nombre
 
@@ -136,6 +168,8 @@ public class LaCasaDorada {
             }
             customers.add(i, customer);
         }
+
+        saveDataCustomers();
     }
 
     // GET and ADD for Order----------------------------------
@@ -144,9 +178,10 @@ public class LaCasaDorada {
     }
 
     public void addOrders(OrdersDetails[] products, Customer customer, Employee employeeCreate,
-            Employee employeeDelivery, LocalDateTime date, String address, String comment) {
+            Employee employeeDelivery, LocalDateTime date, String address, String comment) throws IOException {
         CODE_ORDER++;
         orders.add(new Order(CODE_ORDER, products, customer, employeeCreate, employeeDelivery, date, address, comment));
+        saveDataOrders();
     }
 
     // GET and ADD for Employee----------------------------------
@@ -154,9 +189,10 @@ public class LaCasaDorada {
         return employees;
     }
 
-    public void addEmployees(String firstName, String lastName, String id) {
+    public void addEmployees(String firstName, String lastName, String id) throws IOException {
         employees.add(new Employee(firstName, lastName, id));
         // Falta agregar los dos empleados
+        saveDataEmployees();
     }
 
     // Import data
@@ -191,6 +227,7 @@ public class LaCasaDorada {
             line = br.readLine();
         }
         br.close();
+        saveDataProducts();
     }
 
     // CUSTOMERS
@@ -211,6 +248,7 @@ public class LaCasaDorada {
             line = br.readLine();
         }
         br.close();
+        saveDataCustomers();
     }
 
     public void importEmployee(String fileDirectory) throws IOException {
@@ -231,12 +269,14 @@ public class LaCasaDorada {
 
     // Change status for orders
 
-    public void setStatus(Order order) {
+    public void setStatus(Order order) throws IOException {
 
         if (order.getStatus() != Status.ENTREGADO) {
             int index = (order.getStatus().ordinal() + 1);
             order.setStatus(Status.values()[index]);
         }
+
+        saveDataOrders();
 
     }
 
@@ -357,7 +397,7 @@ public class LaCasaDorada {
     }
 
     public Boolean setCustomer(Customer setCustomer, String fn, String ln, String id, String address, String phone,
-            String comments, String av) {
+            String comments, String av) throws IOException {
 
         boolean valid = false;
         if (!setCustomer.getFirstName().equals(fn) && !fn.isEmpty()) {
@@ -399,11 +439,13 @@ public class LaCasaDorada {
             }
         }
 
+        saveDataCustomers();
+
         return valid;
 
     }
 
-    public boolean deleteCustomer(Customer setCustomer) {
+    public boolean deleteCustomer(Customer setCustomer) throws IOException {
 
         boolean valid = true;
 
@@ -416,11 +458,11 @@ public class LaCasaDorada {
         if (valid) {
             customers.remove(setCustomer);
         }
-
+        saveDataCustomers();
         return valid;
     }
 
-    public Boolean setEmployee(Employee setEmployee, String fn, String ln, String id, String av) {
+    public Boolean setEmployee(Employee setEmployee, String fn, String ln, String id, String av) throws IOException {
         boolean valid = false;
         if (!setEmployee.getFirstName().equals(fn) && !fn.isEmpty()) {
             setEmployee.setFirstName(fn);
@@ -445,12 +487,12 @@ public class LaCasaDorada {
                 setEmployee.setAvailability(false);
             }
         }
-
+        saveDataEmployees();
         return valid;
 
     }
 
-    public boolean deleteEmployee(Employee setEmployee) {
+    public boolean deleteEmployee(Employee setEmployee) throws IOException {
 
         boolean valid = true;
 
@@ -463,11 +505,11 @@ public class LaCasaDorada {
         if (valid) {
             employees.remove(setEmployee);
         }
-
+        saveDataEmployees();
         return valid;
     }
 
-    public Boolean setIngredient(Ingredient setIngredient, String name, String av) {
+    public Boolean setIngredient(Ingredient setIngredient, String name, String av) throws IOException {
         boolean valid = false;
         if (!setIngredient.getName().equals(name) && !name.isEmpty()) {
             setIngredient.setName(name);
@@ -482,11 +524,11 @@ public class LaCasaDorada {
                 setIngredient.setAvailability(false);
             }
         }
-
+        saveDataIngredients();
         return valid;
     }
 
-    public boolean deleteIngredient(Ingredient setIngredient) { 
+    public boolean deleteIngredient(Ingredient setIngredient) throws IOException {
 
         boolean valid = true;
 
@@ -505,11 +547,12 @@ public class LaCasaDorada {
         if (valid) {
             ingredients.remove(setIngredient);
         }
-
+        saveDataIngredients();
         return valid;
     }
 
-    public Boolean setuser(User setUser, String fn, String ln, String id, String user, String password, String av) {
+    public Boolean setuser(User setUser, String fn, String ln, String id, String user, String password, String av)
+            throws IOException {
         boolean valid = false;
         if (!setUser.getFirstName().equals(fn) && !fn.isEmpty()) {
             setUser.setFirstName(fn);
@@ -545,10 +588,12 @@ public class LaCasaDorada {
             }
         }
 
+        saveDataUsers();
+
         return valid;
     }
 
-    public Boolean deleteUser(User setUser) {
+    public Boolean deleteUser(User setUser) throws IOException {
         boolean valid = true;
 
         for (int i = 0; i < orders.size() && valid; i++) {
@@ -586,12 +631,12 @@ public class LaCasaDorada {
         if (valid) {
             users.remove(setUser);
         }
-
+        saveDataUsers();
         return valid;
     }
 
     public Boolean setProduct(Product setProduct, String name, double[] prices, Ingredient[] setIngredients,
-            String type, String av) {
+            String type, String av) throws IOException {
         boolean valid = false;
 
         if (!setProduct.getName().equals(name) && !name.isEmpty()) {
@@ -622,11 +667,11 @@ public class LaCasaDorada {
                 setProduct.setAvailability(false);
             }
         }
-
+        saveDataProducts();
         return valid;
     }
 
-    public boolean deleteProduct(Product setProduct) {
+    public boolean deleteProduct(Product setProduct) throws IOException {
 
         boolean valid = true;
 
@@ -645,8 +690,96 @@ public class LaCasaDorada {
         if (valid) {
             products.remove(setProduct);
         }
-
+        saveDataProducts();
         return valid;
     }
 
+    // Serializable
+    public void loadData() throws IOException, ClassNotFoundException {
+
+        File f = new File(CUSTOMERS_FILE_NAME);
+
+        if (f.exists()){
+            ObjectInputStream oisCustomers = new ObjectInputStream(new FileInputStream(f));
+            customers = (ArrayList) oisCustomers.readObject();
+            oisCustomers.close();
+        }
+        
+        f=new File(EMPLOYEES_FILE_NAME);
+
+        if (f.exists()){
+            ObjectInputStream oisEmployees = new ObjectInputStream(new FileInputStream(f));
+            employees = (ArrayList) oisEmployees.readObject();
+            oisEmployees.close();
+    
+        }
+        
+        f= new File(USERS_FILE_NAME);
+
+        if (f.exists()){
+        ObjectInputStream oisUsers = new ObjectInputStream(new FileInputStream(f));
+        users = (ArrayList) oisUsers.readObject();
+        oisUsers.close();
+        }
+
+        f=new File(PRODUCTS_FILE_NAME);
+        if (f.exists()){
+        ObjectInputStream oisProducts = new ObjectInputStream(new FileInputStream(f));
+        products = (ArrayList) oisProducts.readObject();
+        oisProducts.close();
+        }
+
+        f= new File(ORDERS_FILE_NAME);
+        if (f.exists()){
+        ObjectInputStream oisOrders = new ObjectInputStream(new FileInputStream(f));
+        orders = (ArrayList) oisOrders.readObject();
+        oisOrders.close();
+        }
+
+        f=new File(INGREDIENTS_FILE_NAME);
+
+        if (f.exists()){
+        ObjectInputStream oisIngredients = new ObjectInputStream(new FileInputStream(f));
+        ingredients = (ArrayList) oisIngredients.readObject();
+        oisIngredients.close();
+        }
+    }
+
+    public void saveDataCustomers() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CUSTOMERS_FILE_NAME));
+        oos.writeObject(customers);
+        oos.close();
+    }
+
+    public void saveDataEmployees() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMPLOYEES_FILE_NAME));
+        oos.writeObject(employees);
+        oos.close();
+    }
+
+    public void saveDataUsers() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_FILE_NAME));
+        oos.writeObject(users);
+        oos.close();
+    }
+
+    public void saveDataProducts() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_FILE_NAME));
+        oos.writeObject(products);
+        oos.close();
+    }
+
+    public void saveDataIngredients() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(INGREDIENTS_FILE_NAME));
+        oos.writeObject(ingredients);
+        oos.close();
+    }
+
+    public void saveDataOrders() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ORDERS_FILE_NAME));
+        oos.writeObject(orders);
+        oos.close();
+    }
+
+    // -------------------------------------
 }
