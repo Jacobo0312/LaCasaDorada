@@ -1457,8 +1457,15 @@ public class LaCasaDoradaGUI {
         // Seleccioanr que sea .csv
         // Cambiar el null para mantener la ventane
 
-        laCasaDorada.reportEmployeesDelivery(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
+        String report =laCasaDorada.reportEmployeesDelivery(dateTimeInit, dateTimeFinal, file.getAbsolutePath(),
                 dateReportSeparate.getText());
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("REPORTES");
+                alert.setHeaderText(null);
+                alert.setContentText(report);
+                alert.showAndWait();
+
     }
 
     @FXML
@@ -1483,8 +1490,12 @@ public class LaCasaDoradaGUI {
         // Seleccioanr que sea .csv
         // Cambiar el null para mantener la ventane
 
-        laCasaDorada.reportProducts(dateTimeInit, dateTimeFinal, file.getAbsolutePath(), dateReportSeparate.getText());
-
+        String report=laCasaDorada.reportProducts(dateTimeInit, dateTimeFinal, file.getAbsolutePath(), dateReportSeparate.getText());
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("REPORTES");
+        alert.setHeaderText(null);
+        alert.setContentText(report);
+        alert.showAndWait();
     }
 
     public void loadInfoCustomer(Customer customer) throws IOException {

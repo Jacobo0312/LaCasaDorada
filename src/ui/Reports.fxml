@@ -1,41 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button layoutX="334.0" layoutY="276.0" mnemonicParsing="false" onAction="#reportOrders" text="Generar reporte de pedidos" />
-      <Label layoutX="60.0" layoutY="146.0" prefHeight="41.0" prefWidth="121.0" text="Intervalo" />
-      <Label layoutX="115.0" layoutY="231.0" prefHeight="25.0" prefWidth="11.0" text=":">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="379.0" layoutY="231.0" prefHeight="25.0" prefWidth="11.0" text=":">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="254.0" layoutY="229.0" text="Hasta">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="dateReportOrderInit" layoutX="53.0" layoutY="196.0" />
-      <DatePicker fx:id="dateReportOrderFinal" layoutX="329.0" layoutY="196.0" />
-      <ComboBox fx:id="dateReportOrderHourInit" layoutX="47.0" layoutY="233.0" prefHeight="25.0" prefWidth="68.0" />
-      <ComboBox fx:id="dateReportOrderMinutsInit" layoutX="126.0" layoutY="233.0" prefHeight="25.0" prefWidth="68.0" />
-      <ComboBox fx:id="dateReportOrderHourFinal" layoutX="314.0" layoutY="233.0" prefHeight="25.0" prefWidth="68.0" />
-      <ComboBox fx:id="dateReportOrderMinutsFinal" layoutX="395.0" layoutY="232.0" prefHeight="25.0" prefWidth="68.0" />
-      <Label layoutX="67.0" layoutY="129.0" prefHeight="25.0" prefWidth="108.0" text="Separador" />
-      <TextField fx:id="dateReportSeparate" layoutX="140.0" layoutY="129.0" prefHeight="25.0" prefWidth="25.0" text=";" />
-      <Button layoutX="80.0" layoutY="282.0" mnemonicParsing="false" onAction="#reportEmployeesDelivery" text="Generar reporte de clientes" />
-      <Button layoutX="99.0" layoutY="337.0" mnemonicParsing="false" onAction="#reportProducts" text="Generar reporte de productos" />
-   </children>
-</Pane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="552.0" prefWidth="826.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="137.0" prefWidth="937.0" style="-fx-background-color: black; -fx-border-color: #d4af37;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#fce96c" layoutX="301.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reportes">
+               <font>
+                  <Font name="Gabriola" size="76.0" />
+               </font>
+            </Text>
+            <Button layoutX="613.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="64.0" prefWidth="183.0" style="-fx-background-color: #d4af37;" text="Atras" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="612.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="41.0">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../T1/src/icons/iconmonstr-log-out-1-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Gabriola" size="28.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="171.0" fitWidth="251.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../T1/src/img/casa-dorada-editada.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="550.0" layoutY="60.0" prefHeight="25.0" prefWidth="11.0" text=":">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="550.0" layoutY="110.0" prefHeight="25.0" prefWidth="11.0" text=":">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="198.0" layoutY="108.0" text="Hasta">
+               <font>
+                  <Font name="Gabriola" size="26.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dateReportOrderInit" layoutX="272.0" layoutY="61.0" />
+            <DatePicker fx:id="dateReportOrderFinal" layoutX="272.0" layoutY="111.0" AnchorPane.bottomAnchor="264.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="380.0" AnchorPane.topAnchor="111.0" />
+            <ComboBox fx:id="dateReportOrderHourInit" layoutX="474.0" layoutY="61.0" prefHeight="25.0" prefWidth="68.0" />
+            <ComboBox fx:id="dateReportOrderMinutsInit" layoutX="561.0" layoutY="62.0" prefHeight="25.0" prefWidth="68.0" />
+            <ComboBox fx:id="dateReportOrderHourFinal" layoutX="474.0" layoutY="111.0" prefHeight="25.0" prefWidth="68.0" />
+            <ComboBox fx:id="dateReportOrderMinutsFinal" layoutX="561.0" layoutY="111.0" prefHeight="25.0" prefWidth="68.0" />
+            <Label layoutX="202.0" layoutY="161.0" prefHeight="25.0" prefWidth="108.0" text="Separador">
+               <font>
+                  <Font name="Gabriola" size="26.0" />
+               </font>
+            </Label>
+            <TextField fx:id="dateReportSeparate" layoutX="293.0" layoutY="164.0" prefHeight="25.0" prefWidth="25.0" text=";" />
+            <Label layoutX="198.0" layoutY="58.0" text="Desde">
+               <font>
+                  <Font name="Gabriola" size="26.0" />
+               </font>
+            </Label>
+            <HBox layoutX="113.0" layoutY="288.0" prefHeight="39.0" prefWidth="601.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#reportEmployeesDelivery" text="Generar reporte de clientes">
+                     <font>
+                        <Font name="Gabriola" size="19.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#reportProducts" text="Generar reporte de productos">
+                     <font>
+                        <Font name="Gabriola" size="19.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#reportOrders" text="Generar reporte de pedidos">
+                     <font>
+                        <Font name="Gabriola" size="19.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

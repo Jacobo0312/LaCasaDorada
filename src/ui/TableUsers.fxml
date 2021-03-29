@@ -5,34 +5,44 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox>
+<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox prefHeight="500.0" prefWidth="900.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Log out" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
+            <Label alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="877.0" text="Lista de usuarios." textFill="#d4af37">
                <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font></Button>
+                  <Font name="Gabriola" size="32.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableUsers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 0 0 10 10;">
+              <columns>
+                  <TableColumn fx:id="colUserFN" prefWidth="169.0" style="-fx-background-color: #d4af37;" text="Nombre" />
+                  <TableColumn fx:id="colUserLN" maxWidth="330.0" minWidth="-1.0" prefWidth="168.0" style="-fx-background-color: #d4af37;" text="Apellidpo" />
+                  <TableColumn fx:id="colUserID" maxWidth="469.0" minWidth="-1.0" prefWidth="180.0" style="-fx-background-color: #d4af37;" text="id" />
+                  <TableColumn fx:id="colUserUS" maxWidth="469.0" minWidth="-1.0" prefWidth="193.0" style="-fx-background-color: #d4af37;" text="Usuario" />
+                  <TableColumn fx:id="colUserPA" maxWidth="469.0" minWidth="-1.0" prefWidth="178.0" style="-fx-background-color: #d4af37;" text="Contraseña" />
+              </columns>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox />
+            <AnchorPane prefHeight="83.0" prefWidth="900.0">
+               <children>
+                  <Button layoutX="688.0" layoutY="9.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="168.0" style="-fx-background-color: #d4af37;" text="Atras">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
-      </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="57.0" prefWidth="877.0" text="User list" textFill="#8d5bf0">
-         <font>
-            <Font name="Dubai Bold" size="32.0" />
-         </font></Label>
-      <TableView fx:id="tableUsers" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;">
-        <columns>
-          <TableColumn fx:id="colUserFN" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="First name" />
-          <TableColumn fx:id="colUserLN" minWidth="0.0" prefWidth="118.0" style="-fx-background-color: #6743B0;" text="Last name" />
-            <TableColumn fx:id="colUserID" prefWidth="208.0" style="-fx-background-color: #6743B0;" text="id" />
-            <TableColumn fx:id="colUserUS" maxWidth="305.0" minWidth="-1.0" prefWidth="246.0" style="-fx-background-color: #6743B0;" text="User" />
-        </columns>
-      </TableView>
-   </children>
-</VBox>
+      </VBox>
+   </center>
+</BorderPane>

@@ -303,7 +303,7 @@ public class LaCasaDorada {
 
     }
 
-    public void reportEmployeesDelivery(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String absolutePath,
+    public String reportEmployeesDelivery(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String absolutePath,
             String separate) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter(absolutePath);
@@ -334,7 +334,6 @@ public class LaCasaDorada {
             }
 
         }
-        // Pasar el hash map a reporte
 
         for (Map.Entry<String, double[]> entry : reportEmployee.entrySet()) {
 
@@ -343,11 +342,12 @@ public class LaCasaDorada {
         }
         pw.println(report);
         pw.close();
-        // Aqui se genera el reporte
 
+
+        return report;
     }
 
-    public void reportProducts(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String absolutePath,
+    public String reportProducts(LocalDateTime dateTimeInit, LocalDateTime dateTimeFinal, String absolutePath,
             String separate) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter(absolutePath);
@@ -383,7 +383,6 @@ public class LaCasaDorada {
             }
 
         }
-        // Pasar el hash map a reporte
 
         for (Map.Entry<String, double[]> entry : reportProduct.entrySet()) {
 
@@ -392,7 +391,7 @@ public class LaCasaDorada {
         }
         pw.println(report);
         pw.close();
-        // Aqui se genera el reporte
+        return report;
 
     }
 
@@ -695,13 +694,14 @@ public class LaCasaDorada {
     }
 
     // Serializable
+    @SuppressWarnings("unchecked")
     public void loadData() throws IOException, ClassNotFoundException {
 
         File f = new File(CUSTOMERS_FILE_NAME);
 
         if (f.exists()){
             ObjectInputStream oisCustomers = new ObjectInputStream(new FileInputStream(f));
-            customers = (ArrayList) oisCustomers.readObject();
+            customers = (ArrayList<Customer>) oisCustomers.readObject();
             oisCustomers.close();
         }
         
@@ -709,7 +709,7 @@ public class LaCasaDorada {
 
         if (f.exists()){
             ObjectInputStream oisEmployees = new ObjectInputStream(new FileInputStream(f));
-            employees = (ArrayList) oisEmployees.readObject();
+            employees = (ArrayList<Employee>) oisEmployees.readObject();
             oisEmployees.close();
     
         }
@@ -718,21 +718,21 @@ public class LaCasaDorada {
 
         if (f.exists()){
         ObjectInputStream oisUsers = new ObjectInputStream(new FileInputStream(f));
-        users = (ArrayList) oisUsers.readObject();
+        users = (ArrayList<User>) oisUsers.readObject();
         oisUsers.close();
         }
 
         f=new File(PRODUCTS_FILE_NAME);
         if (f.exists()){
         ObjectInputStream oisProducts = new ObjectInputStream(new FileInputStream(f));
-        products = (ArrayList) oisProducts.readObject();
+        products = (ArrayList<Product>) oisProducts.readObject();
         oisProducts.close();
         }
 
         f= new File(ORDERS_FILE_NAME);
         if (f.exists()){
         ObjectInputStream oisOrders = new ObjectInputStream(new FileInputStream(f));
-        orders = (ArrayList) oisOrders.readObject();
+        orders = (ArrayList<Order>) oisOrders.readObject();
         oisOrders.close();
         }
 
@@ -740,7 +740,7 @@ public class LaCasaDorada {
 
         if (f.exists()){
         ObjectInputStream oisIngredients = new ObjectInputStream(new FileInputStream(f));
-        ingredients = (ArrayList) oisIngredients.readObject();
+        ingredients = (ArrayList<Ingredient>) oisIngredients.readObject();
         oisIngredients.close();
         }
     }

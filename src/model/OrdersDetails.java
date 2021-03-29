@@ -1,7 +1,11 @@
 package model;
 
-public class OrdersDetails {
+import java.io.Serializable;
 
+public class OrdersDetails implements Serializable {
+
+
+    private static final long serialVersionUID = 1L;
     private Product product;
     private int amount;
     private Size size;
