@@ -5,61 +5,51 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="496.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="20.0" prefWidth="886.0" text="Lista de ordenes" textFill="#8d5bf0">
-         <font>
-            <Font name="Dubai Bold" size="32.0" />
-         </font></Label>
-      <TableView fx:id="tableOrders" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="344.0" prefWidth="881.0" style="-fx-background-color: #DBAFFF;">
-        <columns>
-          <TableColumn fx:id="colOrderCO" prefWidth="113.0" style="-fx-background-color: #6743B0;" text="Code" />
-          <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="140.0" style="-fx-background-color: #6743B0;" text="Status" />
-            <TableColumn fx:id="colOrderCU" maxWidth="264.0" minWidth="-1.0" prefWidth="174.0" style="-fx-background-color: #6743B0;" text="Customer" />
-            <TableColumn fx:id="colOrderEmployeeCR" prefWidth="200.0" text="Employee Create" />
-            <TableColumn fx:id="colOrderEmployeeDE" prefWidth="157.0" text="Empleado que entrega" />
-            <TableColumn fx:id="colOrderDA" prefWidth="92.0" text="Date" />
-            <TableColumn fx:id="colOrderTO" prefWidth="102.0" text="Total" />
-        </columns>
-      </TableView>
-      <HBox>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="900.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Revisar" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
+            <Label alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="877.0" text="Lista de ordenes." textFill="#d4af37">
                <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font></Button>
-            <Button mnemonicParsing="false" onAction="#showOrder" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Editar" textFill="#8d5bf0">
-               <font>
-                  <Font name="Dubai Regular" size="24.0" />
+                  <Font name="Gabriola" size="32.0" />
                </font>
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Mostrar actuales" textFill="#8d5bf0">
-               <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font>
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="215.0" style="-fx-background-color: #040308;" text="Salir" textFill="#8d5bf0">
-               <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font>
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </Button>
+            </Label>
+            <TableView fx:id="tableOrders" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 0 0 10 10;">
+              <columns>
+                <TableColumn fx:id="colOrderCO" prefWidth="107.0" style="-fx-background-color: #d4af37;" text="Codigo" />
+                <TableColumn fx:id="colOrderST" minWidth="0.0" prefWidth="124.0" style="-fx-background-color: #d4af37;" text="Estatus" />
+                  <TableColumn fx:id="colOrderCU" prefWidth="142.0" style="-fx-background-color: #d4af37;" text="Cliente" />
+                  <TableColumn fx:id="colOrderEmployeeCR" maxWidth="330.0" minWidth="-1.0" prefWidth="148.0" style="-fx-background-color: #d4af37;" text="Empleado que lo crea" />
+                  <TableColumn fx:id="colOrderEmployeeDE" maxWidth="469.0" minWidth="-1.0" prefWidth="164.0" style="-fx-background-color: #d4af37;" text="Empleado que  entrega" />
+                  <TableColumn fx:id="colOrderDA" maxWidth="469.0" minWidth="-1.0" prefWidth="107.0" style="-fx-background-color: #d4af37;" text="Fecha" />
+                  <TableColumn fx:id="colOrderTO" maxWidth="469.0" minWidth="-1.0" prefWidth="107.0" style="-fx-background-color: #d4af37;" text="Total" />
+              </columns>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox />
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="83.0" prefWidth="900.0">
+               <children>
+                  <Button layoutX="716.0" layoutY="9.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showOrder" prefHeight="49.0" prefWidth="160.0" style="-fx-background-color: #d4af37;" text="Editar">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="23.0" layoutY="9.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="49.0" prefWidth="168.0" style="-fx-background-color: #d4af37;" text="Atras">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
-      </HBox>
-   </children>
-</VBox>
+      </VBox>
+   </center>
+</BorderPane>

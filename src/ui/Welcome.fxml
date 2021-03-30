@@ -29,17 +29,20 @@
               <MenuItem fx:id="labelLoginOrLogOut" mnemonicParsing="false" onAction="#loadWelcome" />
             </items>
                <graphic>
-                  <Text fx:id="labelUser" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario" />
+                  <Text fx:id="labelUser" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Text>
                </graphic>
           </Menu>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Archivo">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#importData" text="Importar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
             </items>
           </Menu>
         </menus>

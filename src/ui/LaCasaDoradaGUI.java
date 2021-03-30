@@ -1914,7 +1914,14 @@ public class LaCasaDoradaGUI {
 
     }
 
-
+    @FXML
+    public void about(ActionEvent event) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+	    alert.setTitle("La Casa Dorada");
+	    alert.setHeaderText("Credits");
+	    alert.setContentText("Sebastian Navia\nJacobo Garcia\nAlgoritmos II");
+	    alert.showAndWait();
+    }
 
 
 

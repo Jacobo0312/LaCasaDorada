@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -8,190 +7,132 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="682.0" prefWidth="877.0" style="-fx-background-color: #BFA5F2;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="346.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="521.0" minWidth="0.0" prefWidth="456.0" />
-  </columnConstraints>
-  <rowConstraints>
-      <RowConstraints maxHeight="67.0" minHeight="22.0" prefHeight="52.0" />
-      <RowConstraints maxHeight="57.0" minHeight="1.0" prefHeight="43.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="134.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="118.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="128.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label alignment="TOP_RIGHT" prefHeight="32.0" prefWidth="106.0" text="Products:" textAlignment="RIGHT" GridPane.rowIndex="2">
-         <font>
-            <Font name="Dubai Regular" size="18.0" />
-         </font>
-         <GridPane.margin>
-            <Insets left="60.0" />
-         </GridPane.margin></Label>
-      <Label alignment="CENTER" prefHeight="32.0" prefWidth="265.0" text="Customer: Agregar para busqueda" GridPane.rowIndex="1">
-         <font>
-            <Font name="Dubai Regular" size="18.0" />
-         </font>
-         <padding>
-            <Insets left="80.0" />
-         </padding></Label>
-      <Label text="LA CASA DORADA">
-         <font>
-            <Font name="Dubai Regular" size="17.0" />
-         </font>
-         <padding>
-            <Insets left="10.0" />
-         </padding></Label>
-      <Label prefHeight="57.0" prefWidth="268.0" text="Order." GridPane.columnIndex="1">
-         <font>
-            <Font name="Dubai Bold" size="29.0" />
-         </font></Label>
-      <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="378.0" prefHeight="31.0" prefWidth="184.0" text="Add Comment:" GridPane.rowIndex="6">
-         <font>
-            <Font name="Dubai Regular" size="17.0" />
-         </font>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </Label>
-      <Pane prefHeight="65.0" prefWidth="375.0" GridPane.rowIndex="6" />
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1043.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="500.0" prefWidth="950.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#AddProductToOrder" prefHeight="25.0" prefWidth="333.0" text="Add">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="350.0" text="Delete">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="Size">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <RadioButton fx:id="sizeLittle" mnemonicParsing="false" prefHeight="17.0" prefWidth="84.0" text="Little">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="size" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="sizeBig" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="Big" toggleGroup="$size">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </RadioButton>
-               </children>
-            </VBox>
-            <Label alignment="TOP_CENTER" prefHeight="32.0" prefWidth="91.0" text="Amount:" textAlignment="RIGHT">
+            <TextField fx:id="orderComments" alignment="CENTER" layoutX="80.0" layoutY="335.0" prefHeight="79.0" prefWidth="356.0" promptText="Comentarios" style="-fx-border-color: black;" />
+            <Text layoutX="73.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente:">
                <font>
-                  <Font name="Dubai Regular" size="18.0" />
+                  <Font name="Bold Italic Art" size="24.0" />
                </font>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="productAmount" prefHeight="71.0" prefWidth="74.0">
-               <HBox.margin>
-                  <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </TextField>
+            </Text>
+            <RadioButton fx:id="sizeLittle" layoutX="256.0" layoutY="81.0" mnemonicParsing="false" text="Pequeño">
+               <toggleGroup>
+                  <ToggleGroup fx:id="size" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="sizeBig" layoutX="357.0" layoutY="81.0" mnemonicParsing="false" text="Grande" toggleGroup="$size" />
+            <Text layoutX="95.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tamaño:" wrappingWidth="137.2578125">
+               <font>
+                  <Font size="25.0" />
+               </font></Text>
+            <TextField fx:id="productAmount" layoutX="241.0" layoutY="137.0" prefHeight="40.0" prefWidth="187.0" promptText="Ingrese la cantidad" />
+            <Label fx:id="labelCustomer" layoutX="173.0" layoutY="31.0" text="Sin asignar">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+            <Button layoutX="258.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadCreateCustomer" prefHeight="30.0" prefWidth="77.0" text="Crear">
+               <graphic>
+                  <ImageView fitHeight="47.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/iconmonstr-edit-6-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="352.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadCustomerFinder" text="Buscar">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/iconmonstr-magnifier-4-72.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <TableView fx:id="tableProducts" layoutX="481.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="131.0" prefWidth="512.0" style="-fx-text-color: gold;">
+              <columns>
+                <TableColumn fx:id="colProductsNA" prefWidth="95.0" style="-fx-background-color: #8F7E10;" text="Nombre" />
+                <TableColumn fx:id="colProductsIN" prefWidth="160.0" style="-fx-background-color: #8F7E10;" text="Ingredientes" />
+                  <TableColumn fx:id="colProductsPR" prefWidth="168.0" style="-fx-background-color: #8F7E10;" text="Precios" />
+                  <TableColumn fx:id="colProductsAV" minWidth="0.0" prefWidth="0.0" style="-fx-background-color: #8F7E10;" text="Disponibilidad" />
+                  <TableColumn fx:id="colProductsTY" prefWidth="117.0" style="-fx-background-color: #8F7E10;" text="Tipo" />
+              </columns>
+            </TableView>
+            <Button layoutX="599.0" layoutY="191.0" mnemonicParsing="false" onAction="#AddProductToOrder" prefHeight="31.0" prefWidth="151.0" text="Añadir" />
+            <Button layoutX="801.0" layoutY="191.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Eliminar" />
+            <TableView fx:id="tableOrderProducts" layoutX="494.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="118.0" prefWidth="512.0">
+              <columns>
+                <TableColumn fx:id="colOrderNA" prefWidth="191.0" style="-fx-background-color: #8F7E10;" text="Nombre" />
+                <TableColumn fx:id="colOrderAM" prefWidth="176.0" style="-fx-background-color: #8F7E10;" text="Cantidad" />
+                  <TableColumn fx:id="colOrderPR" prefWidth="177.0" style="-fx-background-color: #8F7E10;" text="Precio" />
+              </columns>
+            </TableView>
+            <TextField fx:id="orderAddress" layoutX="228.0" layoutY="230.0" prefHeight="38.0" prefWidth="193.0" promptText="Ingrese la dirección" />
+            <Text layoutX="685.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Productos:">
+               <font>
+                  <Font name="System Italic" size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="622.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empleado que entrega:" wrappingWidth="343.80078125">
+               <font>
+                  <Font name="System Italic" size="22.0" />
+               </font>
+            </Text>
+            <TableView fx:id="tableEmployees" layoutX="494.0" layoutY="405.0" prefHeight="115.0" prefWidth="512.0">
+              <columns>
+                <TableColumn fx:id="colEmployeesFN" prefWidth="179.0" style="-fx-background-color: #8F7E10;" text="Nombre" />
+                <TableColumn fx:id="colEmployeesLN" prefWidth="170.0" style="-fx-background-color: #8F7E10;" text="Apellido" />
+                  <TableColumn fx:id="colEmployeesID" prefWidth="195.0" style="-fx-background-color: #8F7E10;" text="Identificación" />
+                  <TableColumn fx:id="colEmployeeAV" prefWidth="163.0" style="-fx-background-color: #d4af37;" text="Disponibilidad" />
+              </columns>
+            </TableView>
+            <Button layoutX="245.0" layoutY="437.0" mnemonicParsing="false" onAction="#addOrder" prefHeight="53.0" prefWidth="182.0" style="-fx-background-color: #d4af37;" text="Crear orden">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/iconmonstr-share-11-72.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Gabriola" size="25.0" />
+               </font>
+            </Button>
+            <Text layoutX="95.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad:" wrappingWidth="137.2578125">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="95.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" wrappingWidth="137.2578125">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="95.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentarios:" wrappingWidth="176.2578125">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Button layoutX="33.0" layoutY="436.0" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="52.0" prefWidth="159.0" style="-fx-background-color: #d4af37;" text="Atras">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/iconmonstr-log-out-1-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Gabriola" size="28.0" />
+               </font>
+            </Button>
          </children>
-      </HBox>
-      <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="32.0" prefWidth="181.0" text="Order" textAlignment="RIGHT" GridPane.rowIndex="4">
-         <font>
-            <Font name="Dubai Regular" size="18.0" />
-         </font>
-         <padding>
-            <Insets left="80.0" />
-         </padding>
-      </Label>
-      <TableView fx:id="tableProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="481.0" prefWidth="483.0" style="-fx-background-color: #DBAFFF;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <columns>
-            <TableColumn fx:id="colProductsNA" prefWidth="114.0" style="-fx-background-color: #6743B0;" text="Name" />
-            <TableColumn fx:id="colProductsIN" minWidth="0.0" prefWidth="105.0" style="-fx-background-color: #6743B0;" text="Ingredients" />
-            <TableColumn fx:id="colProductsPR" prefWidth="100.0" style="-fx-background-color: #6743B0;" text="Price per size" />
-            <TableColumn fx:id="colProductsAV" maxWidth="264.0" minWidth="-1.0" prefWidth="91.333251953125" style="-fx-background-color: #6743B0;" text="Availability" />
-            <TableColumn fx:id="colProductsTY" maxWidth="264.0" minWidth="-1.0" prefWidth="91.333251953125" style="-fx-background-color: #6743B0;" text="Type" />
-         </columns>
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin>
-      </TableView>
-      <TextField fx:id="orderComments" prefHeight="51.0" prefWidth="306.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #040308;" text="Exit" textFill="#8d5bf0" GridPane.rowIndex="8">
-         <font>
-            <Font name="Dubai Regular" size="24.0" />
-         </font>
-      </Button>
-      <Button mnemonicParsing="false" onAction="#addOrder" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #040308;" text="Crear" textFill="#8d5bf0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-         <font>
-            <Font name="Dubai Regular" size="24.0" />
-         </font>
-      </Button>
-      <TableView fx:id="tableOrderProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="481.0" prefWidth="483.0" style="-fx-background-color: #DBAFFF;" GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <columns>
-            <TableColumn fx:id="colOrderNA" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="Name" />
-            <TableColumn fx:id="colOrderAM" minWidth="0.0" prefWidth="101.0" style="-fx-background-color: #6743B0;" text="Cantidad" />
-            <TableColumn fx:id="colOrderPR" prefWidth="91.0" style="-fx-background-color: #6743B0;" text="Precio" />
-         </columns>
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin>
-      </TableView>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <Label fx:id="labelCustomer" prefHeight="51.0" prefWidth="231.0" text="Sin asignar" />
-            <Button mnemonicParsing="false" onAction="#loadCreateCustomer" text="Crear" />
-            <Button mnemonicParsing="false" onAction="#loadCustomerFinder" text="Buscar" />
-         </children>
-      </HBox>
-      <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="32.0" prefWidth="181.0" text="Direccion" textAlignment="RIGHT" GridPane.rowIndex="5">
-         <font>
-            <Font name="Dubai Regular" size="18.0" />
-         </font>
-         <padding>
-            <Insets left="80.0" />
-         </padding>
-      </Label>
-      <TextField fx:id="orderAddress" prefHeight="51.0" prefWidth="306.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="32.0" prefWidth="265.0" text="Empleado que entrega:" textAlignment="RIGHT" GridPane.rowIndex="7">
-         <font>
-            <Font name="Dubai Regular" size="18.0" />
-         </font>
-         <padding>
-            <Insets left="80.0" />
-         </padding>
-      </Label>
-      <TableView fx:id="tableEmployees" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #DBAFFF;" GridPane.columnIndex="1" GridPane.rowIndex="7">
-         <columns>
-            <TableColumn fx:id="colEmployeesFN" prefWidth="142.0" style="-fx-background-color: #6743B0;" text="Nombre" />
-            <TableColumn fx:id="colEmployeesLN" minWidth="0.0" prefWidth="141.0" style="-fx-background-color: #6743B0;" text="Apellido" />
-            <TableColumn fx:id="colEmployeesID" prefWidth="100.0" style="-fx-background-color: #6743B0;" text="Id" />
-            <TableColumn fx:id="colEmployeeAV" prefWidth="163.0" style="-fx-background-color: #d4af37;" text="Disponibilidad" />
-         </columns>
-      </TableView>
-   </children>
-</GridPane>
+      </AnchorPane>
+   </center>
+</BorderPane>

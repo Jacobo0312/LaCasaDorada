@@ -9,36 +9,36 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="508.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="508.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label fx:id="labelCustomerFinder" layoutX="52.0" layoutY="102.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="369.0">
          <font>
             <Font size="19.0" />
          </font></Label>
       <TextField fx:id="filterField" layoutX="106.0" layoutY="70.0" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: #E5E7E9;" />
-      <Label layoutX="22.0" layoutY="72.0" text="Search Box">
+      <Label layoutX="22.0" layoutY="72.0" text="Buscador:" textFill="#d4af37">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Pane layoutY="2.0" prefHeight="51.0" prefWidth="975.0" style="-fx-background-color: #D4AF37;">
          <children>
-            <Label layoutX="17.0" layoutY="8.0" text="Customer finder">
+            <Label layoutX="17.0" layoutY="8.0" text="Buscador de clientes">
                <font>
-                  <Font name="Comic Sans MS Bold Italic" size="25.0" />
+                  <Font name="Gabriola" size="32.0" />
                </font>
             </Label>
          </children>
       </Pane>
       <Pane layoutY="53.0" prefHeight="5.0" prefWidth="975.0" style="-fx-background-color: #000000;" />
-      <Button layoutX="778.0" layoutY="72.0" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #D4AF37;" text="Exit" textFill="#8d5bf0">
+      <Button layoutX="778.0" layoutY="72.0" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #D4AF37;" text="Exit">
          <font>
-            <Font name="Dubai Regular" size="24.0" />
+            <Font name="Gabriola" size="32.0" />
          </font>
       </Button>
-      <Button layoutX="610.0" layoutY="72.0" mnemonicParsing="false" onAction="#addOrderCustomer" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #D4AF37;" text="Add" textFill="#8d5bf0">
+      <Button layoutX="610.0" layoutY="72.0" mnemonicParsing="false" onAction="#addOrderCustomer" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #D4AF37;" text="Add">
          <font>
-            <Font name="Dubai Regular" size="24.0" />
+            <Font name="Gabriola" size="32.0" />
          </font>
       </Button>
       <TableView fx:id="tableCustomers" layoutX="43.0" layoutY="151.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 0 0 10 10;">

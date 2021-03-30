@@ -5,46 +5,57 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="62.0" prefWidth="745.0">
+
+<BorderPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="900.0">
          <children>
-            <Label prefHeight="57.0" prefWidth="374.0" text="#Name" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
+            <Label alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="877.0" text="Lista de productos" textFill="#d4af37">
                <font>
-                  <Font name="Dubai Bold" size="32.0" />
-               </font></Label>
-            <Button mnemonicParsing="false" onAction="#loadCreateProduct" prefHeight="84.0" prefWidth="150.0" text="Create Product">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin></Button>
-            <Button mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="60.0" prefWidth="158.0" style="-fx-background-color: #040308;" text="Exit" textFill="#8d5bf0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Dubai Regular" size="24.0" />
-               </font></Button>
+                  <Font name="Gabriola" size="32.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 0 0 10 10;">
+               <columns>
+                  <TableColumn fx:id="colProductsNA" prefWidth="186.0" resizable="false" style="-fx-background-color: #d4af37;" text="Nombre" />
+                  <TableColumn fx:id="colProductsIN" minWidth="0.0" prefWidth="186.0" resizable="false" style="-fx-background-color: #d4af37;" text="Ingredientes" />
+                  <TableColumn fx:id="colProductsPR" prefWidth="192.0" resizable="false" style="-fx-background-color: #d4af37;" text="Precio" />
+                  <TableColumn fx:id="colProductsAV" minWidth="-1.0" prefWidth="174.0" resizable="false" style="-fx-background-color: #d4af37;" text="Disponibilidad" />
+                  <TableColumn fx:id="colProductsTY" minWidth="-1.0" prefWidth="149.0" resizable="false" style="-fx-background-color: #d4af37;" text="Tipo" />
+               </columns>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <HBox>
+               <children>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadCreateProduct" prefHeight="49.0" prefWidth="498.0" style="-fx-background-color: #d4af37;" text="Crear">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="53.0" prefWidth="500.0" style="-fx-background-color: #d4af37;" text="Salir">
+                     <font>
+                        <Font name="Gabriola" size="26.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="43.0" prefWidth="745.0" text="Products list" textFill="#8d5bf0">
-         <font>
-            <Font name="Dubai Bold" size="32.0" />
-         </font></Label>
-      <TableView fx:id="tableProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="481.0" prefWidth="745.0" style="-fx-background-color: #DBAFFF;">
-        <columns>
-          <TableColumn fx:id="colProductsNA" prefWidth="172.0" style="-fx-background-color: #6743B0;" text="Name" />
-          <TableColumn fx:id="colProductsIN" minWidth="0.0" prefWidth="158.0" style="-fx-background-color: #6743B0;" text="Ingredients" />
-            <TableColumn fx:id="colProductsPR" prefWidth="243.0" style="-fx-background-color: #6743B0;" text="Price per size" />
-            <TableColumn fx:id="colProductsAV" maxWidth="264.0" minWidth="-1.0" prefWidth="91.333251953125" style="-fx-background-color: #6743B0;" text="Availability" />
-            <TableColumn fx:id="colProductsTY" maxWidth="264.0" minWidth="-1.0" prefWidth="91.333251953125" style="-fx-background-color: #6743B0;" text="Type" />
-        </columns>
-      </TableView>
-   </children>
-</VBox>
+      </VBox>
+   </center>
+</BorderPane>

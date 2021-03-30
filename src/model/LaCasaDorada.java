@@ -141,10 +141,10 @@ public class LaCasaDorada {
         Comparator<Customer> lastNameAndFirstName = new Comparator<Customer>() {
             @Override
             public int compare(Customer obj1, Customer obj2) {
-                String f1 = obj1.getFirstName();
-                String l1 = obj1.getLastName();
-                String f2 = obj2.getFirstName();
-                String l2 = obj2.getLastName();
+                String f1 = obj1.getFirstName().toLowerCase();
+                String l1 = obj1.getLastName().toLowerCase();
+                String f2 = obj2.getFirstName().toLowerCase();
+                String l2 = obj2.getLastName().toLowerCase();
 
                 if (l1.compareTo(l2) == 0) {
 
@@ -162,7 +162,6 @@ public class LaCasaDorada {
             customers.add(customer);
         } else {
             int i = 0;
-            // Parametros al contrario para ordenar de forma descendente
             while (i < customers.size() && lastNameAndFirstName.compare(customer, customers.get(i)) < 0) {
                 i++;
             }
@@ -204,7 +203,7 @@ public class LaCasaDorada {
         while (line != null) {
             String[] parts = line.split(SEPARATE);
             String name = parts[0];
-            String[] ingredientsString = parts[1].split(" ");
+            String[] ingredientsString = parts[1].split("-");
             Ingredient[] ingredientsProduct = new Ingredient[ingredientsString.length];
 
             for (int i = 0; i < ingredientsProduct.length; i++) {
@@ -220,8 +219,8 @@ public class LaCasaDorada {
 
             }
             double[] pricePerSize = { Double.parseDouble(parts[2]), Double.parseDouble(parts[3]) };
-            boolean availability = Boolean.parseBoolean(parts[4]);
-            String type = "PLATO";// Por defecto, no se como agregar al csv
+            String type = parts[4];
+            boolean availability = Boolean.parseBoolean(parts[5]);
 
             addProducts(name, ingredientsProduct, pricePerSize, availability, type, admin);
             line = br.readLine();
@@ -438,6 +437,43 @@ public class LaCasaDorada {
             }
         }
 
+        //Sort
+
+        //SelectionSort
+        Comparator<Customer> lastNameAndFirstName = new Comparator<Customer>() {
+            @Override
+            public int compare(Customer obj1, Customer obj2) {
+                String f1 = obj1.getFirstName().toLowerCase();
+                String l1 = obj1.getLastName().toLowerCase();
+                String f2 = obj2.getFirstName().toLowerCase();
+                String l2 = obj2.getLastName().toLowerCase();
+
+                if (l1.compareTo(l2) == 0) {
+
+                    return f1.compareTo(f2);
+                } else {
+                    return l1.compareTo(l2);
+                }
+            }
+        };
+
+        for (int j = 0; j < customers.size() - 1; j++) {
+            Customer min = customers.get(j);
+            for (int i = j + 1; i < customers.size(); i++) {
+                if (lastNameAndFirstName.compare(min, customers.get(i)) < 0) {  
+                    Customer temp = customers.get(i);
+                    customers.set(i, min);
+                    min = temp;
+                }
+
+            }
+            customers.set(j,min);
+
+        }
+
+
+        //-----------------------
+
         saveDataCustomers();
 
         return valid;
@@ -587,6 +623,7 @@ public class LaCasaDorada {
             }
         }
 
+        Collections.sort(users);
         saveDataUsers();
 
         return valid;

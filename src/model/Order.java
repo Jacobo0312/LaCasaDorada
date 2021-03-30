@@ -41,7 +41,7 @@ public class Order implements Serializable {
         for (OrdersDetails ordersDetails : products) {
             sum+=ordersDetails.getPrice();
         }
-        return sum;
+        return Math.round(sum);
     }
 
     public int getCode() {
