@@ -1300,8 +1300,8 @@ public class LaCasaDoradaGUI {
             alert.setTitle("Ingrediente creado");
             alert.setHeaderText(null);
             alert.setContentText("El nuevo ingrediente ha sido agregado");
-
             alert.showAndWait();
+            initializeTableViewingredients();
         }
     }
 

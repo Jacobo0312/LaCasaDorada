@@ -47,7 +47,6 @@ public class LaCasaDorada {
         try {
             loadData();
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
 
@@ -78,6 +77,8 @@ public class LaCasaDorada {
         } else {
             users.add(user);
         }
+        //Dont work add in order
+        Collections.sort(users);
 
         saveDataUsers();
         return user;
@@ -118,12 +119,18 @@ public class LaCasaDorada {
     }
 
     public void addIngredients(String name, Employee employeeCreate) throws IOException {
+
         ingredients.add(new Ingredient(name, employeeCreate));
         saveDataIngredients();
+           //Dont work add in order
+           Collections.sort(ingredients);
     }
 
     public void addIngredients(Ingredient ingredient) throws IOException {
+
         ingredients.add(ingredient);
+           //Dont work add in order
+           Collections.sort(ingredients);
         saveDataIngredients();
     }
 
@@ -211,10 +218,12 @@ public class LaCasaDorada {
                 Ingredient ingredient = new Ingredient(ingredientsString[i], admin);
 
                 int index = Collections.binarySearch(ingredients, ingredient);
-                if (index > 0) {
+                if (index >= 0) {
                     ingredient = ingredients.get(index);
+                }else{
+                    addIngredients(ingredient);
                 }
-                addIngredients(ingredient);
+                
                 ingredientsProduct[i] = ingredient;
 
             }
@@ -559,6 +568,7 @@ public class LaCasaDorada {
                 setIngredient.setAvailability(false);
             }
         }
+        Collections.sort(ingredients);
         saveDataIngredients();
         return valid;
     }
@@ -685,7 +695,7 @@ public class LaCasaDorada {
             valid = true;
         }
 
-        if (!setProduct.getPricePerSize().equals(prices) && (prices.length > 0)) {
+        if (!setProduct.getPricePerSizeInt().equals(prices) && (prices.length > 0)) {
             setProduct.setPricePerSize(prices);
             valid = true;
         }

@@ -1,0 +1,11 @@
+-Function alertas -> Error and Information.
+-Add function for add and delete products.
+-Time for search customer with binary search.
+-References-> Users and employees.
+-Security questions.
+-Attributes GUI change to model or find better solution.
+-Table.refresh () for not initialize the tables again.
+-Error code order with persistence.
+-Design create product and infoProduct.
+-Admin.get(0) -> Error.
+

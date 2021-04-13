@@ -37,6 +37,9 @@ public class Main extends Application {
         Image icon= new Image("/img/casa-dorada-editada.png");
         primaryStage.getIcons().add(icon);
 		Scene scene = new Scene(root);
+
+        scene.getStylesheets().add("/styles/styles.css");
+
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("LA CASA DORADA");
 		primaryStage.show();
