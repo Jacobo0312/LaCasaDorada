@@ -1,3 +1,10 @@
+
+<div>
+  <a href="https://github.com/Jacobo0312/la-casa-dorada/blob/main/docs/T1%20Segunda%20entrega.pdf">ENTREGA 2 LINK PDF</a
+</div>
+
+
+
 # LA CASA DORADA
 
   <b>la-casa-dorada</b> 
