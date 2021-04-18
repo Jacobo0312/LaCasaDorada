@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class LaCasaDorada {
 
     public static final String CUSTOMERS_FILE_NAME = "src/data/customers.bbd";
@@ -259,6 +260,8 @@ public class LaCasaDorada {
         saveDataCustomers();
     }
 
+
+
     public void importEmployee(String fileDirectory) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
         String line = br.readLine();
@@ -273,6 +276,29 @@ public class LaCasaDorada {
         br.close();
 
     }
+
+
+    public void importOrders() {
+
+        for (int i = 0; i <100; i++) {
+
+            int index = (int) Math.floor(Math.random()*products.size());
+            Product product=products.get(index);
+
+            OrdersDetails []orderProducts={new OrdersDetails(product, 2, "BIG")};
+            index = (int) Math.floor(Math.random()*customers.size());
+            Customer customer = customers.get(index);
+            Employee employeeCreate = admin;
+            Employee employeeDelivery = admin;
+            LocalDateTime date = LocalDateTime.now();
+            String address = customer.getAddress();
+            String comment = customer.getComments();
+
+            orders.add(new Order(CODE_ORDER, orderProducts, customer, employeeCreate, employeeDelivery, date, address, comment));
+        }
+    }
+
+
     // ----------------------------------------------------------------------
 
     // Change status for orders
@@ -827,6 +853,35 @@ public class LaCasaDorada {
         oos.writeObject(orders);
         oos.close();
     }
+
+    public Customer binarySearchCustomer(String firstName, String lastName) {
+
+        Comparator<Customer> lastNameAndFirstName = new Comparator<Customer>() {
+            @Override
+            public int compare(Customer obj1, Customer obj2) {
+                String f1 = obj1.getFirstName().toLowerCase();
+                String l1 = obj1.getLastName().toLowerCase();
+                String f2 = obj2.getFirstName().toLowerCase();
+                String l2 = obj2.getLastName().toLowerCase();
+
+                if (l1.compareTo(l2) == 0) {
+                    return f2.compareTo(f1);
+                } else {
+                    return l2.compareTo(l1);
+                }
+            }
+        };
+
+        Customer key=new Customer(firstName,lastName, "", "", "", "", null);
+        int index=Collections.binarySearch(customers, key,lastNameAndFirstName);
+        if (index <0){
+            key=null;
+        }else{
+            key=customers.get(index);
+        }
+        return key;
+    }
+
 
     // -------------------------------------
 }

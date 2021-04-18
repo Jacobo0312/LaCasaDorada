@@ -502,6 +502,15 @@ public class LaCasaDoradaGUI {
     @FXML
     private Text infoProductModify;
 
+
+    //Binary search customer
+
+    @FXML
+    private Text labelTimeBSCustomer;
+
+    @FXML
+    private TextField nameCustomer;
+
     // --------------------------------
 
     private LaCasaDorada laCasaDorada;
@@ -906,6 +915,7 @@ public class LaCasaDoradaGUI {
         laCasaDorada.importProducts("src/data/products.csv");
         laCasaDorada.importCustomers("src/data/customers.csv");
         laCasaDorada.importEmployee("src/data/empleados.csv");
+        laCasaDorada.importOrders();
 
     }
 
@@ -1921,6 +1931,31 @@ public class LaCasaDoradaGUI {
 	    alert.setHeaderText("Credits");
 	    alert.setContentText("Sebastian Navia\nJacobo Garcia\nAlgoritmos II");
 	    alert.showAndWait();
+    }
+
+
+
+    //BinarySearch Customer
+
+    @FXML
+    public void binarySearchCustomer(ActionEvent event) throws InterruptedException {
+
+        long init = System.currentTimeMillis();
+         
+        Thread.sleep(2000);
+         
+        String [] name=nameCustomer.getText().split(" ");
+        orderCustomer=laCasaDorada.binarySearchCustomer(name[0], name[1]);
+        long end = System.currentTimeMillis();
+         
+        double tiempo = (double) (end - init);
+
+        labelTimeBSCustomer.setText(tiempo +" Milisegundos");
+
+        if (orderCustomer!=null){
+            labelCustomer.setText(orderCustomer.toString());
+        }
+
     }
 
 

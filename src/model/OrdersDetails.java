@@ -55,6 +55,6 @@ public class OrdersDetails implements Serializable {
     
     public String toCSV(String separate){
 
-        return getProduct()+separate+getAmount()+separate+getPrice();
+        return getProduct()+separate+getAmount()+separate+getPrice()+separate;
     }
 }
