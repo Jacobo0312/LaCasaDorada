@@ -8,7 +8,7 @@
 # LA CASA DORADA
 
   <b>la-casa-dorada</b> 
-It is a desktop application developed in java with ui in java fx that helps in the management of users, employees, clients, products, orders, reports and orders in a restaurant.<br>
+It is a desktop application developed in java with ui in java fx that helps in the management of users, employees, clients, products, reports and orders in a restaurant.<br>
 The application contains:
   <ul>
   <li>It allows to manage (add, delete, edit) users, clients, products, employees, ingredients and orders.</li>
